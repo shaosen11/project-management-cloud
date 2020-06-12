@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.lingnan.dao.ProjectFunctionDao">
+
+    <resultMap type="com.edu.lingnan.entity.ProjectFunction" id="ProjectFunctionMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="projectsId" column="projects_id" jdbcType="INTEGER"/>
+        <result property="functionId" column="function_id" jdbcType="INTEGER"/>
+        <result property="functionName" column="function_name" jdbcType="VARCHAR"/>
+        <result property="functionStatus" column="function_status" jdbcType="INTEGER"/>
+        <result property="publishUserId" column="publish_user_id" jdbcType="INTEGER"/>
+        <result property="realizeUserId" column="realize_user_id" jdbcType="INTEGER"/>
+        <result property="plannedStartTime" column="planned_start_time" jdbcType="OTHER"/>
+        <result property="plannedEndTime" column="planned_end_time" jdbcType="OTHER"/>
+        <result property="actualStartTime" column="actual_start_time" jdbcType="OTHER"/>
+        <result property="actualEndTime" column="actual_end_time" jdbcType="OTHER"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
+        <result property="delReason" column="del_reason" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ProjectFunctionMap">
+        select
+          id, projects_id, function_id, function_name, function_status, publish_user_id, realize_user_id, planned_start_time, planned_end_time, actual_start_time, actual_end_time, delete_flag, del_reason, description
+        from project_management_cloud.project_function
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ProjectFunctionMap">
+        select
+          id, projects_id, function_id, function_name, function_status, publish_user_id, realize_user_id, planned_start_time, planned_end_time, actual_start_time, actual_end_time, delete_flag, del_reason, description
+        from project_management_cloud.project_function
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ProjectFunctionMap">
+        select
+          id, projects_id, function_id, function_name, function_status, publish_user_id, realize_user_id, planned_start_time, planned_end_time, actual_start_time, actual_end_time, delete_flag, del_reason, description
+        from project_management_cloud.project_function
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="projectsId != null">
+                and projects_id = #{projectsId}
+            </if>
+            <if test="functionId != null">
+                and function_id = #{functionId}
+            </if>
+            <if test="functionName != null and functionName != ''">
+                and function_name = #{functionName}
+            </if>
+            <if test="functionStatus != null">
+                and function_status = #{functionStatus}
+            </if>
+            <if test="publishUserId != null">
+                and publish_user_id = #{publishUserId}
+            </if>
+            <if test="realizeUserId != null">
+                and realize_user_id = #{realizeUserId}
+            </if>
+            <if test="plannedStartTime != null">
+                and planned_start_time = #{plannedStartTime}
+            </if>
+            <if test="plannedEndTime != null">
+                and planned_end_time = #{plannedEndTime}
+            </if>
+            <if test="actualStartTime != null">
+                and actual_start_time = #{actualStartTime}
+            </if>
+            <if test="actualEndTime != null">
+                and actual_end_time = #{actualEndTime}
+            </if>
+            <if test="deleteFlag != null">
+                and delete_flag = #{deleteFlag}
+            </if>
+            <if test="delReason != null and delReason != ''">
+                and del_reason = #{delReason}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into project_management_cloud.project_function(projects_id, function_id, function_name, function_status, publish_user_id, realize_user_id, planned_start_time, planned_end_time, actual_start_time, actual_end_time, delete_flag, del_reason, description)
+        values (#{projectsId}, #{functionId}, #{functionName}, #{functionStatus}, #{publishUserId}, #{realizeUserId}, #{plannedStartTime}, #{plannedEndTime}, #{actualStartTime}, #{actualEndTime}, #{deleteFlag}, #{delReason}, #{description})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update project_management_cloud.project_function
+        <set>
+            <if test="projectsId != null">
+                projects_id = #{projectsId},
+            </if>
+            <if test="functionId != null">
+                function_id = #{functionId},
+            </if>
+            <if test="functionName != null and functionName != ''">
+                function_name = #{functionName},
+            </if>
+            <if test="functionStatus != null">
+                function_status = #{functionStatus},
+            </if>
+            <if test="publishUserId != null">
+                publish_user_id = #{publishUserId},
+            </if>
+            <if test="realizeUserId != null">
+                realize_user_id = #{realizeUserId},
+            </if>
+            <if test="plannedStartTime != null">
+                planned_start_time = #{plannedStartTime},
+            </if>
+            <if test="plannedEndTime != null">
+                planned_end_time = #{plannedEndTime},
+            </if>
+            <if test="actualStartTime != null">
+                actual_start_time = #{actualStartTime},
+            </if>
+            <if test="actualEndTime != null">
+                actual_end_time = #{actualEndTime},
+            </if>
+            <if test="deleteFlag != null">
+                delete_flag = #{deleteFlag},
+            </if>
+            <if test="delReason != null and delReason != ''">
+                del_reason = #{delReason},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from project_management_cloud.project_function where id = #{id}
+    </delete>
+
+</mapper>

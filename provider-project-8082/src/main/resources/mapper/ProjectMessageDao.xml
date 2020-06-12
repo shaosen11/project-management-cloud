@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.lingnan.dao.ProjectMessageDao">
+
+    <resultMap type="com.edu.lingnan.entity.ProjectMessage" id="ProjectMessageMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="projectId" column="project_id" jdbcType="INTEGER"/>
+        <result property="fromUserId" column="from_user_id" jdbcType="INTEGER"/>
+        <result property="toUserId" column="to_user_id" jdbcType="INTEGER"/>
+        <result property="typeId" column="type_id" jdbcType="INTEGER"/>
+        <result property="message" column="message" jdbcType="VARCHAR"/>
+        <result property="time" column="time" jdbcType="VARCHAR"/>
+        <result property="isRead" column="is_read" jdbcType="INTEGER"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
+        <result property="allFlag" column="all_flag" jdbcType="INTEGER"/>
+        <result property="adminFlag" column="admin_flag" jdbcType="INTEGER"/>
+        <result property="needToDo" column="need_to_do" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ProjectMessageMap">
+        select
+          id, project_id, from_user_id, to_user_id, type_id, message, time, is_read, delete_flag, all_flag, admin_flag, need_to_do
+        from project_management_cloud.project_message
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ProjectMessageMap">
+        select
+          id, project_id, from_user_id, to_user_id, type_id, message, time, is_read, delete_flag, all_flag, admin_flag, need_to_do
+        from project_management_cloud.project_message
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ProjectMessageMap">
+        select
+          id, project_id, from_user_id, to_user_id, type_id, message, time, is_read, delete_flag, all_flag, admin_flag, need_to_do
+        from project_management_cloud.project_message
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="projectId != null">
+                and project_id = #{projectId}
+            </if>
+            <if test="fromUserId != null">
+                and from_user_id = #{fromUserId}
+            </if>
+            <if test="toUserId != null">
+                and to_user_id = #{toUserId}
+            </if>
+            <if test="typeId != null">
+                and type_id = #{typeId}
+            </if>
+            <if test="message != null and message != ''">
+                and message = #{message}
+            </if>
+            <if test="time != null and time != ''">
+                and time = #{time}
+            </if>
+            <if test="isRead != null">
+                and is_read = #{isRead}
+            </if>
+            <if test="deleteFlag != null">
+                and delete_flag = #{deleteFlag}
+            </if>
+            <if test="allFlag != null">
+                and all_flag = #{allFlag}
+            </if>
+            <if test="adminFlag != null">
+                and admin_flag = #{adminFlag}
+            </if>
+            <if test="needToDo != null">
+                and need_to_do = #{needToDo}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into project_management_cloud.project_message(project_id, from_user_id, to_user_id, type_id, message, time, is_read, delete_flag, all_flag, admin_flag, need_to_do)
+        values (#{projectId}, #{fromUserId}, #{toUserId}, #{typeId}, #{message}, #{time}, #{isRead}, #{deleteFlag}, #{allFlag}, #{adminFlag}, #{needToDo})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update project_management_cloud.project_message
+        <set>
+            <if test="projectId != null">
+                project_id = #{projectId},
+            </if>
+            <if test="fromUserId != null">
+                from_user_id = #{fromUserId},
+            </if>
+            <if test="toUserId != null">
+                to_user_id = #{toUserId},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId},
+            </if>
+            <if test="message != null and message != ''">
+                message = #{message},
+            </if>
+            <if test="time != null and time != ''">
+                time = #{time},
+            </if>
+            <if test="isRead != null">
+                is_read = #{isRead},
+            </if>
+            <if test="deleteFlag != null">
+                delete_flag = #{deleteFlag},
+            </if>
+            <if test="allFlag != null">
+                all_flag = #{allFlag},
+            </if>
+            <if test="adminFlag != null">
+                admin_flag = #{adminFlag},
+            </if>
+            <if test="needToDo != null">
+                need_to_do = #{needToDo},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from project_management_cloud.project_message where id = #{id}
+    </delete>
+
+</mapper>

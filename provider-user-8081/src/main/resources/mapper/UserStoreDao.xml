@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.lingnan.dao.UserStoreDao">
+
+    <resultMap type="com.edu.lingnan.entity.UserStore" id="UserStoreMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="projectsId" column="projects_id" jdbcType="INTEGER"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
+        <result property="storeTime" column="store_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UserStoreMap">
+        select
+          id, user_id, projects_id, delete_flag, store_time
+        from project_management_cloud.user_store
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="UserStoreMap">
+        select
+          id, user_id, projects_id, delete_flag, store_time
+        from project_management_cloud.user_store
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="UserStoreMap">
+        select
+          id, user_id, projects_id, delete_flag, store_time
+        from project_management_cloud.user_store
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="projectsId != null">
+                and projects_id = #{projectsId}
+            </if>
+            <if test="deleteFlag != null">
+                and delete_flag = #{deleteFlag}
+            </if>
+            <if test="storeTime != null">
+                and store_time = #{storeTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into project_management_cloud.user_store(user_id, projects_id, delete_flag, store_time)
+        values (#{userId}, #{projectsId}, #{deleteFlag}, #{storeTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update project_management_cloud.user_store
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="projectsId != null">
+                projects_id = #{projectsId},
+            </if>
+            <if test="deleteFlag != null">
+                delete_flag = #{deleteFlag},
+            </if>
+            <if test="storeTime != null">
+                store_time = #{storeTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from project_management_cloud.user_store where id = #{id}
+    </delete>
+
+</mapper>

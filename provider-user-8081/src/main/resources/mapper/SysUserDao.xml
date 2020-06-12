@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.lingnan.dao.SysUserDao">
+
+    <resultMap type="com.edu.lingnan.entity.SysUser" id="SysUserMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="birthday" column="birthday" jdbcType="OTHER"/>
+        <result property="gender" column="gender" jdbcType="INTEGER"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="introduce" column="introduce" jdbcType="VARCHAR"/>
+        <result property="tag" column="tag" jdbcType="VARCHAR"/>
+        <result property="photo" column="photo" jdbcType="VARCHAR"/>
+        <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="enabled" column="enabled" jdbcType="INTEGER"/>
+        <result property="accountNonExpired" column="account_non_expired" jdbcType="INTEGER"/>
+        <result property="accountNonLocked" column="account_non_locked" jdbcType="INTEGER"/>
+        <result property="credentialNonExpired" column="credential_non_expired" jdbcType="INTEGER"/>
+        <result property="validataCode" column="validata_code" jdbcType="VARCHAR"/>
+        <result property="outDate" column="out_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SysUserMap">
+        select
+          id, email, username, password, phone, birthday, gender, address, introduce, tag, photo, last_login_time, create_time, enabled, account_non_expired, account_non_locked, credential_non_expired, validata_code, out_date
+        from project_management_cloud.sys_user
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SysUserMap">
+        select
+          id, email, username, password, phone, birthday, gender, address, introduce, tag, photo, last_login_time, create_time, enabled, account_non_expired, account_non_locked, credential_non_expired, validata_code, out_date
+        from project_management_cloud.sys_user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SysUserMap">
+        select
+          id, email, username, password, phone, birthday, gender, address, introduce, tag, photo, last_login_time, create_time, enabled, account_non_expired, account_non_locked, credential_non_expired, validata_code, out_date
+        from project_management_cloud.sys_user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="birthday != null">
+                and birthday = #{birthday}
+            </if>
+            <if test="gender != null">
+                and gender = #{gender}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="introduce != null and introduce != ''">
+                and introduce = #{introduce}
+            </if>
+            <if test="tag != null and tag != ''">
+                and tag = #{tag}
+            </if>
+            <if test="photo != null and photo != ''">
+                and photo = #{photo}
+            </if>
+            <if test="lastLoginTime != null">
+                and last_login_time = #{lastLoginTime}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="enabled != null">
+                and enabled = #{enabled}
+            </if>
+            <if test="accountNonExpired != null">
+                and account_non_expired = #{accountNonExpired}
+            </if>
+            <if test="accountNonLocked != null">
+                and account_non_locked = #{accountNonLocked}
+            </if>
+            <if test="credentialNonExpired != null">
+                and credential_non_expired = #{credentialNonExpired}
+            </if>
+            <if test="validataCode != null and validataCode != ''">
+                and validata_code = #{validataCode}
+            </if>
+            <if test="outDate != null">
+                and out_date = #{outDate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into project_management_cloud.sys_user(email, username, password, phone, birthday, gender, address, introduce, tag, photo, last_login_time, create_time, enabled, account_non_expired, account_non_locked, credential_non_expired, validata_code, out_date)
+        values (#{email}, #{username}, #{password}, #{phone}, #{birthday}, #{gender}, #{address}, #{introduce}, #{tag}, #{photo}, #{lastLoginTime}, #{createTime}, #{enabled}, #{accountNonExpired}, #{accountNonLocked}, #{credentialNonExpired}, #{validataCode}, #{outDate})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update project_management_cloud.sys_user
+        <set>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="gender != null">
+                gender = #{gender},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="introduce != null and introduce != ''">
+                introduce = #{introduce},
+            </if>
+            <if test="tag != null and tag != ''">
+                tag = #{tag},
+            </if>
+            <if test="photo != null and photo != ''">
+                photo = #{photo},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled},
+            </if>
+            <if test="accountNonExpired != null">
+                account_non_expired = #{accountNonExpired},
+            </if>
+            <if test="accountNonLocked != null">
+                account_non_locked = #{accountNonLocked},
+            </if>
+            <if test="credentialNonExpired != null">
+                credential_non_expired = #{credentialNonExpired},
+            </if>
+            <if test="validataCode != null and validataCode != ''">
+                validata_code = #{validataCode},
+            </if>
+            <if test="outDate != null">
+                out_date = #{outDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from project_management_cloud.sys_user where id = #{id}
+    </delete>
+
+</mapper>

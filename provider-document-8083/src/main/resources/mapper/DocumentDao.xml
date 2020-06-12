@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.lingnan.dao.DocumentDao">
+
+    <resultMap type="com.edu.lingnan.entity.Document" id="DocumentMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="versionMessage" column="version_message" jdbcType="VARCHAR"/>
+        <result property="serialNumber" column="serial_number" jdbcType="VARCHAR"/>
+        <result property="projectId" column="project_id" jdbcType="INTEGER"/>
+        <result property="uploadTime" column="upload_time" jdbcType="TIMESTAMP"/>
+        <result property="versionFlag" column="version_flag" jdbcType="INTEGER"/>
+        <result property="codeLineNumber" column="code_line_number" jdbcType="INTEGER"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="DocumentMap">
+        select
+          id, name, user_id, version, version_message, serial_number, project_id, upload_time, version_flag, code_line_number, delete_flag
+        from project_management_cloud.document
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="DocumentMap">
+        select
+          id, name, user_id, version, version_message, serial_number, project_id, upload_time, version_flag, code_line_number, delete_flag
+        from project_management_cloud.document
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="DocumentMap">
+        select
+          id, name, user_id, version, version_message, serial_number, project_id, upload_time, version_flag, code_line_number, delete_flag
+        from project_management_cloud.document
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="version != null">
+                and version = #{version}
+            </if>
+            <if test="versionMessage != null and versionMessage != ''">
+                and version_message = #{versionMessage}
+            </if>
+            <if test="serialNumber != null and serialNumber != ''">
+                and serial_number = #{serialNumber}
+            </if>
+            <if test="projectId != null">
+                and project_id = #{projectId}
+            </if>
+            <if test="uploadTime != null">
+                and upload_time = #{uploadTime}
+            </if>
+            <if test="versionFlag != null">
+                and version_flag = #{versionFlag}
+            </if>
+            <if test="codeLineNumber != null">
+                and code_line_number = #{codeLineNumber}
+            </if>
+            <if test="deleteFlag != null">
+                and delete_flag = #{deleteFlag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into project_management_cloud.document(name, user_id, version, version_message, serial_number, project_id, upload_time, version_flag, code_line_number, delete_flag)
+        values (#{name}, #{userId}, #{version}, #{versionMessage}, #{serialNumber}, #{projectId}, #{uploadTime}, #{versionFlag}, #{codeLineNumber}, #{deleteFlag})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update project_management_cloud.document
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="version != null">
+                version = #{version},
+            </if>
+            <if test="versionMessage != null and versionMessage != ''">
+                version_message = #{versionMessage},
+            </if>
+            <if test="serialNumber != null and serialNumber != ''">
+                serial_number = #{serialNumber},
+            </if>
+            <if test="projectId != null">
+                project_id = #{projectId},
+            </if>
+            <if test="uploadTime != null">
+                upload_time = #{uploadTime},
+            </if>
+            <if test="versionFlag != null">
+                version_flag = #{versionFlag},
+            </if>
+            <if test="codeLineNumber != null">
+                code_line_number = #{codeLineNumber},
+            </if>
+            <if test="deleteFlag != null">
+                delete_flag = #{deleteFlag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from project_management_cloud.document where id = #{id}
+    </delete>
+
+</mapper>
