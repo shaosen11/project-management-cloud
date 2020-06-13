@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface UserLikeDao {
+public interface UserLikeDao extends BaseDao<UserLike>{
 
     /**
      * 通过ID查询单条数据
@@ -43,28 +43,5 @@ public interface UserLikeDao {
      */
     List<UserLike> queryAll(UserLike userLike);
 
-    /**
-     * 新增数据
-     *
-     * @param userLike 实例对象
-     * @return 影响行数
-     */
-    int insert(UserLike userLike);
-
-    /**
-     * 修改数据
-     *
-     * @param userLike 实例对象
-     * @return 影响行数
-     */
-    int update(UserLike userLike);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 影响行数
-     */
-    int deleteById(Integer id);
 
 }

@@ -12,7 +12,7 @@
     <select id="queryById" resultMap="SysRoleMenuMap">
         select
           id, role_id, menu_id
-        from project_management_cloud.sys_role_menu
+        from project_management_user_cloud.sys_role_menu
         where id = #{id}
     </select>
 
@@ -20,7 +20,7 @@
     <select id="queryAllByLimit" resultMap="SysRoleMenuMap">
         select
           id, role_id, menu_id
-        from project_management_cloud.sys_role_menu
+        from project_management_user_cloud.sys_role_menu
         limit #{offset}, #{limit}
     </select>
 
@@ -28,7 +28,7 @@
     <select id="queryAll" resultMap="SysRoleMenuMap">
         select
           id, role_id, menu_id
-        from project_management_cloud.sys_role_menu
+        from project_management_user_cloud.sys_role_menu
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -42,29 +42,6 @@
         </where>
     </select>
 
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into project_management_cloud.sys_role_menu(role_id, menu_id)
-        values (#{roleId}, #{menuId})
-    </insert>
 
-    <!--通过主键修改数据-->
-    <update id="update">
-        update project_management_cloud.sys_role_menu
-        <set>
-            <if test="roleId != null">
-                role_id = #{roleId},
-            </if>
-            <if test="menuId != null">
-                menu_id = #{menuId},
-            </if>
-        </set>
-        where id = #{id}
-    </update>
-
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete from project_management_cloud.sys_role_menu where id = #{id}
-    </delete>
 
 </mapper>

@@ -47,6 +47,6 @@
   "pkColumn" : null,
   "otherColumn" : null,
   "savePackageName" : "com.edu.lingnan",
-  "savePath" : "./common-api/src/main/java/com/edu/lingnan",
-  "saveModelName" : "common-api"
+  "savePath" : "./provider-user-8081/src/main/java/com/edu/lingnan",
+  "saveModelName" : "provider-user-8081"
 }

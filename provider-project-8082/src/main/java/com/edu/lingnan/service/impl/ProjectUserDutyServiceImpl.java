@@ -2,6 +2,7 @@ package com.edu.lingnan.service.impl;
 
 import com.edu.lingnan.entity.ProjectUserDuty;
 import com.edu.lingnan.dao.ProjectUserDutyDao;
+import com.edu.lingnan.feign.ProjectUserDutyFeignService;
 import com.edu.lingnan.service.ProjectUserDutyService;
 import org.springframework.stereotype.Service;
 
@@ -66,14 +67,4 @@ public class ProjectUserDutyServiceImpl implements ProjectUserDutyService {
         return this.queryById(projectUserDuty.getId());
     }
 
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    @Override
-    public boolean deleteById(Integer id) {
-        return this.projectUserDutyDao.deleteById(id) > 0;
-    }
 }

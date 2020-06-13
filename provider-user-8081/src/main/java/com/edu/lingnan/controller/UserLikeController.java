@@ -1,6 +1,7 @@
 package com.edu.lingnan.controller;
 
 import com.edu.lingnan.entity.UserLike;
+import com.edu.lingnan.feign.UserLikeFeignService;
 import com.edu.lingnan.service.UserLikeService;
 import org.springframework.web.bind.annotation.*;
 

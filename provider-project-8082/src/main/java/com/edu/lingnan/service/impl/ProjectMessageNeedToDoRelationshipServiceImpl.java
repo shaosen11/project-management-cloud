@@ -2,6 +2,7 @@ package com.edu.lingnan.service.impl;
 
 import com.edu.lingnan.entity.ProjectMessageNeedToDoRelationship;
 import com.edu.lingnan.dao.ProjectMessageNeedToDoRelationshipDao;
+import com.edu.lingnan.feign.ProjectMessageNeedToDoRelationshipFeignService;
 import com.edu.lingnan.service.ProjectMessageNeedToDoRelationshipService;
 import org.springframework.stereotype.Service;
 
@@ -66,14 +67,4 @@ public class ProjectMessageNeedToDoRelationshipServiceImpl implements ProjectMes
         return this.queryById(projectMessageNeedToDoRelationship.getId());
     }
 
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    @Override
-    public boolean deleteById(Integer id) {
-        return this.projectMessageNeedToDoRelationshipDao.deleteById(id) > 0;
-    }
 }

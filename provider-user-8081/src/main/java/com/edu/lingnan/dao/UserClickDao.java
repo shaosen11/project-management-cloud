@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface UserClickDao {
+public interface UserClickDao extends BaseDao<UserClick>{
 
     /**
      * 通过ID查询单条数据
@@ -43,28 +43,5 @@ public interface UserClickDao {
      */
     List<UserClick> queryAll(UserClick userClick);
 
-    /**
-     * 新增数据
-     *
-     * @param userClick 实例对象
-     * @return 影响行数
-     */
-    int insert(UserClick userClick);
-
-    /**
-     * 修改数据
-     *
-     * @param userClick 实例对象
-     * @return 影响行数
-     */
-    int update(UserClick userClick);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 影响行数
-     */
-    int deleteById(Integer id);
 
 }

@@ -11,7 +11,7 @@
     <select id="queryById" resultMap="ProjectTypeMap">
         select
           id, type
-        from project_management_cloud.project_type
+        from project_management_project_cloud.project_type
         where id = #{id}
     </select>
 
@@ -19,7 +19,7 @@
     <select id="queryAllByLimit" resultMap="ProjectTypeMap">
         select
           id, type
-        from project_management_cloud.project_type
+        from project_management_project_cloud.project_type
         limit #{offset}, #{limit}
     </select>
 
@@ -27,7 +27,7 @@
     <select id="queryAll" resultMap="ProjectTypeMap">
         select
           id, type
-        from project_management_cloud.project_type
+        from project_management_project_cloud.project_type
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -38,26 +38,5 @@
         </where>
     </select>
 
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into project_management_cloud.project_type(type)
-        values (#{type})
-    </insert>
-
-    <!--通过主键修改数据-->
-    <update id="update">
-        update project_management_cloud.project_type
-        <set>
-            <if test="type != null and type != ''">
-                type = #{type},
-            </if>
-        </set>
-        where id = #{id}
-    </update>
-
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete from project_management_cloud.project_type where id = #{id}
-    </delete>
 
 </mapper>

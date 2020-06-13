@@ -1,6 +1,7 @@
 package com.edu.lingnan.controller;
 
 import com.edu.lingnan.entity.SysMenu;
+import com.edu.lingnan.feign.SysMenuFeignService;
 import com.edu.lingnan.service.SysMenuService;
 import org.springframework.web.bind.annotation.*;
 

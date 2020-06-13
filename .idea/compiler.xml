@@ -12,14 +12,14 @@
         <module name="common-api" />
         <module name="zuul-8888" />
         <module name="consumer-user-9001" />
+        <module name="consumer-api" />
         <module name="consumer-project-9002" />
         <module name="provider-user-8081" />
         <module name="consumer-document-9003" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="consumer-document-9001" target="1.5" />
-      <module name="consumer-project-9001" target="1.5" />
+      <module name="consumer-api" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

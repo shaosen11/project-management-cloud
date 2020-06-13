@@ -12,7 +12,7 @@
     <select id="queryById" resultMap="ProjectUserDutyMap">
         select
           id, duty_name, delete_flag
-        from project_management_cloud.project_user_duty
+        from project_management_project_cloud.project_user_duty
         where id = #{id}
     </select>
 
@@ -20,7 +20,7 @@
     <select id="queryAllByLimit" resultMap="ProjectUserDutyMap">
         select
           id, duty_name, delete_flag
-        from project_management_cloud.project_user_duty
+        from project_management_project_cloud.project_user_duty
         limit #{offset}, #{limit}
     </select>
 
@@ -28,7 +28,7 @@
     <select id="queryAll" resultMap="ProjectUserDutyMap">
         select
           id, duty_name, delete_flag
-        from project_management_cloud.project_user_duty
+        from project_management_project_cloud.project_user_duty
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -42,29 +42,5 @@
         </where>
     </select>
 
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into project_management_cloud.project_user_duty(duty_name, delete_flag)
-        values (#{dutyName}, #{deleteFlag})
-    </insert>
-
-    <!--通过主键修改数据-->
-    <update id="update">
-        update project_management_cloud.project_user_duty
-        <set>
-            <if test="dutyName != null and dutyName != ''">
-                duty_name = #{dutyName},
-            </if>
-            <if test="deleteFlag != null">
-                delete_flag = #{deleteFlag},
-            </if>
-        </set>
-        where id = #{id}
-    </update>
-
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete from project_management_cloud.project_user_duty where id = #{id}
-    </delete>
 
 </mapper>

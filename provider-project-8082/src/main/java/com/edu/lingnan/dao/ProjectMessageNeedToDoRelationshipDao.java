@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface ProjectMessageNeedToDoRelationshipDao {
+public interface ProjectMessageNeedToDoRelationshipDao extends BaseDao<ProjectMessageNeedToDoRelationship>{
 
     /**
      * 通过ID查询单条数据
@@ -43,28 +43,5 @@ public interface ProjectMessageNeedToDoRelationshipDao {
      */
     List<ProjectMessageNeedToDoRelationship> queryAll(ProjectMessageNeedToDoRelationship projectMessageNeedToDoRelationship);
 
-    /**
-     * 新增数据
-     *
-     * @param projectMessageNeedToDoRelationship 实例对象
-     * @return 影响行数
-     */
-    int insert(ProjectMessageNeedToDoRelationship projectMessageNeedToDoRelationship);
-
-    /**
-     * 修改数据
-     *
-     * @param projectMessageNeedToDoRelationship 实例对象
-     * @return 影响行数
-     */
-    int update(ProjectMessageNeedToDoRelationship projectMessageNeedToDoRelationship);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 影响行数
-     */
-    int deleteById(Integer id);
 
 }

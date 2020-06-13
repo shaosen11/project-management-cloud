@@ -12,7 +12,7 @@
     <select id="queryById" resultMap="SysUserRoleMap">
         select
           id, user_id, role_id
-        from project_management_cloud.sys_user_role
+        from project_management_user_cloud.sys_user_role
         where id = #{id}
     </select>
 
@@ -20,7 +20,7 @@
     <select id="queryAllByLimit" resultMap="SysUserRoleMap">
         select
           id, user_id, role_id
-        from project_management_cloud.sys_user_role
+        from project_management_user_cloud.sys_user_role
         limit #{offset}, #{limit}
     </select>
 
@@ -28,7 +28,7 @@
     <select id="queryAll" resultMap="SysUserRoleMap">
         select
           id, user_id, role_id
-        from project_management_cloud.sys_user_role
+        from project_management_user_cloud.sys_user_role
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -42,29 +42,5 @@
         </where>
     </select>
 
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into project_management_cloud.sys_user_role(user_id, role_id)
-        values (#{userId}, #{roleId})
-    </insert>
-
-    <!--通过主键修改数据-->
-    <update id="update">
-        update project_management_cloud.sys_user_role
-        <set>
-            <if test="userId != null">
-                user_id = #{userId},
-            </if>
-            <if test="roleId != null">
-                role_id = #{roleId},
-            </if>
-        </set>
-        where id = #{id}
-    </update>
-
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete from project_management_cloud.sys_user_role where id = #{id}
-    </delete>
 
 </mapper>

@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface UserCodeUpdateRecordDao {
+public interface UserCodeUpdateRecordDao extends BaseDao<UserCodeUpdateRecord>{
 
     /**
      * 通过ID查询单条数据
@@ -43,28 +43,5 @@ public interface UserCodeUpdateRecordDao {
      */
     List<UserCodeUpdateRecord> queryAll(UserCodeUpdateRecord userCodeUpdateRecord);
 
-    /**
-     * 新增数据
-     *
-     * @param userCodeUpdateRecord 实例对象
-     * @return 影响行数
-     */
-    int insert(UserCodeUpdateRecord userCodeUpdateRecord);
-
-    /**
-     * 修改数据
-     *
-     * @param userCodeUpdateRecord 实例对象
-     * @return 影响行数
-     */
-    int update(UserCodeUpdateRecord userCodeUpdateRecord);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 影响行数
-     */
-    int deleteById(Integer id);
 
 }

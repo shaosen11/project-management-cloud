@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface ProjectUserDao {
+public interface ProjectUserDao extends BaseDao<ProjectUser>{
 
     /**
      * 通过ID查询单条数据
@@ -43,28 +43,5 @@ public interface ProjectUserDao {
      */
     List<ProjectUser> queryAll(ProjectUser projectUser);
 
-    /**
-     * 新增数据
-     *
-     * @param projectUser 实例对象
-     * @return 影响行数
-     */
-    int insert(ProjectUser projectUser);
-
-    /**
-     * 修改数据
-     *
-     * @param projectUser 实例对象
-     * @return 影响行数
-     */
-    int update(ProjectUser projectUser);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 影响行数
-     */
-    int deleteById(Integer id);
 
 }

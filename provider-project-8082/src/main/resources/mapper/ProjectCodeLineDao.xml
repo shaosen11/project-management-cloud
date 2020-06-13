@@ -14,7 +14,7 @@
     <select id="queryById" resultMap="ProjectCodeLineMap">
         select
           id, projects_id, code_line_number, upload_time, delete_flag
-        from project_management_cloud.project_code_line
+        from project_management_project_cloud.project_code_line
         where id = #{id}
     </select>
 
@@ -22,7 +22,7 @@
     <select id="queryAllByLimit" resultMap="ProjectCodeLineMap">
         select
           id, projects_id, code_line_number, upload_time, delete_flag
-        from project_management_cloud.project_code_line
+        from project_management_project_cloud.project_code_line
         limit #{offset}, #{limit}
     </select>
 
@@ -30,7 +30,7 @@
     <select id="queryAll" resultMap="ProjectCodeLineMap">
         select
           id, projects_id, code_line_number, upload_time, delete_flag
-        from project_management_cloud.project_code_line
+        from project_management_project_cloud.project_code_line
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -50,35 +50,5 @@
         </where>
     </select>
 
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into project_management_cloud.project_code_line(projects_id, code_line_number, upload_time, delete_flag)
-        values (#{projectsId}, #{codeLineNumber}, #{uploadTime}, #{deleteFlag})
-    </insert>
-
-    <!--通过主键修改数据-->
-    <update id="update">
-        update project_management_cloud.project_code_line
-        <set>
-            <if test="projectsId != null">
-                projects_id = #{projectsId},
-            </if>
-            <if test="codeLineNumber != null">
-                code_line_number = #{codeLineNumber},
-            </if>
-            <if test="uploadTime != null">
-                upload_time = #{uploadTime},
-            </if>
-            <if test="deleteFlag != null">
-                delete_flag = #{deleteFlag},
-            </if>
-        </set>
-        where id = #{id}
-    </update>
-
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete from project_management_cloud.project_code_line where id = #{id}
-    </delete>
 
 </mapper>

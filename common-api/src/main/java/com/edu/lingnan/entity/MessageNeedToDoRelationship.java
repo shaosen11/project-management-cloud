@@ -1,5 +1,7 @@
 package com.edu.lingnan.entity;
 
+import com.edu.lingnan.annotation.Id;
+import com.edu.lingnan.annotation.Table;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,10 +13,12 @@ import java.io.Serializable;
  * @since 2020-06-11 20:10:53
  */
 @Data
+@Table("project_management_user_cloud.message_need_to_do_relationship")
 public class MessageNeedToDoRelationship implements Serializable {
     /**
     * 自增id
     */
+    @Id
     private Integer id;
     /**
     * messageid

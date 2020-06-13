@@ -1,6 +1,7 @@
 package com.edu.lingnan.controller;
 
 import com.edu.lingnan.entity.Project;
+import com.edu.lingnan.feign.ProjectFeignService;
 import com.edu.lingnan.service.ProjectService;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class ProjectController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("selectOne/{id}")
+    @GetMapping("get/{id}")
     public Project selectOne(@PathVariable("id") Integer id) {
         return this.projectService.queryById(id);
     }

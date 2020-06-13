@@ -2,6 +2,7 @@ package com.edu.lingnan.service.impl;
 
 import com.edu.lingnan.entity.ProjectSchedule;
 import com.edu.lingnan.dao.ProjectScheduleDao;
+import com.edu.lingnan.feign.ProjectScheduleFeignService;
 import com.edu.lingnan.service.ProjectScheduleService;
 import org.springframework.stereotype.Service;
 
@@ -66,14 +67,4 @@ public class ProjectScheduleServiceImpl implements ProjectScheduleService {
         return this.queryById(projectSchedule.getId());
     }
 
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    @Override
-    public boolean deleteById(Integer id) {
-        return this.projectScheduleDao.deleteById(id) > 0;
-    }
 }

@@ -1,6 +1,7 @@
 package com.edu.lingnan.controller;
 
 import com.edu.lingnan.entity.Document;
+import com.edu.lingnan.feign.DocumentFeignService;
 import com.edu.lingnan.service.DocumentService;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class DocumentController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("selectOne/{id}")
+    @GetMapping("get/{id}")
     public Document selectOne(@PathVariable("id") Integer id) {
         return this.documentService.queryById(id);
     }

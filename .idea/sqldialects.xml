@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/provider-project-8082/src/main/resources/mapper/ProjectMessageDao.xml" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/provider-user-8081/src/main/resources/mapper/MessageDao.xml" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/provider-user-8081/src/main/resources/mapper/UserCodeUpdateRecordDao.xml" dialect="MySQL" />
+  </component>
+</project>

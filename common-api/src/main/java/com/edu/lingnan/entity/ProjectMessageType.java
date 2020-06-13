@@ -1,5 +1,7 @@
 package com.edu.lingnan.entity;
 
+import com.edu.lingnan.annotation.Id;
+import com.edu.lingnan.annotation.Table;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,10 +13,12 @@ import java.io.Serializable;
  * @since 2020-06-11 20:13:41
  */
 @Data
+@Table("project_management_project_cloud.project_message_type")
 public class ProjectMessageType implements Serializable {
     /**
     * 自增id
     */
+    @Id
     private Integer id;
     /**
     * 类型名称

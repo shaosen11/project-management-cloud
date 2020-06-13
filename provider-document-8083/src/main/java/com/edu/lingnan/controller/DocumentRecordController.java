@@ -1,6 +1,7 @@
 package com.edu.lingnan.controller;
 
 import com.edu.lingnan.entity.DocumentRecord;
+import com.edu.lingnan.feign.DocumentRecordFeignService;
 import com.edu.lingnan.service.DocumentRecordService;
 import org.springframework.web.bind.annotation.*;
 

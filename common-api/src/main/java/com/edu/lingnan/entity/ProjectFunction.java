@@ -1,5 +1,7 @@
 package com.edu.lingnan.entity;
 
+import com.edu.lingnan.annotation.Id;
+import com.edu.lingnan.annotation.Table;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,8 +13,10 @@ import java.io.Serializable;
  * @since 2020-06-11 20:13:23
  */
 @Data
+@Table("project_manaproject_management_project_cloudgement_user_cloud.project_function")
 public class ProjectFunction implements Serializable {
 
+    @Id
     private Integer id;
     
     private Integer projectsId;

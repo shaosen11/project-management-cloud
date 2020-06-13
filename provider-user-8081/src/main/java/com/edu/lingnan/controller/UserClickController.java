@@ -1,6 +1,7 @@
 package com.edu.lingnan.controller;
 
 import com.edu.lingnan.entity.UserClick;
+import com.edu.lingnan.feign.UserClickFeignService;
 import com.edu.lingnan.service.UserClickService;
 import org.springframework.web.bind.annotation.*;
 

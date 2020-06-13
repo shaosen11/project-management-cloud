@@ -20,7 +20,7 @@
     <select id="queryById" resultMap="ProjectUserCooperationMap">
         select
           id, projects_id, in_project_user_id, not_in_project_user_id, duty_code, time, delete_flag, invite_flag, join_flag, finish_flag, success_flag
-        from project_management_cloud.project_user_cooperation
+        from project_management_project_cloud.project_user_cooperation
         where id = #{id}
     </select>
 
@@ -28,7 +28,7 @@
     <select id="queryAllByLimit" resultMap="ProjectUserCooperationMap">
         select
           id, projects_id, in_project_user_id, not_in_project_user_id, duty_code, time, delete_flag, invite_flag, join_flag, finish_flag, success_flag
-        from project_management_cloud.project_user_cooperation
+        from project_management_project_cloud.project_user_cooperation
         limit #{offset}, #{limit}
     </select>
 
@@ -36,7 +36,7 @@
     <select id="queryAll" resultMap="ProjectUserCooperationMap">
         select
           id, projects_id, in_project_user_id, not_in_project_user_id, duty_code, time, delete_flag, invite_flag, join_flag, finish_flag, success_flag
-        from project_management_cloud.project_user_cooperation
+        from project_management_project_cloud.project_user_cooperation
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -74,53 +74,5 @@
         </where>
     </select>
 
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into project_management_cloud.project_user_cooperation(projects_id, in_project_user_id, not_in_project_user_id, duty_code, time, delete_flag, invite_flag, join_flag, finish_flag, success_flag)
-        values (#{projectsId}, #{inProjectUserId}, #{notInProjectUserId}, #{dutyCode}, #{time}, #{deleteFlag}, #{inviteFlag}, #{joinFlag}, #{finishFlag}, #{successFlag})
-    </insert>
-
-    <!--通过主键修改数据-->
-    <update id="update">
-        update project_management_cloud.project_user_cooperation
-        <set>
-            <if test="projectsId != null">
-                projects_id = #{projectsId},
-            </if>
-            <if test="inProjectUserId != null">
-                in_project_user_id = #{inProjectUserId},
-            </if>
-            <if test="notInProjectUserId != null">
-                not_in_project_user_id = #{notInProjectUserId},
-            </if>
-            <if test="dutyCode != null">
-                duty_code = #{dutyCode},
-            </if>
-            <if test="time != null">
-                time = #{time},
-            </if>
-            <if test="deleteFlag != null">
-                delete_flag = #{deleteFlag},
-            </if>
-            <if test="inviteFlag != null">
-                invite_flag = #{inviteFlag},
-            </if>
-            <if test="joinFlag != null">
-                join_flag = #{joinFlag},
-            </if>
-            <if test="finishFlag != null">
-                finish_flag = #{finishFlag},
-            </if>
-            <if test="successFlag != null">
-                success_flag = #{successFlag},
-            </if>
-        </set>
-        where id = #{id}
-    </update>
-
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete from project_management_cloud.project_user_cooperation where id = #{id}
-    </delete>
 
 </mapper>

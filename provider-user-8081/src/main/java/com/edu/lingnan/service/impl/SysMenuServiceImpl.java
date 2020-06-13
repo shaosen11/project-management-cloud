@@ -2,6 +2,7 @@ package com.edu.lingnan.service.impl;
 
 import com.edu.lingnan.entity.SysMenu;
 import com.edu.lingnan.dao.SysMenuDao;
+import com.edu.lingnan.feign.SysMenuFeignService;
 import com.edu.lingnan.service.SysMenuService;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class SysMenuServiceImpl implements SysMenuService {
      * @param id 主键
      * @return 实例对象
      */
+    @Override
     public SysMenu queryById(Integer id) {
         return this.sysMenuDao.queryById(id);
     }
@@ -36,6 +38,7 @@ public class SysMenuServiceImpl implements SysMenuService {
      * @param limit 查询条数
      * @return 对象列表
      */
+    @Override
     public List<SysMenu> queryAllByLimit(int offset, int limit) {
         return this.sysMenuDao.queryAllByLimit(offset, limit);
     }
@@ -46,6 +49,7 @@ public class SysMenuServiceImpl implements SysMenuService {
      * @param sysMenu 实例对象
      * @return 实例对象
      */
+    @Override
     public SysMenu insert(SysMenu sysMenu) {
         this.sysMenuDao.insert(sysMenu);
         return sysMenu;
@@ -57,18 +61,10 @@ public class SysMenuServiceImpl implements SysMenuService {
      * @param sysMenu 实例对象
      * @return 实例对象
      */
+    @Override
     public SysMenu update(SysMenu sysMenu) {
         this.sysMenuDao.update(sysMenu);
         return this.queryById(sysMenu.getId());
     }
 
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    public boolean deleteById(Integer id) {
-        return this.sysMenuDao.deleteById(id) > 0;
-    }
 }

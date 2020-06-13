@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface UserStoreDao {
+public interface UserStoreDao extends BaseDao<UserStore>{
 
     /**
      * 通过ID查询单条数据
@@ -43,28 +43,5 @@ public interface UserStoreDao {
      */
     List<UserStore> queryAll(UserStore userStore);
 
-    /**
-     * 新增数据
-     *
-     * @param userStore 实例对象
-     * @return 影响行数
-     */
-    int insert(UserStore userStore);
-
-    /**
-     * 修改数据
-     *
-     * @param userStore 实例对象
-     * @return 影响行数
-     */
-    int update(UserStore userStore);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 影响行数
-     */
-    int deleteById(Integer id);
 
 }

@@ -14,7 +14,7 @@
     <select id="queryById" resultMap="UserCodeUpdateRecordMap">
         select
           id, userId, time, code_update_count, delete_flag
-        from project_management_cloud.user_code_update_record
+        from project_management_user_cloud.user_code_update_record
         where id = #{id}
     </select>
 
@@ -22,7 +22,7 @@
     <select id="queryAllByLimit" resultMap="UserCodeUpdateRecordMap">
         select
           id, userId, time, code_update_count, delete_flag
-        from project_management_cloud.user_code_update_record
+        from project_management_user_cloud.user_code_update_record
         limit #{offset}, #{limit}
     </select>
 
@@ -30,7 +30,7 @@
     <select id="queryAll" resultMap="UserCodeUpdateRecordMap">
         select
           id, userId, time, code_update_count, delete_flag
-        from project_management_cloud.user_code_update_record
+        from project_management_user_cloud.user_code_update_record
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -50,35 +50,5 @@
         </where>
     </select>
 
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into project_management_cloud.user_code_update_record(userId, time, code_update_count, delete_flag)
-        values (#{userid}, #{time}, #{codeUpdateCount}, #{deleteFlag})
-    </insert>
-
-    <!--通过主键修改数据-->
-    <update id="update">
-        update project_management_cloud.user_code_update_record
-        <set>
-            <if test="userid != null">
-                userId = #{userid},
-            </if>
-            <if test="time != null">
-                time = #{time},
-            </if>
-            <if test="codeUpdateCount != null">
-                code_update_count = #{codeUpdateCount},
-            </if>
-            <if test="deleteFlag != null">
-                delete_flag = #{deleteFlag},
-            </if>
-        </set>
-        where id = #{id}
-    </update>
-
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete from project_management_cloud.user_code_update_record where id = #{id}
-    </delete>
 
 </mapper>

@@ -11,7 +11,7 @@
     <select id="queryById" resultMap="ProjectScheduleMap">
         select
           id, schedule
-        from project_management_cloud.project_schedule
+        from project_management_project_cloud.project_schedule
         where id = #{id}
     </select>
 
@@ -19,7 +19,7 @@
     <select id="queryAllByLimit" resultMap="ProjectScheduleMap">
         select
           id, schedule
-        from project_management_cloud.project_schedule
+        from project_management_project_cloud.project_schedule
         limit #{offset}, #{limit}
     </select>
 
@@ -27,7 +27,7 @@
     <select id="queryAll" resultMap="ProjectScheduleMap">
         select
           id, schedule
-        from project_management_cloud.project_schedule
+        from project_management_project_cloud.project_schedule
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -38,26 +38,5 @@
         </where>
     </select>
 
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into project_management_cloud.project_schedule(schedule)
-        values (#{schedule})
-    </insert>
-
-    <!--通过主键修改数据-->
-    <update id="update">
-        update project_management_cloud.project_schedule
-        <set>
-            <if test="schedule != null and schedule != ''">
-                schedule = #{schedule},
-            </if>
-        </set>
-        where id = #{id}
-    </update>
-
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete from project_management_cloud.project_schedule where id = #{id}
-    </delete>
 
 </mapper>

@@ -1,5 +1,7 @@
 package com.edu.lingnan.entity;
 
+import com.edu.lingnan.annotation.Id;
+import com.edu.lingnan.annotation.Table;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,8 +14,10 @@ import java.io.Serializable;
  * @since 2020-06-11 20:10:08
  */
 @Data
+@Table("project_management_document_cloud.document")
 public class Document implements Serializable {
 
+    @Id
     private Integer id;
     
     private String name;

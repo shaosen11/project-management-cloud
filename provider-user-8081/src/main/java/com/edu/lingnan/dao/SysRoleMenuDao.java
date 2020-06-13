@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface SysRoleMenuDao {
+public interface SysRoleMenuDao extends BaseDao<SysRoleMenu>{
 
     /**
      * 通过ID查询单条数据
@@ -43,28 +43,5 @@ public interface SysRoleMenuDao {
      */
     List<SysRoleMenu> queryAll(SysRoleMenu sysRoleMenu);
 
-    /**
-     * 新增数据
-     *
-     * @param sysRoleMenu 实例对象
-     * @return 影响行数
-     */
-    int insert(SysRoleMenu sysRoleMenu);
-
-    /**
-     * 修改数据
-     *
-     * @param sysRoleMenu 实例对象
-     * @return 影响行数
-     */
-    int update(SysRoleMenu sysRoleMenu);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 影响行数
-     */
-    int deleteById(Integer id);
 
 }

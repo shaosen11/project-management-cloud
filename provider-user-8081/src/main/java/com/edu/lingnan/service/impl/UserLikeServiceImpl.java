@@ -2,6 +2,7 @@ package com.edu.lingnan.service.impl;
 
 import com.edu.lingnan.entity.UserLike;
 import com.edu.lingnan.dao.UserLikeDao;
+import com.edu.lingnan.feign.UserLikeFeignService;
 import com.edu.lingnan.service.UserLikeService;
 import org.springframework.stereotype.Service;
 
@@ -66,14 +67,4 @@ public class UserLikeServiceImpl implements UserLikeService {
         return this.queryById(userLike.getId());
     }
 
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    @Override
-    public boolean deleteById(Integer id) {
-        return this.userLikeDao.deleteById(id) > 0;
-    }
 }

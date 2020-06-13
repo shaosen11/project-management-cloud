@@ -2,6 +2,7 @@ package com.edu.lingnan.service.impl;
 
 import com.edu.lingnan.entity.ProjectRecord;
 import com.edu.lingnan.dao.ProjectRecordDao;
+import com.edu.lingnan.feign.ProjectRecordFeignService;
 import com.edu.lingnan.service.ProjectRecordService;
 import org.springframework.stereotype.Service;
 
@@ -66,14 +67,4 @@ public class ProjectRecordServiceImpl implements ProjectRecordService {
         return this.queryById(projectRecord.getId());
     }
 
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    @Override
-    public boolean deleteById(Integer id) {
-        return this.projectRecordDao.deleteById(id) > 0;
-    }
 }

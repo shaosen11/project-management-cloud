@@ -14,9 +14,6 @@
         <module>provider-project-8082</module>
         <module>provider-document-8083</module>
         <module>consumer-user-9001</module>
-        <module>consumer-project-9001</module>
-        <module>consumer-document-9001</module>
-        <module>consumer-project-9001</module>
         <module>consumer-project-9002</module>
         <module>consumer-document-9003</module>
         <module>zuul-8888</module>
@@ -100,4 +97,18 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

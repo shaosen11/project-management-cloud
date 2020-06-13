@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface DocumentRecordDao {
+public interface DocumentRecordDao extends BaseDao<DocumentRecord>{
 
     /**
      * 通过ID查询单条数据
@@ -43,28 +43,5 @@ public interface DocumentRecordDao {
      */
     List<DocumentRecord> queryAll(DocumentRecord documentRecord);
 
-    /**
-     * 新增数据
-     *
-     * @param documentRecord 实例对象
-     * @return 影响行数
-     */
-    int insert(DocumentRecord documentRecord);
-
-    /**
-     * 修改数据
-     *
-     * @param documentRecord 实例对象
-     * @return 影响行数
-     */
-    int update(DocumentRecord documentRecord);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 影响行数
-     */
-    int deleteById(Integer id);
 
 }

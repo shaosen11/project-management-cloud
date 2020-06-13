@@ -1,5 +1,9 @@
 package com.edu.lingnan.entity;
 
+import com.edu.lingnan.annotation.Id;
+import com.edu.lingnan.annotation.Table;
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -8,11 +12,13 @@ import java.io.Serializable;
  * @author makejava
  * @since 2020-06-11 20:10:58
  */
+@Data
+@Table("project_management_user_cloud.message_type")
 public class MessageType implements Serializable {
-    private static final long serialVersionUID = 142876975947995659L;
     /**
     * 消息码
     */
+    @Id
     private Integer id;
     /**
     * 消息名
@@ -35,53 +41,5 @@ public class MessageType implements Serializable {
     */
     private String background2;
 
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public String getBackground() {
-        return background;
-    }
-
-    public void setBackground(String background) {
-        this.background = background;
-    }
-
-    public Integer getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(Integer deleteFlag) {
-        this.deleteFlag = deleteFlag;
-    }
-
-    public String getBackground2() {
-        return background2;
-    }
-
-    public void setBackground2(String background2) {
-        this.background2 = background2;
-    }
 
 }

@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface ProjectCodeLineDao {
+public interface ProjectCodeLineDao extends BaseDao<ProjectCodeLine>{
 
     /**
      * 通过ID查询单条数据
@@ -43,28 +43,5 @@ public interface ProjectCodeLineDao {
      */
     List<ProjectCodeLine> queryAll(ProjectCodeLine projectCodeLine);
 
-    /**
-     * 新增数据
-     *
-     * @param projectCodeLine 实例对象
-     * @return 影响行数
-     */
-    int insert(ProjectCodeLine projectCodeLine);
-
-    /**
-     * 修改数据
-     *
-     * @param projectCodeLine 实例对象
-     * @return 影响行数
-     */
-    int update(ProjectCodeLine projectCodeLine);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 影响行数
-     */
-    int deleteById(Integer id);
 
 }

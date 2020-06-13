@@ -1,6 +1,7 @@
 package com.edu.lingnan.controller;
 
 import com.edu.lingnan.entity.SysUser;
+import com.edu.lingnan.feign.SysUserFeignService;
 import com.edu.lingnan.service.SysUserService;
 import org.springframework.web.bind.annotation.*;
 

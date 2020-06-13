@@ -16,7 +16,7 @@
     <select id="queryById" resultMap="DocumentRecordMap">
         select
           id, project_id, user_id, operate_time, operate_message, ip, delete_flag
-        from project_management_cloud.document_record
+        from project_management_document_cloud.document_record
         where id = #{id}
     </select>
 
@@ -24,7 +24,7 @@
     <select id="queryAllByLimit" resultMap="DocumentRecordMap">
         select
           id, project_id, user_id, operate_time, operate_message, ip, delete_flag
-        from project_management_cloud.document_record
+        from project_management_document_cloud.document_record
         limit #{offset}, #{limit}
     </select>
 
@@ -32,7 +32,7 @@
     <select id="queryAll" resultMap="DocumentRecordMap">
         select
           id, project_id, user_id, operate_time, operate_message, ip, delete_flag
-        from project_management_cloud.document_record
+        from project_management_document_cloud.document_record
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -58,41 +58,5 @@
         </where>
     </select>
 
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into project_management_cloud.document_record(project_id, user_id, operate_time, operate_message, ip, delete_flag)
-        values (#{projectId}, #{userId}, #{operateTime}, #{operateMessage}, #{ip}, #{deleteFlag})
-    </insert>
-
-    <!--通过主键修改数据-->
-    <update id="update">
-        update project_management_cloud.document_record
-        <set>
-            <if test="projectId != null">
-                project_id = #{projectId},
-            </if>
-            <if test="userId != null">
-                user_id = #{userId},
-            </if>
-            <if test="operateTime != null">
-                operate_time = #{operateTime},
-            </if>
-            <if test="operateMessage != null and operateMessage != ''">
-                operate_message = #{operateMessage},
-            </if>
-            <if test="ip != null and ip != ''">
-                ip = #{ip},
-            </if>
-            <if test="deleteFlag != null">
-                delete_flag = #{deleteFlag},
-            </if>
-        </set>
-        where id = #{id}
-    </update>
-
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete from project_management_cloud.document_record where id = #{id}
-    </delete>
 
 </mapper>

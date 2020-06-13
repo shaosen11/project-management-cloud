@@ -1,6 +1,7 @@
 package com.edu.lingnan.controller;
 
 import com.edu.lingnan.entity.ProjectSchedule;
+import com.edu.lingnan.feign.ProjectScheduleFeignService;
 import com.edu.lingnan.service.ProjectScheduleService;
 import org.springframework.web.bind.annotation.*;
 

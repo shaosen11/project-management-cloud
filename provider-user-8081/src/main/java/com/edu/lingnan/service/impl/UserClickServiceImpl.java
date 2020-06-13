@@ -2,6 +2,7 @@ package com.edu.lingnan.service.impl;
 
 import com.edu.lingnan.entity.UserClick;
 import com.edu.lingnan.dao.UserClickDao;
+import com.edu.lingnan.feign.UserClickFeignService;
 import com.edu.lingnan.service.UserClickService;
 import org.springframework.stereotype.Service;
 
@@ -66,14 +67,4 @@ public class UserClickServiceImpl implements UserClickService {
         return this.queryById(userClick.getId());
     }
 
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    @Override
-    public boolean deleteById(Integer id) {
-        return this.userClickDao.deleteById(id) > 0;
-    }
 }

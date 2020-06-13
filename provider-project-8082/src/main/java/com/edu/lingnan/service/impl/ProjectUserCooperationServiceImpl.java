@@ -2,6 +2,7 @@ package com.edu.lingnan.service.impl;
 
 import com.edu.lingnan.entity.ProjectUserCooperation;
 import com.edu.lingnan.dao.ProjectUserCooperationDao;
+import com.edu.lingnan.feign.ProjectUserCooperationFeignService;
 import com.edu.lingnan.service.ProjectUserCooperationService;
 import org.springframework.stereotype.Service;
 
@@ -66,14 +67,4 @@ public class ProjectUserCooperationServiceImpl implements ProjectUserCooperation
         return this.queryById(projectUserCooperation.getId());
     }
 
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    @Override
-    public boolean deleteById(Integer id) {
-        return this.projectUserCooperationDao.deleteById(id) > 0;
-    }
 }

@@ -2,6 +2,7 @@ package com.edu.lingnan.service.impl;
 
 import com.edu.lingnan.entity.SysUserRole;
 import com.edu.lingnan.dao.SysUserRoleDao;
+import com.edu.lingnan.feign.SysUserRoleFeignService;
 import com.edu.lingnan.service.SysUserRoleService;
 import org.springframework.stereotype.Service;
 
@@ -66,14 +67,4 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
         return this.queryById(sysUserRole.getId());
     }
 
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    @Override
-    public boolean deleteById(Integer id) {
-        return this.sysUserRoleDao.deleteById(id) > 0;
-    }
 }

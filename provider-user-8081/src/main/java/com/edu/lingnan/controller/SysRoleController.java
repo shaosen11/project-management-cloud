@@ -1,6 +1,7 @@
 package com.edu.lingnan.controller;
 
 import com.edu.lingnan.entity.SysRole;
+import com.edu.lingnan.feign.SysRoleFeignService;
 import com.edu.lingnan.service.SysRoleService;
 import org.springframework.web.bind.annotation.*;
 

@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: consumer-project
+  main:
+    allow-bean-definition-overriding: true
 
 #eureka配置，注册到注册中心
 eureka:

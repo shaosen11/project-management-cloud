@@ -1,6 +1,7 @@
 package com.edu.lingnan.controller;
 
 import com.edu.lingnan.entity.UserStore;
+import com.edu.lingnan.feign.UserStoreFeignService;
 import com.edu.lingnan.service.UserStoreService;
 import org.springframework.web.bind.annotation.*;
 

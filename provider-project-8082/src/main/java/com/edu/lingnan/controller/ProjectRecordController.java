@@ -1,6 +1,7 @@
 package com.edu.lingnan.controller;
 
 import com.edu.lingnan.entity.ProjectRecord;
+import com.edu.lingnan.feign.ProjectRecordFeignService;
 import com.edu.lingnan.service.ProjectRecordService;
 import org.springframework.web.bind.annotation.*;
 

@@ -2,6 +2,7 @@ package com.edu.lingnan.service.impl;
 
 import com.edu.lingnan.entity.SysUser;
 import com.edu.lingnan.dao.SysUserDao;
+import com.edu.lingnan.feign.SysUserFeignService;
 import com.edu.lingnan.service.SysUserService;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class SysUserServiceImpl implements SysUserService {
      * @param id 主键
      * @return 实例对象
      */
+    @Override
     public SysUser queryById(Integer id) {
         return this.sysUserDao.queryById(id);
     }
@@ -36,6 +38,7 @@ public class SysUserServiceImpl implements SysUserService {
      * @param limit 查询条数
      * @return 对象列表
      */
+    @Override
     public List<SysUser> queryAllByLimit(int offset, int limit) {
         return this.sysUserDao.queryAllByLimit(offset, limit);
     }
@@ -46,9 +49,11 @@ public class SysUserServiceImpl implements SysUserService {
      * @param sysUser 实例对象
      * @return 实例对象
      */
+    @Override
     public SysUser insert(SysUser sysUser) {
-        this.sysUserDao.insert(sysUser);
-        return sysUser;
+//        this.sysUserDao.insert(sysUser);
+//        return sysUser;
+        return null;
     }
 
     /**
@@ -57,18 +62,11 @@ public class SysUserServiceImpl implements SysUserService {
      * @param sysUser 实例对象
      * @return 实例对象
      */
+    @Override
     public SysUser update(SysUser sysUser) {
-        this.sysUserDao.update(sysUser);
-        return this.queryById(sysUser.getId());
+//        this.sysUserDao.update(sysUser);
+//        return this.queryById(sysUser.getId());
+        return null;
     }
 
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    public boolean deleteById(Integer id) {
-        return this.sysUserDao.deleteById(id) > 0;
-    }
 }

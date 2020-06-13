@@ -31,7 +31,7 @@
     <select id="queryById" resultMap="ProjectMap">
         select
           id, name, charge_user_id, code_line_number, code_update_count, schedule_id, function_points, completed_function_points, last_update_time, type_id, store_count, like_count, click_count, delete_flag, characterization, create_time, user_count, document_count, planned_start_time, planned_end_time, actual_start_time, actual_end_time
-        from project_management_cloud.project
+        from project_management_project_cloud.project
         where id = #{id}
     </select>
 
@@ -39,7 +39,7 @@
     <select id="queryAllByLimit" resultMap="ProjectMap">
         select
           id, name, charge_user_id, code_line_number, code_update_count, schedule_id, function_points, completed_function_points, last_update_time, type_id, store_count, like_count, click_count, delete_flag, characterization, create_time, user_count, document_count, planned_start_time, planned_end_time, actual_start_time, actual_end_time
-        from project_management_cloud.project
+        from project_management_project_cloud.project
         limit #{offset}, #{limit}
     </select>
 
@@ -47,7 +47,7 @@
     <select id="queryAll" resultMap="ProjectMap">
         select
           id, name, charge_user_id, code_line_number, code_update_count, schedule_id, function_points, completed_function_points, last_update_time, type_id, store_count, like_count, click_count, delete_flag, characterization, create_time, user_count, document_count, planned_start_time, planned_end_time, actual_start_time, actual_end_time
-        from project_management_cloud.project
+        from project_management_project_cloud.project
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -118,86 +118,5 @@
         </where>
     </select>
 
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into project_management_cloud.project(name, charge_user_id, code_line_number, code_update_count, schedule_id, function_points, completed_function_points, last_update_time, type_id, store_count, like_count, click_count, delete_flag, characterization, create_time, user_count, document_count, planned_start_time, planned_end_time, actual_start_time, actual_end_time)
-        values (#{name}, #{chargeUserId}, #{codeLineNumber}, #{codeUpdateCount}, #{scheduleId}, #{functionPoints}, #{completedFunctionPoints}, #{lastUpdateTime}, #{typeId}, #{storeCount}, #{likeCount}, #{clickCount}, #{deleteFlag}, #{characterization}, #{createTime}, #{userCount}, #{documentCount}, #{plannedStartTime}, #{plannedEndTime}, #{actualStartTime}, #{actualEndTime})
-    </insert>
-
-    <!--通过主键修改数据-->
-    <update id="update">
-        update project_management_cloud.project
-        <set>
-            <if test="name != null and name != ''">
-                name = #{name},
-            </if>
-            <if test="chargeUserId != null">
-                charge_user_id = #{chargeUserId},
-            </if>
-            <if test="codeLineNumber != null">
-                code_line_number = #{codeLineNumber},
-            </if>
-            <if test="codeUpdateCount != null">
-                code_update_count = #{codeUpdateCount},
-            </if>
-            <if test="scheduleId != null">
-                schedule_id = #{scheduleId},
-            </if>
-            <if test="functionPoints != null">
-                function_points = #{functionPoints},
-            </if>
-            <if test="completedFunctionPoints != null">
-                completed_function_points = #{completedFunctionPoints},
-            </if>
-            <if test="lastUpdateTime != null">
-                last_update_time = #{lastUpdateTime},
-            </if>
-            <if test="typeId != null">
-                type_id = #{typeId},
-            </if>
-            <if test="storeCount != null">
-                store_count = #{storeCount},
-            </if>
-            <if test="likeCount != null">
-                like_count = #{likeCount},
-            </if>
-            <if test="clickCount != null">
-                click_count = #{clickCount},
-            </if>
-            <if test="deleteFlag != null">
-                delete_flag = #{deleteFlag},
-            </if>
-            <if test="characterization != null and characterization != ''">
-                characterization = #{characterization},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
-            <if test="userCount != null">
-                user_count = #{userCount},
-            </if>
-            <if test="documentCount != null">
-                document_count = #{documentCount},
-            </if>
-            <if test="plannedStartTime != null">
-                planned_start_time = #{plannedStartTime},
-            </if>
-            <if test="plannedEndTime != null">
-                planned_end_time = #{plannedEndTime},
-            </if>
-            <if test="actualStartTime != null">
-                actual_start_time = #{actualStartTime},
-            </if>
-            <if test="actualEndTime != null">
-                actual_end_time = #{actualEndTime},
-            </if>
-        </set>
-        where id = #{id}
-    </update>
-
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete from project_management_cloud.project where id = #{id}
-    </delete>
 
 </mapper>

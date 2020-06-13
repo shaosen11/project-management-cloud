@@ -1,5 +1,7 @@
 package com.edu.lingnan.entity;
 
+import com.edu.lingnan.annotation.Id;
+import com.edu.lingnan.annotation.Table;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,10 +14,12 @@ import java.io.Serializable;
  * @since 2020-06-11 20:14:14
  */
 @Data
+@Table("project_management_project_cloud.project_user_cooperation")
 public class ProjectUserCooperation implements Serializable {
     /**
     * 自增id
     */
+    @Id
     private Integer id;
     /**
     * 项目id

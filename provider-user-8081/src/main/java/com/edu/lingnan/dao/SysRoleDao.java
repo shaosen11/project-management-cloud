@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface SysRoleDao {
+public interface SysRoleDao extends BaseDao<SysRole>{
 
     /**
      * 通过ID查询单条数据
@@ -43,28 +43,5 @@ public interface SysRoleDao {
      */
     List<SysRole> queryAll(SysRole sysRole);
 
-    /**
-     * 新增数据
-     *
-     * @param sysRole 实例对象
-     * @return 影响行数
-     */
-    int insert(SysRole sysRole);
-
-    /**
-     * 修改数据
-     *
-     * @param sysRole 实例对象
-     * @return 影响行数
-     */
-    int update(SysRole sysRole);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 影响行数
-     */
-    int deleteById(Integer id);
 
 }

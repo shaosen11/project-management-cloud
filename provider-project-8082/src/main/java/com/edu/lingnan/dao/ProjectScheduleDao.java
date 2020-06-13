@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface ProjectScheduleDao {
+public interface ProjectScheduleDao extends BaseDao<ProjectSchedule>{
 
     /**
      * 通过ID查询单条数据
@@ -43,28 +43,5 @@ public interface ProjectScheduleDao {
      */
     List<ProjectSchedule> queryAll(ProjectSchedule projectSchedule);
 
-    /**
-     * 新增数据
-     *
-     * @param projectSchedule 实例对象
-     * @return 影响行数
-     */
-    int insert(ProjectSchedule projectSchedule);
-
-    /**
-     * 修改数据
-     *
-     * @param projectSchedule 实例对象
-     * @return 影响行数
-     */
-    int update(ProjectSchedule projectSchedule);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 影响行数
-     */
-    int deleteById(Integer id);
 
 }

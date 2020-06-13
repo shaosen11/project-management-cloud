@@ -2,6 +2,7 @@ package com.edu.lingnan.service.impl;
 
 import com.edu.lingnan.entity.DocumentRecord;
 import com.edu.lingnan.dao.DocumentRecordDao;
+import com.edu.lingnan.feign.DocumentRecordFeignService;
 import com.edu.lingnan.service.DocumentRecordService;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class DocumentRecordServiceImpl implements DocumentRecordService {
      * @param id 主键
      * @return 实例对象
      */
+    @Override
     public DocumentRecord queryById(Integer id) {
         return this.documentRecordDao.queryById(id);
     }
@@ -36,6 +38,7 @@ public class DocumentRecordServiceImpl implements DocumentRecordService {
      * @param limit 查询条数
      * @return 对象列表
      */
+    @Override
     public List<DocumentRecord> queryAllByLimit(int offset, int limit) {
         return this.documentRecordDao.queryAllByLimit(offset, limit);
     }
@@ -46,6 +49,7 @@ public class DocumentRecordServiceImpl implements DocumentRecordService {
      * @param documentRecord 实例对象
      * @return 实例对象
      */
+    @Override
     public DocumentRecord insert(DocumentRecord documentRecord) {
         this.documentRecordDao.insert(documentRecord);
         return documentRecord;
@@ -57,18 +61,9 @@ public class DocumentRecordServiceImpl implements DocumentRecordService {
      * @param documentRecord 实例对象
      * @return 实例对象
      */
+    @Override
     public DocumentRecord update(DocumentRecord documentRecord) {
         this.documentRecordDao.update(documentRecord);
         return this.queryById(documentRecord.getId());
-    }
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    public boolean deleteById(Integer id) {
-        return this.documentRecordDao.deleteById(id) > 0;
     }
 }
