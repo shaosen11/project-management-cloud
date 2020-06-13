@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>UserList-ProjectManagment</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+    <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
+    <div th:replace="commom/bar :: commom_css"></div>
+</head>
+<body>
+<div class="wrapper">
+    <!--
+            Tip 1: You can change the background color of the main header using: data-background-color="blue | purple | light-blue | green | orange | red"
+    -->
+    <div class="main-header" data-background-color="purple">
+        <!-- Logo Header -->
+        <div class="logo-header">
+
+            <a href="../index.html" class="logo">
+                <img src="../../assets/img/logoazzara.svg" alt="navbar brand" class="navbar-brand">
+            </a>
+            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+                    data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon">
+						<i class="fa fa-bars"></i>
+					</span>
+            </button>
+            <button class="topbar-toggler more"><i class="fa fa-ellipsis-v"></i></button>
+            <div class="navbar-minimize">
+                <button class="btn btn-minimize btn-rounded">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- End Logo Header -->
+
+        <!-- Navbar Header -->
+        <div th:replace="commom/bar :: topbar"></div>
+        <!-- End Navbar -->
+    </div>
+
+    <!-- Sidebar -->
+    <div th:replace="commom/bar :: sidebar"></div>
+    <!-- End Sidebar -->
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header">
+                    <h4 class="page-title">DataTables.Net</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <a href="#">
+                                <i class="flaticon-home"></i>
+                            </a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">Tables</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">Datatables</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-flex align-items-center">
+                                    <h4 class="card-title">用户信息</h4>
+                                    <button class="btn btn-primary btn-round ml-auto" data-toggle="modal"
+                                            data-target="#addRowModal">
+                                        <i class="fa fa-plus"></i>
+                                        Add User
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!-- 添加弹窗Modal -->
+                                <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header no-bd">
+                                                <h5 class="modal-title">
+														<span class="fw-mediumbold">
+														New</span>
+                                                    <span class="fw-light">
+															User
+														</span>
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="small">Create a new User using this form, make sure you fill
+                                                    them all</p>
+                                                <div class="row">
+                                                    <div class="col-md-6 pr-0">
+                                                        <div class="form-group form-group-default">
+                                                            <label>UserName</label>
+                                                            <input id="addName" name="username" onBlur="checkUserName()"
+                                                                   type="text" class="form-control"
+                                                                   placeholder="fill name">
+                                                            <span class="default" style="color: #3c763d" id="nameErr">请输入4位以上的用户名</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 pr-0">
+                                                        <div class="form-group form-group-default">
+                                                            <label>Password</label>
+                                                            <input id="addPassword" name="password"
+                                                                   onBlur="checkPassword()" type="password"
+                                                                   class="form-control" placeholder="fill position">
+                                                            <span class="default" style="color: #3c763d"
+                                                                  id="passwordErr">请输入4位以上的密码</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-group-default">
+                                                            <label>Email</label>
+                                                            <input id="addEmail" name="email" onBlur="checkEmail()"
+                                                                   type="email" class="form-control"
+                                                                   placeholder="fill Email">
+                                                            <span class="default" style="color: #3c763d" id="emailErr">请输入邮箱</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-group-default">
+                                                            <label>Phone</label>
+                                                            <input id="addPhone" name="phone" onBlur="checkPhone()"
+                                                                   type="text" class="form-control"
+                                                                   placeholder="fill Phone">
+                                                            <span class="default" style="color: #3c763d" id="phoneErr">请输入11位手机号码</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-group-default">
+                                                            <label>Gender</label>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                       name="gender" value="1">
+                                                                <label class="form-check-label">男</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                       name="gender" value="0">
+                                                                <label class="form-check-label">女</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-group-default">
+                                                            <label>Birthday</label>
+                                                            <input id="addBirthday" name="birthday" type="date"
+                                                                   class="form-control" placeholder="fill Birthday">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 pr-0">
+                                                        <div class="form-group form-group-default">
+                                                            <label>Address</label>
+                                                            <input id="addAddress" name="address" type="text"
+                                                                   class="form-control" placeholder="fill Address">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 pr-0">
+                                                        <div class="form-group form-group-default">
+                                                            <label>Introduce</label>
+                                                            <input id="addIntroduce" name="introduce" type="text"
+                                                                   class="form-control" placeholder="fill Introduce">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer no-bd">
+                                                <button type="button" class="btn btn-primary" onclick="addUser()">Add
+                                                </button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 修改弹窗Modal -->
+                                <div class="modal fade" id="editRowModal" tabindex="-1" role="dialog"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header no-bd">
+                                                <h5 class="modal-title">
+														<span class="fw-mediumbold">
+														Edit</span>
+                                                    <span class="fw-light">
+															User
+														</span>
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-md-6 pr-0">
+                                                        <div class="form-group form-group-default">
+                                                            <label>Id</label>
+                                                            <input id="editId" name="id" type="text"
+                                                                   class="form-control" readonly="readonly">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 pr-0">
+                                                        <div class="form-group form-group-default">
+                                                            <label>UserName</label>
+                                                            <input id="editName" name="username"
+                                                                   onBlur="checkEditName()" type="text"
+                                                                   class="form-control">
+                                                            <span class="default" style="color: #3c763d" id="nameError">请输入4位以上的用户名</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-group-default">
+                                                            <label>Email</label>
+                                                            <input id="editEmail" name="email" type="text"
+                                                                   class="form-control" readonly="readonly">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-group-default">
+                                                            <label>Phone</label>
+                                                            <input id="editPhone" name="phone" type="text"
+                                                                   class="form-control" onBlur="checkEditPhone()">
+                                                            <span class="default" style="color: #3c763d"
+                                                                  id="phoneError">请输入11位手机号码</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-group-default">
+                                                            <label>Gender</label>
+                                                            <select name="gender" id="editGender">
+                                                                <option value="1">男</option>
+                                                                <option value="0">女</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-group-default">
+                                                            <label>Birthday</label>
+                                                            <input id="editBirthday" name="birthday" type="date"
+                                                                   class="form-control" placeholder="fill Birthday">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-group-default">
+                                                            <label>Address</label>
+                                                            <input id="editAddress" name="address" type="text"
+                                                                   class="form-control" placeholder="fill Address">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-group-default">
+                                                            <label>Introduce</label>
+                                                            <input id="editIntroduce" name="introduce" type="text"
+                                                                   class="form-control" placeholder="fill Introduce">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer no-bd">
+                                                <button type="button" class="btn btn-primary" onclick="updateUser()">
+                                                    Edit
+                                                </button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 用户信息表单 -->
+                                <div class="table-responsive">
+                                    <table id="add-row" class="display table table-striped table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>用户名</th>
+                                            <th>邮箱</th>
+                                            <th>电话</th>
+                                            <th>生日</th>
+                                            <th>性别</th>
+                                            <th>地址</th>
+                                            <th>介绍</th>
+                                            <th style="width: 10%">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>用户名</th>
+                                            <th>邮箱</th>
+                                            <th>电话</th>
+                                            <th>生日</th>
+                                            <th>性别</th>
+                                            <th>地址</th>
+                                            <th>介绍</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        <tr th:each="user:${userlist}">
+                                            <td th:text="${user.id}"></td>
+                                            <td th:text="${user.username}"></td>
+                                            <td th:text="${user.email}"></td>
+                                            <td th:text="${user.phone}"></td>
+                                            <td th:text="${#dates.format(user.birthday,'yyyy-MM-dd')}"></td>
+                                            <td th:text="${user.gender}==1?'男':'女'"
+                                                th:if="${not #strings.isEmpty(user.gender)}"></td>
+                                            <td th:text="${user.gender}" th:if="${#strings.isEmpty(user.gender)}"></td>
+                                            <td th:text="${user.address}"></td>
+                                            <td th:text="${user.introduce}"></td>
+                                            <td>
+                                                <div class="form-button-action">
+                                                    <button class="btn btn-primary btn-link ml-auto" data-toggle="modal"
+                                                            data-target="#editRowModal" onclick="editUser(this)">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" data-toggle="tooltip" title=""
+                                                            class="btn btn-link btn-danger"
+                                                            th:onclick="deleteUser([[${user.id}]])">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!--公共JS-->
+<th:block th:replace="commom/bar :: commom_js" />
+<!--公共JS-->
+<th:block th:replace="commom/bar :: nav_js" />
+
+</body>
+</html>

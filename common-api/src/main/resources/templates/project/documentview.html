@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Document-ProjectManagment</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+    <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
+    <div th:replace="commom/bar :: commom_css"></div>
+    <link rel="stylesheet" th:href="@{/assets/js/highlight/styles/atelier-cave-dark.css}">
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="commom/bar :: topbar"></div>
+    <!-- Sidebar -->
+    <div th:replace="commom/bar :: projectsidebar"></div>
+    <!-- End Sidebar -->
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header">
+                    <h4 class="page-title">[[${project.name}]]文件</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <a th:href="@{/}">
+                                <i class="flaticon-home"></i>
+                            </a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{/projects_view/{id}(id=${project.id})}">项目主面板</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{/project_user_cooperation_view/{id}(id=${project.id})}">项目文件</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row" th:if="${documents1!=null} and ${documents2!=null}">
+                    <div class="col-md-9">
+                        <div class="card">
+
+                            <div class="card-header">
+                                <h4 class="card-title" th:text="${documents1.name}">文件名</h4>
+                            </div>
+                            <div class="card-body row">
+                                <div class="col-md-6">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <h3>当前版本</h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <!--                                        <textarea id="addressd1" class="card-group col-md-12" rows="25"></textarea>-->
+                                        <pre>
+                                    <code id="addressd1">
+
+                                    </code>
+                                </pre>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <h3>待审核版本</h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <!--                                        <textarea id="addressd2" class="card-group col-md-12" rows="25"></textarea>-->
+                                        <pre>
+                                    <code id="addressd2">
+
+                                    </code>
+                                </pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card" th:if="${projectAdmin!=null}">
+                            <div class="card-body row">
+                                <div class="col-md-6">
+                                    <form th:action="@{/document(projectsId=${param.projectId},documentName=${documents1.name},userId=${param.userId},operate=1)}"
+                                          method="post">
+                                        <input type="hidden" name="_method" value="put"/>
+                                        <button class="btn btn-primary btn-round col-md-12">
+                                                            <span class="btn-label">
+                                                                <i class="fas fa-check-circle"></i>
+                                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="col-md-6">
+                                    <form th:action="@{/document(projectsId=${param.projectId},documentName=${documents1.name},userId=${param.userId},operate=2)}"
+                                          method="post">
+                                        <input type="hidden" name="_method" value="put"/>
+                                        <button class="btn btn-danger btn-round col-md-12">
+                                                            <span class="btn-label">
+                                                                <i class="fas fa-times-circle"></i>
+                                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    版本信息
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <textarea class="col-md-12" rows="15"
+                                          th:text="${documents1.versionMessage}"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row" th:if="${documents1!=null} and ${documents2==null}">
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title" th:text="${documents1.name}"></h4>
+                            </div>
+                            <div class="card-body">
+                                <pre>
+                                    <code id="addressdocument">
+
+                                    </code>
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body row">
+                                <div class="col-md-4">
+                                    <button class="btn btn-secondary btn-round col-md-12" onclick="downloadFile()">
+                                            <span class="btn-label">
+                                                <i class="fas fa-cloud-download-alt"></i>
+                                            </span>
+                                    </button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-secondary btn-round col-md-12" onclick="uploadFileModel()">
+                                            <span class="btn-label">
+                                               <i class="fas fa-cloud-upload-alt"></i>
+                                            </span>
+                                    </button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-secondary btn-round col-md-12" onclick="updateFileModel()">
+                                            <span class="btn-label">
+                                               <i class="fas fa-cog"></i>
+                                            </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    版本信息
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <textarea class="col-md-12" rows="15"
+                                          th:text="${documents1.versionMessage}"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- End Custom template -->
+</div>
+
+<!--model框-->
+<div th:replace="commom/bar :: uploadfilemodel"></div>
+<div th:replace="commom/bar :: newprojectpackage"></div>
+<div class="modal fade" id="updateFileModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form th:action="@{/documents/updatedocuments}" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabe">修改版本信息和包</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="projectId" th:value="${projectId}">
+                    <input type="hidden" name="creator" value="${loginUser.id}">
+                    <input type="hidden" name="filename" value="${filename}">
+                    <div class="col-md-12">
+                        <select class="form-control" id="packageName1" name="packageName">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" rows="3" placeholder="版本信息" id="versionMessage1"
+                                  name="versionMessage" autocomplete="off"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+                    <input type="submit" class="btn btn-primary" value="提交">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--公共JS-->
+<th:block th:replace="commom/bar :: commom_js"/>
+<!--公共JS-->
+<th:block th:replace="commom/bar :: nav_project_js"/>
+
+<!--代码高亮-->
+<script th:src="@{/assets/js/highlight/highlight.js}"></script>
+<!--加载文件-->
+<script type="text/javascript">
+    $(function () {
+        var addressdocument = "[[${addressdocument}]]";
+        var addressd1 = "[[${addressd1}]]";
+        var addressd2 = "[[${addressd2}]]";
+        if (addressd1 != "" && addressd2 != "") {
+            $.ajax({
+                url: addressd1,
+                type: "get",
+                datatype: "json",
+                success: function (data) {
+                    var code = data;
+                    var highCode = hljs.highlightAuto(code).value;
+                    $("#addressd1").html(highCode);
+                }
+            })
+            $.ajax({
+                url: addressd2,
+                type: "get",
+                datatype: "json",
+                success: function (data) {
+                    var code = data;
+                    var highCode = hljs.highlightAuto(code).value;
+                    $("#addressd2").html(highCode);
+                }
+            })
+        } else {
+            $.ajax({
+                url: addressdocument,
+                type: "get",
+                datatype: "json",
+                success: function (data) {
+                    var code = data;
+                    var highCode = hljs.highlightAuto(code).value;
+                    $("#addressdocument").html(highCode);
+                }
+            })
+
+        }
+
+    })
+</script>
+<!--下载文件-->
+<script type="text/javascript">
+    var documentName = "[[${param.documentName}]]";
+    function downloadFile() {
+        $.ajax({
+            url: "/download",
+            type: "get",
+            data: {
+                projectId: projectId,
+                documentName: documentName,
+            },
+            datatype: "json",
+            success: function (data) {
+                location.href=data;
+            }
+        })
+    }
+</script>
+<!--修改文件弹出框-->
+<script type="text/javascript">
+    function updateFileModel(){
+        checkLoginAndPowerAndDoFunction(updateFileDo)
+    }
+    function updateFileDo() {
+        $("#updateFileModel").modal('show');
+    }
+</script>
+</body>
+</html>
