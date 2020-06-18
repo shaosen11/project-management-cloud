@@ -19,6 +19,8 @@
       <set>
         <option value="$PROJECT_DIR$/consumer-api/pom.xml" />
         <option value="$PROJECT_DIR$/consumer-project-9001/pom.xml" />
+        <option value="$PROJECT_DIR$/provider-login-8083/pom.xml" />
+        <option value="$PROJECT_DIR$/uaa-50020/pom.xml" />
       </set>
     </option>
   </component>

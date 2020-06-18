@@ -1,0 +1,30 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: zuul
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}-${server.port}
+  client:
+    service-url:
+      defaultZone: http://www.eureka7001.com:7001/eureka/
+
+info:
+  app.name: ${spring.application.name}-${server.port}
+
+zuul:
+  routes:
+    mydeptuser.serviceId: CONSUMER-USER
+    mydeptuser.path: /user/**
+    mydeptproject.serviceId: CONSUMER-PROJECT
+    mydeptproject.path: /project/**
+    mydeptdocument.serviceId: CONSUMER-DOCUMENT
+    mydeptdocument.path: /document/**
+    mydeptlogin.serviceId: CONSUMER-LOGIN
+    mydeptlogin.path: /loginServer/**
+    mydepttotal.serviceId: CONSUMER-TOTAL
+    mydepttotal.path: /totalServer/**
+  ignored-services: "*" #不能再使用这个路径访问，ignored

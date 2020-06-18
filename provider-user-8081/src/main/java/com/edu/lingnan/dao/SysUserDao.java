@@ -44,5 +44,9 @@ public interface SysUserDao extends BaseDao<SysUser>{
     List<SysUser> queryAll(SysUser sysUser);
 
 
-
+    /**
+     * 统计用户数量
+     * @return
+     */
+    Integer userCount();
 }

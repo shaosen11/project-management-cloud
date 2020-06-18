@@ -75,4 +75,9 @@ public class ProjectServiceImpl implements ProjectService {
         return this.projectDao.getAllDelProject();
     }
 
+    @Override
+    public Integer projectCount() {
+        return projectDao.projectCount();
+    }
+
 }

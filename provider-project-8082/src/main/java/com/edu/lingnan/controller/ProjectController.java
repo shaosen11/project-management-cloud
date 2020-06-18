@@ -34,6 +34,10 @@ public class ProjectController {
         return this.projectService.queryById(id);
     }
 
+    @GetMapping("getProjectCount")
+    public Integer getProjectCount() {
+        return this.projectService.projectCount();
+    }
     /**
      * 查询所有项目信息
      * @return 数据

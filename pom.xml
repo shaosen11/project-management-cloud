@@ -17,6 +17,11 @@
         <module>consumer-project-9002</module>
         <module>consumer-document-9003</module>
         <module>zuul-8888</module>
+        <module>uaa-50020</module>
+        <module>provider-login-8083</module>
+        <module>provider-login-8084</module>
+        <module>consumer-login-9004</module>
+        <module>consumer-total-9005</module>
     </modules>
 
 
@@ -95,6 +100,9 @@
                 <artifactId>logback-core</artifactId>
                 <version>${logback.version}</version>
             </dependency>
+
+
+
         </dependencies>
     </dependencyManagement>
 

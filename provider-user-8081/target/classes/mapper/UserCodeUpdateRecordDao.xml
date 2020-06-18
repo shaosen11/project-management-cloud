@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.lingnan.dao.UserCodeUpdateRecordDao">
+
+    <resultMap type="com.edu.lingnan.entity.UserCodeUpdateRecord" id="UserCodeUpdateRecordMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userid" column="userId" jdbcType="INTEGER"/>
+        <result property="time" column="time" jdbcType="OTHER"/>
+        <result property="codeUpdateCount" column="code_update_count" jdbcType="INTEGER"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UserCodeUpdateRecordMap">
+        select
+          id, userId, time, code_update_count, delete_flag
+        from project_management_user_cloud.user_code_update_record
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="UserCodeUpdateRecordMap">
+        select
+          id, userId, time, code_update_count, delete_flag
+        from project_management_user_cloud.user_code_update_record
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="UserCodeUpdateRecordMap">
+        select
+          id, userId, time, code_update_count, delete_flag
+        from project_management_user_cloud.user_code_update_record
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userid != null">
+                and userId = #{userid}
+            </if>
+            <if test="time != null">
+                and time = #{time}
+            </if>
+            <if test="codeUpdateCount != null">
+                and code_update_count = #{codeUpdateCount}
+            </if>
+            <if test="deleteFlag != null">
+                and delete_flag = #{deleteFlag}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

@@ -1,0 +1,43 @@
+server:
+  port: 8084
+logging:
+  level:
+    com.edu.lingnan.dao: debug
+mybatis:
+  type-aliases-package: com.edu.lingnan.entity
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+spring:
+  application:
+    name: prodiver-login
+  datasource:
+    username: root
+    password: 20177600
+    url: jdbc:mysql://47.98.240.31:3306/project_management_user_cloud?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    #   数据源其他配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+
+#eureka的配置，注册到注册中心
+eureka:
+  client:
+    service-url:
+      defaultZone: http://www.eureka7001.com:7001/eureka/
+  instance:
+    instance-id:  ${spring.application.name}-${server.port}
+
+info:
+  app.name:  ${spring.application.name}-${server.port}

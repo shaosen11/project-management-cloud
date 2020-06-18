@@ -118,6 +118,12 @@
         </where>
     </select>
 
+    <!--查找所有项目-->
+    <select id="projectCount" resultType="Integer">
+        select count(*)
+        from project_management_project_cloud.project
+        where delete_flag = 1
+    </select>
     <!--查询所有已注销项目信息-->
     <select id="getAllDelProject" resultMap="ProjectMap">
         select

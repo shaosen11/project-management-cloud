@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.lingnan.dao.ProjectDao">
+
+    <resultMap type="com.edu.lingnan.entity.Project" id="ProjectMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="chargeUserId" column="charge_user_id" jdbcType="INTEGER"/>
+        <result property="codeLineNumber" column="code_line_number" jdbcType="INTEGER"/>
+        <result property="codeUpdateCount" column="code_update_count" jdbcType="INTEGER"/>
+        <result property="scheduleId" column="schedule_id" jdbcType="INTEGER"/>
+        <result property="functionPoints" column="function_points" jdbcType="INTEGER"/>
+        <result property="completedFunctionPoints" column="completed_function_points" jdbcType="INTEGER"/>
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+        <result property="typeId" column="type_id" jdbcType="INTEGER"/>
+        <result property="storeCount" column="store_count" jdbcType="INTEGER"/>
+        <result property="likeCount" column="like_count" jdbcType="INTEGER"/>
+        <result property="clickCount" column="click_count" jdbcType="INTEGER"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
+        <result property="characterization" column="characterization" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="userCount" column="user_count" jdbcType="INTEGER"/>
+        <result property="documentCount" column="document_count" jdbcType="INTEGER"/>
+        <result property="plannedStartTime" column="planned_start_time" jdbcType="OTHER"/>
+        <result property="plannedEndTime" column="planned_end_time" jdbcType="OTHER"/>
+        <result property="actualStartTime" column="actual_start_time" jdbcType="OTHER"/>
+        <result property="actualEndTime" column="actual_end_time" jdbcType="OTHER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ProjectMap">
+        select
+          id, name, charge_user_id, code_line_number, code_update_count, schedule_id, function_points, completed_function_points, last_update_time, type_id, store_count, like_count, click_count, delete_flag, characterization, create_time, user_count, document_count, planned_start_time, planned_end_time, actual_start_time, actual_end_time
+        from project_management_project_cloud.project
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ProjectMap">
+        select
+          id, name, charge_user_id, code_line_number, code_update_count, schedule_id, function_points, completed_function_points, last_update_time, type_id, store_count, like_count, click_count, delete_flag, characterization, create_time, user_count, document_count, planned_start_time, planned_end_time, actual_start_time, actual_end_time
+        from project_management_project_cloud.project
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ProjectMap">
+        select
+          id, name, charge_user_id, code_line_number, code_update_count, schedule_id, function_points, completed_function_points, last_update_time, type_id, store_count, like_count, click_count, delete_flag, characterization, create_time, user_count, document_count, planned_start_time, planned_end_time, actual_start_time, actual_end_time
+        from project_management_project_cloud.project
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="chargeUserId != null">
+                and charge_user_id = #{chargeUserId}
+            </if>
+            <if test="codeLineNumber != null">
+                and code_line_number = #{codeLineNumber}
+            </if>
+            <if test="codeUpdateCount != null">
+                and code_update_count = #{codeUpdateCount}
+            </if>
+            <if test="scheduleId != null">
+                and schedule_id = #{scheduleId}
+            </if>
+            <if test="functionPoints != null">
+                and function_points = #{functionPoints}
+            </if>
+            <if test="completedFunctionPoints != null">
+                and completed_function_points = #{completedFunctionPoints}
+            </if>
+            <if test="lastUpdateTime != null">
+                and last_update_time = #{lastUpdateTime}
+            </if>
+            <if test="typeId != null">
+                and type_id = #{typeId}
+            </if>
+            <if test="storeCount != null">
+                and store_count = #{storeCount}
+            </if>
+            <if test="likeCount != null">
+                and like_count = #{likeCount}
+            </if>
+            <if test="clickCount != null">
+                and click_count = #{clickCount}
+            </if>
+            <if test="deleteFlag != null">
+                and delete_flag = #{deleteFlag}
+            </if>
+            <if test="characterization != null and characterization != ''">
+                and characterization = #{characterization}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="userCount != null">
+                and user_count = #{userCount}
+            </if>
+            <if test="documentCount != null">
+                and document_count = #{documentCount}
+            </if>
+            <if test="plannedStartTime != null">
+                and planned_start_time = #{plannedStartTime}
+            </if>
+            <if test="plannedEndTime != null">
+                and planned_end_time = #{plannedEndTime}
+            </if>
+            <if test="actualStartTime != null">
+                and actual_start_time = #{actualStartTime}
+            </if>
+            <if test="actualEndTime != null">
+                and actual_end_time = #{actualEndTime}
+            </if>
+        </where>
+    </select>
+
+    <!--查找所有项目-->
+    <select id="projectCount" resultType="Integer">
+        select count(*)
+        from project_management_project_cloud.project
+        where delete_flag = 1
+    </select>
+</mapper>

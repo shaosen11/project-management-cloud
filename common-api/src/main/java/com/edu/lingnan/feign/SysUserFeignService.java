@@ -26,6 +26,11 @@ public interface SysUserFeignService {
      */
     @GetMapping("/sysUser/queryById/{id}")
     SysUser queryById(@PathVariable("id") Integer id);
+    @GetMapping("/sysUser/{id}")
+    SysUser getSysUser(@PathVariable("id") Integer id);
+
+    @GetMapping("/sysUser/getUserCount")
+    Integer getUserCount();
 
 //    /**
 //     * 查询多条数据

@@ -56,5 +56,9 @@ public interface ProjectService {
     List<Project> getAllDelProject();
 
 
-
+    /**
+     * 统计系统项目数量
+     * @return
+     */
+    Integer projectCount();
 }

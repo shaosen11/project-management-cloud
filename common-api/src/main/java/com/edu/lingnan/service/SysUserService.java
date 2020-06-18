@@ -34,7 +34,7 @@ public interface SysUserService {
      * @param sysUser 实例对象
      * @return 实例对象
      */
-    SysUser insert(SysUser sysUser);
+    boolean insert(SysUser sysUser);
 
     /**
      * 修改数据
@@ -42,7 +42,7 @@ public interface SysUserService {
      * @param sysUser 实例对象
      * @return 实例对象
      */
-    SysUser update(SysUser sysUser);
+    boolean update(SysUser sysUser);
 
-
+    Integer userCount();
 }

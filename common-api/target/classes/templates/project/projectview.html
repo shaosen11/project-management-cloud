@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Project-ProjectManagment</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+    <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
+    <div th:replace="commom/bar :: commom_css"></div>
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="commom/bar :: topbar"></div>
+    <!-- Sidebar -->
+    <div th:replace="commom/bar :: projectsidebar"></div>
+    <!-- End Sidebar -->
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header col-md-6">
+                    <h4 class="page-title">项目主页面</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <a th:href="@{/}">
+                                <i class="flaticon-home"></i>
+                            </a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{/projects_view/{id}(id=${project.id})}">项目主面板</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--项目详情-->
+                <!--项目项目上传代码行，上传次数，文件数量，项目人员-->
+                <div class="row">
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="icon-big text-center">
+                                            <i class="flaticon-graph text-primary"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats">
+                                        <div class="numbers">
+                                            <p class="card-category">代码行</p>
+                                            <h4 class="card-title" id="projectCodeLineNumber">
+                                                [[${project.codeLineNumber}]]</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="icon-big text-center">
+                                            <i class="flaticon-up-arrow-2 text-success"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats">
+                                        <div class="numbers">
+                                            <p class="card-category">上传次数</p>
+                                            <h4 class="card-title" id="projectCodeUpdateCount">
+                                                [[${project.codeUpdateCount}]]</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="icon-big text-center">
+                                            <i class="flaticon-folder text-warning"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats">
+                                        <div class="numbers">
+                                            <p class="card-category">文件数量</p>
+                                            <h4 class="card-title" id="projectDocumentCount">
+                                                [[${project.documentCount}]]</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="icon-big text-center">
+                                            <i class="flaticon-users text-secondary"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats">
+                                        <div class="numbers">
+                                            <p class="card-category">贡献者</p>
+                                            <h4 class="card-title" id="projectUserCount">[[${project.userCount}]]</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--主体-->
+                <div class="row">
+                    <!-- 折线图-->
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">项目代码行变化</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="pull-in" style="width: 100%;height: 350px;">
+                                    <canvas id="lindChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 饼图-->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-head-row">
+                                    <div class="card-title">共享比</div>
+                                    <div class="card-tools">
+                                        <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm"
+                                            role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="pill"
+                                                   onclick="switchDevoteChart()">代码贡献量</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="pill"
+                                                   onclick="switchUpdateChart()">上传次数</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content mt-2 mb-3">
+                                    <div class="card-body col-md-12">
+                                        <div class="chart-container">
+                                            <canvas id="pieChart" style="width: 50%; height: 50%"></canvas>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!--待完成-->
+                    <!--                    <div class="col-md-6">-->
+                    <!--                        <div class="card">-->
+                    <!--                            <div class="card-header">-->
+                    <!--                                <div class="card-title">Feed Activity</div>-->
+                    <!--                            </div>-->
+                    <!--                            <div class="card-body">-->
+                    <!--                                <ol class="activity-feed">-->
+                    <!--                                    <li class="feed-item feed-item-secondary">-->
+                    <!--                                        <time class="date" datetime="9-25">Sep 25</time>-->
+                    <!--                                        <span class="text">Responded to need <a-->
+                    <!--                                                href="#">"Volunteer opportunity"</a></span>-->
+                    <!--                                    </li>-->
+                    <!--                                    <li class="feed-item feed-item-success">-->
+                    <!--                                        <time class="date" datetime="9-24">Sep 24</time>-->
+                    <!--                                        <span class="text">Added an interest <a-->
+                    <!--                                                href="#">"Volunteer Activities"</a></span>-->
+                    <!--                                    </li>-->
+                    <!--                                    <li class="feed-item feed-item-info">-->
+                    <!--                                        <time class="date" datetime="9-23">Sep 23</time>-->
+                    <!--                                        <span class="text">Joined the group <a href="single-group.php">"Boardsmanship Forum"</a></span>-->
+                    <!--                                    </li>-->
+                    <!--                                    <li class="feed-item feed-item-warning">-->
+                    <!--                                        <time class="date" datetime="9-21">Sep 21</time>-->
+                    <!--                                        <span class="text">Responded to need <a-->
+                    <!--                                                href="#">"In-Kind Opportunity"</a></span>-->
+                    <!--                                    </li>-->
+                    <!--                                    <li class="feed-item feed-item-danger">-->
+                    <!--                                        <time class="date" datetime="9-18">Sep 18</time>-->
+                    <!--                                        <span class="text">Created need <a-->
+                    <!--                                                href="#">"Volunteer Opportunity"</a></span>-->
+                    <!--                                    </li>-->
+                    <!--                                    <li class="feed-item">-->
+                    <!--                                        <time class="date" datetime="9-17">Sep 17</time>-->
+                    <!--                                        <span class="text">Attending the event <a href="single-event.php">"Some New Event"</a></span>-->
+                    <!--                                    </li>-->
+                    <!--                                </ol>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                    <!--项目日志-->
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-head-row">
+                                    <div class="card-title">项目日志</div>
+                                    <div class="card-tools">
+                                        <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm"
+                                            role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="pills-tab-today"
+                                                   data-toggle="pill" href="#pills-today" role="tab"
+                                                   aria-selected="true">全部</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="pills-tab-week" data-toggle="pill"
+                                                   href="#pills-week" role="tab" aria-selected="false">我的</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content mt-2 mb-3">
+                                    <div class="tab-pane fade show active" id="pills-today" role="tabpanel"
+                                         aria-labelledby="pills-tab-today">
+                                        <!-- 分页容器：显示数据 -->
+                                        <div id="allDiv"></div>
+                                        <!-- 分页容器： 显示分页按钮-->
+                                        <div class="text-right mt-3 mb-3">
+                                            <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                            <ul id="allPage" class="pagination"></ul>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-week" role="tabpanel"
+                                         aria-labelledby="pills-tab-week">
+                                        <!-- 分页容器：显示数据 -->
+                                        <div id="myDiv"></div>
+                                        <!-- 分页容器： 显示分页按钮-->
+                                        <div class="text-right mt-3 mb-3">
+                                            <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                            <ul id="myPage" class="pagination"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--model框-->
+<div th:replace="commom/bar :: uploadfilemodel"></div>
+<div th:replace="commom/bar :: newprojectpackage"></div>
+
+
+<!--公共JS-->
+<th:block th:replace="commom/bar :: commom_js"/>
+<!--公共JS-->
+<th:block th:replace="commom/bar :: nav_project_js"/>
+
+
+<!--饼图-->
+<script type="text/javascript">
+    var pieChart = document.getElementById('pieChart').getContext('2d');
+    $(function () {
+        $.ajax({
+            type: "get",
+            async: true,
+            url: "/getCodeInsertData",
+            data: {
+                projectId: projectId
+            },
+            dataType: "json",
+            success: function (result) {
+                ChartsFunction(result)
+            }
+        })
+    })
+
+    function ChartsFunction(result) {
+        var xdata = [];
+        var ydata = [];
+        $(result).each(function (index, item) {
+            xdata.push(item.name);
+            ydata.push(item.value);
+        })
+        var myPieChart = new Chart(pieChart, {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: ydata,
+                    backgroundColor: [
+                        "#1d7af3", "#f3545d", "#fdaf4b",
+                        "#716aca", "#f3545d", "#28a745",
+                        "#6610f2", "#007bff", "#6610f2",
+                        "#6f42c1", "#e83e8c", "#dc3545",
+                        "#fd7e14", "#ffc107", "#28a745",
+                        "#20c997", "#17a2b8", "#343a40",
+                        "#007bff", "#6c757d", "#28a745",
+                        "#17a2b8", "#ffc107", "#dc3545",
+                        "#f8f9fa", "#343a40"],
+                    borderWidth: 0
+                }],
+                labels: xdata
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        fontColor: 'rgb(154, 154, 154)',
+                        fontSize: 11,
+                        usePointStyle: true,
+                        padding: 20
+                    }
+                },
+                pieceLabel: {
+                    render: 'percentage',
+                    fontColor: 'white',
+                    fontSize: 14,
+                },
+                tooltips: false,
+                layout: {
+                    padding: {
+                        left: 20,
+                        right: 20,
+                        top: 20,
+                        bottom: 20
+                    }
+                }
+            }
+        })
+    }
+</script>
+<!--切换饼状图-->
+<script type="text/javascript">
+    function switchDevoteChart() {
+        ajaxDevoteAndUpdateChart("/getCodeDevoteData")
+    }
+
+    function switchUpdateChart() {
+        ajaxDevoteAndUpdateChart("/getCodeInsertData")
+    }
+
+    function ajaxDevoteAndUpdateChart(url) {
+        $.ajax({
+            type: "get",
+            async: true,
+            url: url,
+            data: {
+                projectId: projectId
+            },
+            dataType: "json",
+            success: function (result) {
+                ChartsFunction(result)
+            }
+        })
+    }
+</script>
+<!--折线图-->
+<script type="text/javascript">
+    $(function () {
+        var ctx = document.getElementById('lindChart').getContext('2d');
+        var xdata = [];
+        var ydata = [];
+        $.ajax({
+            type: "get",
+            async: true,
+            url: "/getLineChartDate?projectId=" + projectId,
+            data: [],
+            dataType: "json",
+            success: function (result) {
+                $(result).each(function (index, item) {
+                    xdata.push(echarts.format.formatTime('yyyy-MM-dd', item.uploadTime));
+                    ydata.push(item.codeLineNumber);
+                })
+                var statisticsChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: xdata,
+                        datasets: [{
+                            label: "代码行",
+                            borderColor: '#177dff',
+                            pointBackgroundColor: 'rgba(23, 125, 255, 0.2)',
+                            pointRadius: 0,
+                            backgroundColor: 'rgba(23, 125, 255, 0.1)',
+                            legendColor: '#177dff',
+                            fill: true,
+                            borderWidth: 2,
+                            data: ydata
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        legend: {
+                            display: false
+                        },
+                        tooltips: {
+                            bodySpacing: 4,
+                            mode: "nearest",
+                            intersect: 0,
+                            position: "nearest",
+                            xPadding: 10,
+                            yPadding: 10,
+                            caretPadding: 10
+                        },
+                        layout: {
+                            padding: {left: 15, right: 15, top: 15, bottom: 15}
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    fontColor: "rgba(0,0,0,0.5)",
+                                    beginAtZero: false,
+                                    maxTicksLimit: 5,
+                                    padding: 20
+                                },
+                                gridLines: {
+                                    drawTicks: false,
+                                    display: false
+                                }
+                            }],
+                            xAxes: [{
+                                gridLines: {
+                                    zeroLineColor: "transparent"
+                                },
+                                ticks: {
+                                    padding: 20,
+                                    fontColor: "rgba(0,0,0,0.5)",
+                                }
+                            }]
+                        },
+                    }
+                });
+            }
+        })
+    })
+</script>
+<!--项目日志分页-->
+<script type="text/javascript">
+    $(function () {
+        addDocumentRecordPage(projectId, 0, allDiv, allPage);
+        if (userId != "") {
+            addDocumentRecordPage(projectId, userId, myDiv, myPage);
+        }
+    })
+
+    function addDocumentRecordPage(projectId, userId, div, ul) {
+        pageStart();//开始分页
+        function pageStart() {//分页函数
+            $.ajax({ //去后台查询第一页数据
+                type: "get",
+                url: "/documentRecordPage",
+                dataType: "json",
+                data: {
+                    page: '1',
+                    projectId: projectId,
+                    userId: userId
+                }, //参数：当前页为1
+                success: function (data) {
+                    appendDocumentRecordHtml(data.list)//处理第一页的数据
+                    var options = {//根据后台返回的分页相关信息，设置插件参数
+                        bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                        currentPage: data.page, //当前页数
+                        totalPages: data.totalPage, //总页数
+                        numberOfPages: data.pageSize,//每页记录数
+                        itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                            switch (type) {
+                                case "first":
+                                    return "首页";
+                                case "prev":
+                                    return "上一页";
+                                case "next":
+                                    return "下一页";
+                                case "last":
+                                    return "末页";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
+                            $.ajax({//根据page去后台加载数据
+                                url: "/documentRecordPage",
+                                type: "get",
+                                dataType: "json",
+                                data: {
+                                    "page": page,
+                                    projectId: projectId,
+                                    userId: userId
+                                },
+                                success: function (data) {
+                                    appendDocumentRecordHtml(data.list);//处理数据
+                                }
+                            });
+                        }
+                    };
+                    $(ul).bootstrapPaginator(options);//设置分页
+                },
+            });
+        }
+
+        function appendDocumentRecordHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+            $(div).html("");
+            var tableShow = '';
+            for (var i = 0; i < list.length; i++) {
+                tableShow += '<div class="d-flex">\n' +
+                    '                <div class="avatar avatar-online">\n';
+                if (list[i].projectsUser.dutyCode == 1) {
+                    tableShow += '                    <span class="avatar-title rounded-circle border border-white bg-secondary"> ' + list[i].projectsUser.projectsUserDuty.dutyName[0].toUpperCase() + ' </span>\n'
+                } else if (list[i].projectsUser.dutyCode == 2) {
+                    tableShow += '                    <span class="avatar-title rounded-circle border border-white bg-primary"> ' + list[i].projectsUser.projectsUserDuty.dutyName[0].toUpperCase() + ' </span>\n'
+                } else if (list[i].projectsUser.dutyCode == 3) {
+                    tableShow += '                    <span class="avatar-title rounded-circle border border-white bg-info"> ' + list[i].projectsUser.projectsUserDuty.dutyName[0].toUpperCase() + ' </span>\n'
+                }
+                tableShow +=
+                    '                </div>\n' +
+                    '                <div class="flex-1 ml-3 pt-1">\n' +
+                    '                    <h5 class="text-uppercase fw-bold mb-1">' + list[i].myUserDetails.username + '<span class="text-info pl-3"> ip:' + list[i].ip + ' </span></h5>\n' +
+                    '                    <span class="text-muted">' + list[i].operateMessage + '</span>\n' +
+                    '                </div>\n' +
+                    '                <div class="float-right pt-1">\n' +
+                    '                    <small class="text-muted">' + list[i].operateTimeString + '</small>\n' +
+                    '                </div>\n' +
+                    '            </div>\n' +
+                    '            <div class="separator-dashed"></div>'
+            }
+            $(div).html(tableShow)
+        }
+    }
+</script>
+</body>
+</html>

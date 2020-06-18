@@ -43,6 +43,11 @@ public interface ProjectDao extends  BaseDao<Project>{
     List<Project> queryAll(Project project);
 
     /**
+     * 统计项目数量
+     * @return
+     */
+    Integer projectCount();
+    /**
      * 查询所有已注销项目信息
      * @return
      */
