@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface ProjectDao extends BaseDao<Project>{
+public interface ProjectDao extends  BaseDao<Project>{
 
     /**
      * 通过ID查询单条数据
@@ -37,11 +37,18 @@ public interface ProjectDao extends BaseDao<Project>{
 
     /**
      * 通过实体作为筛选条件查询
-     *
      * @param project 实例对象
      * @return 对象列表
      */
     List<Project> queryAll(Project project);
+
+    /**
+     * 查询所有已注销项目信息
+     * @return
+     */
+    List<Project> getAllDelProject();
+
+
 
 
 }

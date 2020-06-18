@@ -3,7 +3,10 @@ package com.edu.lingnan.feign;
 import com.edu.lingnan.entity.UserClick;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -16,45 +19,21 @@ import java.util.List;
 @FeignClient(value = "PRODIVER-USER")
 public interface UserClickFeignService {
 
-//    /**
-//     * 通过ID查询单条数据
-//     *
-//     * @param id 主键
-//     * @return 实例对象
-//     */
-//    UserClick queryById(Integer id);
-//
-//    /**
-//     * 查询多条数据
-//     *
-//     * @param offset 查询起始位置
-//     * @param limit 查询条数
-//     * @return 对象列表
-//     */
-//    List<UserClick> queryAllByLimit(int offset, int limit);
-//
-//    /**
-//     * 新增数据
-//     *
-//     * @param userClick 实例对象
-//     * @return 实例对象
-//     */
-//    UserClick insert(UserClick userClick);
-//
-//    /**
-//     * 修改数据
-//     *
-//     * @param userClick 实例对象
-//     * @return 实例对象
-//     */
-//    UserClick update(UserClick userClick);
-//
-//    /**
-//     * 通过主键删除数据
-//     *
-//     * @param id 主键
-//     * @return 是否成功
-//     */
-//    boolean deleteById(Integer id);
+    /**
+     * 通过主键查询单条数据
+     *
+     * @param id 主键
+     * @return 单条数据
+     */
+    @GetMapping("userClick/queryById")
+    UserClick queryById(Integer id);
+
+    /**
+     * 插入一条数据
+     * @param userClick 更新记录
+     * @return Boolean
+     */
+    @RequestMapping(value = "userClick/", method = RequestMethod.POST, consumes = "application/json")
+    Boolean insert(@RequestBody UserClick userClick);
 
 }

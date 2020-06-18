@@ -55,7 +55,6 @@
 										<div class="numbers">
 											<p class="card-category">待办功能点</p>
 											<h4 class="card-title" id="projectFunctionTodo"></h4>
-
 										</div>
 									</div>
 								</div>
@@ -440,34 +439,34 @@
     var functionStatusFlag = 0;
     $(function () {
         allFunctionPage();
-    })
+    });
 
     //全部功能点
     function allFunctionPage() {
         functionStatusFlag = 0;
-        var allFunctionUrl = "/allFunctionPage";
+        var allFunctionUrl = "/project/projectFunction/allFunctionPage";
         appendFuntion1(projectId, allFunctionUrl);
     }
 
     //分配给我的功能点
     function assignFunctionPage() {
         functionStatusFlag = 1;
-        var assignFunctionUrl = "/assignFunctionPage";
-        appendFuntion2(projectId, userId, assignFunctionUrl);
+        var assignFunctionUrl = "/project/projectFunction/assignFunctionPage";
+        appendFuntion2(projectId,assignFunctionUrl);
     }
 
     //我发布的功能点
     function publishFunctionPage() {
         functionStatusFlag = 2;
-        var publishFunctionUrl = "/publishFunctionPage";
-        appendFuntion2(projectId, userId, publishFunctionUrl);
+        var publishFunctionUrl = "/project/projectFunction/publishFunctionPage";
+        appendFuntion2(projectId,publishFunctionUrl);
     }
 
-    //正在进行的功能点
+    //我参与的的功能点
     function joinFunctionPage() {
         functionStatusFlag = 3;
-        var joinFunctionUrl = "/joinFunctionPage";
-        appendFuntion2(projectId, userId, joinFunctionUrl);
+        var joinFunctionUrl = "/project/projectFunction/joinFunctionPage";
+        appendFuntion2(projectId,joinFunctionUrl);
     }
 
     //提取
@@ -508,41 +507,41 @@
         functionPageStart(url, projectId, functionStatus5, functionPage5, divName5, pagecolor5);//全部功能-已取消
     }
 
-    function appendFuntion2(projectId, userId, url) {
+    function appendFuntion2(projectId, url) {
         var functionPage = $('#TodoFunctionPage');
         var divName = $('#TodoDiv');
         $(divName).html("");
         var pagecolor = "#FF9933";
         var functionStatus = 0;
-        functionPageStart2(url, projectId, userId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
+		functionPageStart(url, projectId,functionStatus, functionPage, divName, pagecolor);//全部功能-待办
 
         var functionPage2 = $('#ProcesingFunctionPage');
         var divName2 = $('#ProcesingDiv');
         $(divName2).html("");
         var pagecolor2 = "#1F6FB5";
         var functionStatus2 = 1;
-        functionPageStart2(url, projectId, userId, functionStatus2, functionPage2, divName2, pagecolor2);//全部功能-进行
+		functionPageStart(url, projectId,functionStatus2, functionPage2, divName2, pagecolor2);//全部功能-进行
 
         var functionPage3 = $('#CompletedFunctionPage');
         var divName3 = $('#CompletedDiv');
         $(divName3).html("");
         var pagecolor3 = "#795DDE";
         var functionStatus3 = 2;
-        functionPageStart2(url, projectId, userId, functionStatus3, functionPage3, divName3, pagecolor3);//全部功能-完成
+		functionPageStart(url, projectId,functionStatus3, functionPage3, divName3, pagecolor3);//全部功能-完成
 
         var functionPage4 = $('#AcceptedFunctionPage');
         var divName4 = $('#AcceptedDiv');
-        $(divName2).html("");
+        $(divName4).html("");
         var pagecolor4 = "#007850";
         var functionStatus4 = 3;
-        functionPageStart2(url, projectId, userId, functionStatus4, functionPage4, divName4, pagecolor4);//全部功能-已验收
+		functionPageStart(url, projectId,functionStatus4, functionPage4, divName4, pagecolor4);//全部功能-已验收
 
         var functionPage5 = $('#CancelFunctionPage');
         var divName5 = $('#CancelDiv');
         $(divName5).html("");
         var pagecolor5 = "#7B7687";
         var functionStatus5 = 4;
-        functionPageStart2(url, projectId, userId, functionStatus5, functionPage5, divName5, pagecolor5);//全部功能-已取消
+		functionPageStart(url, projectId,functionStatus5, functionPage5, divName5, pagecolor5);//全部功能-已取消
     }
 
 
@@ -551,12 +550,12 @@
 <script type="text/javascript">
     $(function () {
         getChart();
-    })
+    });
 
     function getChart() {
         $.ajax({
             type: "get",
-            url: "/projectFunctionDataCicleChart",
+            url: "/project/projectFunction/getProjectFunctionDataCicleChart",
             dataType: "json",
             data: {
                 projectId: projectId,
@@ -590,17 +589,17 @@
         var functionStatus = 0;
         $(divName).html("");
         if (functionStatusFlag == 0) {
-            var url = "/allFunctionPage";
+            var url = "/project/projectFunction/allFunctionPage";
             functionPageStart(url, projectId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
         } else {
             if (functionStatusFlag == 1) {
-                var url = "/assignFunctionPage";
+                var url = "/project/projectFunction/assignFunctionPage";
             } else if (functionStatusFlag == 2) {
-                var url = "/publishFunctionPage";
+                var url = "/project/projectFunction/publishFunctionPage";
             } else if (functionStatusFlag == 3) {
-                var url = "/joinFunctionPage";
+                var url = "/project/projectFunction/joinFunctionPage";
             }
-            functionPageStart2(url, projectId, userId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
+			functionPageStart(url, projectId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
         }
 
     }
@@ -676,8 +675,8 @@
 
     function functionNum() {
         $.ajax({
-            type: "get",
-            url: "/projectFunctionTotal",
+            type: "post",
+            url: "/project/projectFunction/getProjectFunctionTotal",
             dataType: "json",
             data: {
                 projectId: projectId,
@@ -832,7 +831,6 @@
         }
     }
 </script>
-
 <!--时间插件-->
 <script type="text/javascript">
     $('#plannedStartTime').datepicker({
@@ -847,7 +845,7 @@
 <!--功能点详情-->
 <script type="text/javascript">
     function projectFunctionDetail(projectFunctionId) {
-        location.href = "/project_function_detail_view/" + projectFunctionId;
+        location.href = "/project/projectFunction/projectFunctionDetailView/" + projectFunctionId;
     }
 </script>
 

@@ -43,6 +43,11 @@ public class ProjectServiceImpl implements ProjectService {
         return this.projectDao.queryAllByLimit(offset, limit);
     }
 
+    @Override
+    public List<Project> queryAll(Project project) {
+        return this.projectDao.queryAll(project);
+    }
+
     /**
      * 新增数据
      *
@@ -50,9 +55,8 @@ public class ProjectServiceImpl implements ProjectService {
      * @return 实例对象
      */
     @Override
-    public Project insert(Project project) {
-        this.projectDao.insert(project);
-        return project;
+    public Boolean insert(Project project) {
+        return this.projectDao.insert(project) > 0;
     }
 
     /**
@@ -62,9 +66,13 @@ public class ProjectServiceImpl implements ProjectService {
      * @return 实例对象
      */
     @Override
-    public Project update(Project project) {
-        this.projectDao.update(project);
-        return this.queryById(project.getId());
+    public Boolean update(Project project) {
+        return this.projectDao.update(project);
+    }
+
+    @Override
+    public List<Project> getAllDelProject() {
+        return this.projectDao.getAllDelProject();
     }
 
 }

@@ -33,4 +33,22 @@ public class ProjectUserController {
         return this.projectUserService.queryById(id);
     }
 
+    @DeleteMapping("/deleteProjectUserByProjectsId/{id}")
+    public Boolean deleteProjectUserByProjectsId(@PathVariable("id") Integer id){
+        Boolean flag = projectUserService.deleteProjectUserByProjectsId(id);
+        return flag;
+    }
+
+    /**
+     * 通过ID查询单条数据
+     * @return 实例对象
+     */
+    @RequestMapping(value = "/getByUserIdAndProjectId", method = RequestMethod.GET)
+    public ProjectUser getByUserIdAndProjectId(@RequestParam("userId") Integer userId, @RequestParam("projectId")Integer projectId){
+        System.out.println("getByUserIdAndProjectId-->userId="+userId+"  projectId="+projectId);
+        ProjectUser projectUser = projectUserService.getByUserIdAndProjectId(userId,projectId);
+        System.out.println(projectUser);
+        return projectUser;
+    }
+
 }

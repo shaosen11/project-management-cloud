@@ -30,7 +30,6 @@ public interface ProjectUserService {
 
     /**
      * 新增数据
-     *
      * @param projectUser 实例对象
      * @return 实例对象
      */
@@ -38,11 +37,22 @@ public interface ProjectUserService {
 
     /**
      * 修改数据
-     *
      * @param projectUser 实例对象
      * @return 实例对象
      */
     ProjectUser update(ProjectUser projectUser);
 
+    /**
+     * 删除项目用户信息通过项目id
+     * @param id 项目id
+     * @return boolean
+     */
+    boolean deleteProjectUserByProjectsId(Integer id);
+
+    /**
+     * 通过用户Id和项目Id查询用户
+     * @return ProjectUser
+     */
+    ProjectUser getByUserIdAndProjectId(Integer userId, Integer projectId);
 
 }

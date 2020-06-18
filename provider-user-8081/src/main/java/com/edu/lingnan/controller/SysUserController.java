@@ -28,8 +28,8 @@ public class SysUserController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("selectOne/{id}")
-    public SysUser selectOne(@PathVariable("id") Integer id) {
+    @GetMapping("queryById/{id}")
+    public SysUser queryById(@PathVariable("id") Integer id) {
         return this.sysUserService.queryById(id);
     }
 

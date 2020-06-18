@@ -118,5 +118,13 @@
         </where>
     </select>
 
+    <!--查询所有已注销项目信息-->
+    <select id="getAllDelProject" resultMap="ProjectMap">
+        select
+        id, name, charge_user_id, code_line_number, code_update_count, schedule_id, function_points, completed_function_points, last_update_time, type_id, store_count, like_count, click_count, delete_flag, characterization, create_time, user_count, document_count, planned_start_time, planned_end_time, actual_start_time, actual_end_time
+        from project_management_project_cloud.project
+        where delete_flag = 0
+    </select>
+
 
 </mapper>

@@ -39,8 +39,33 @@ public class ProjectFunctionServiceImpl implements ProjectFunctionService {
      * @return 对象列表
      */
     @Override
-    public List<ProjectFunction> queryAllByLimit(int offset, int limit) {
-        return this.projectFunctionDao.queryAllByLimit(offset, limit);
+    public List<ProjectFunction> queryAllByLimit(int offset, int limit,ProjectFunction projectFunction) {
+        return this.projectFunctionDao.queryAllByLimit(offset, limit,projectFunction);
+    }
+
+    @Override
+    public List<ProjectFunction> queryAll(ProjectFunction projectFunction) {
+        return this.projectFunctionDao.queryAll(projectFunction);
+    }
+
+    @Override
+    public List<ProjectFunction> queryAllByLimitByUserId(int offset, int limit, ProjectFunction projectFunction) {
+        return this.projectFunctionDao.queryAllByLimitByUserId(offset, limit,projectFunction);
+    }
+
+    @Override
+    public List<ProjectFunction> queryAllByUserId(ProjectFunction projectFunction) {
+        return this.projectFunctionDao.queryAllByUserId(projectFunction);
+    }
+
+    @Override
+    public List<ProjectFunction> queryDelByLimitByUserId(int offset, int limit, ProjectFunction projectFunction) {
+        return this.projectFunctionDao.queryDelByLimitByUserId(offset, limit,projectFunction);
+    }
+
+    @Override
+    public List<ProjectFunction> queryDelByUserId(ProjectFunction projectFunction) {
+        return this.projectFunctionDao.queryDelByUserId(projectFunction);
     }
 
     /**
@@ -57,7 +82,6 @@ public class ProjectFunctionServiceImpl implements ProjectFunctionService {
 
     /**
      * 修改数据
-     *
      * @param projectFunction 实例对象
      * @return 实例对象
      */
@@ -65,6 +89,35 @@ public class ProjectFunctionServiceImpl implements ProjectFunctionService {
     public ProjectFunction update(ProjectFunction projectFunction) {
         this.projectFunctionDao.update(projectFunction);
         return this.queryById(projectFunction.getId());
+    }
+
+    /**
+     * 删除项目功能点信息通过ProjectsId
+     * @return boolean
+     */
+    @Override
+    public boolean deleteProjectFunctionByProjectsId(Integer id) {
+        return this.projectFunctionDao.deleteProjectFunctionByProjectsId(id)>0;
+    }
+
+    @Override
+    public Integer countProjectFunctionByProjectId(Integer id) {
+        return this.projectFunctionDao.countProjectFunctionByProjectId(id);
+    }
+
+    @Override
+    public Integer countByProjectIdAndStatus(Integer id, Integer functionStatus) {
+        return this.projectFunctionDao.countByProjectIdAndStatus(id,functionStatus);
+    }
+
+    @Override
+    public Integer countDelByProjectId(Integer id) {
+        return this.projectFunctionDao.countDelByProjectId(id);
+    }
+
+    @Override
+    public List<ProjectFunction> getProjectPlanFunctionsPage(Integer projectsId, Integer offset, Integer pageSize) {
+        return this.projectFunctionDao.getProjectPlanFunctionsPage(projectsId,offset,pageSize);
     }
 
 }

@@ -43,5 +43,18 @@ public interface ProjectUserDao extends BaseDao<ProjectUser>{
      */
     List<ProjectUser> queryAll(ProjectUser projectUser);
 
+    /**
+     * 删除项目用户信息通过项目id
+     * @param id 项目id
+     * @return boolean
+     */
+    Integer deleteProjectUserByProjectsId(Integer id);
+
+    /**
+     * 通过用户Id和项目Id查询用户
+     * @return ProjectUser
+     */
+    ProjectUser getByUserIdAndProjectId(@Param("userId")Integer userId, @Param("projectId")Integer projectId);
+
 
 }

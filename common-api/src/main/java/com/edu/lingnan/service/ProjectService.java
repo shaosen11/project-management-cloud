@@ -29,20 +29,32 @@ public interface ProjectService {
     List<Project> queryAllByLimit(int offset, int limit);
 
     /**
+     * 查询多条数据
+     * @return 对象列表
+     */
+    List<Project> queryAll(Project project);
+
+    /**
      * 新增数据
      *
      * @param project 实例对象
      * @return 实例对象
      */
-    Project insert(Project project);
+    Boolean insert(Project project);
 
     /**
      * 修改数据
-     *
      * @param project 实例对象
      * @return 实例对象
      */
-    Project update(Project project);
+    Boolean update(Project project);
+
+    /**
+     * 查询所有已注销项目信息
+     * @return list
+     */
+    List<Project> getAllDelProject();
+
 
 
 }

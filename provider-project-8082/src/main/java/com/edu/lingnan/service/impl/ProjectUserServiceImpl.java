@@ -57,7 +57,6 @@ public class ProjectUserServiceImpl implements ProjectUserService {
 
     /**
      * 修改数据
-     *
      * @param projectUser 实例对象
      * @return 实例对象
      */
@@ -65,6 +64,21 @@ public class ProjectUserServiceImpl implements ProjectUserService {
     public ProjectUser update(ProjectUser projectUser) {
         this.projectUserDao.update(projectUser);
         return this.queryById(projectUser.getId());
+    }
+
+    /**
+     * 删除项目用户信息通过项目id
+     * @param id 项目id
+     * @return boolean
+     */
+    @Override
+    public boolean deleteProjectUserByProjectsId(Integer id) {
+        return this.projectUserDao.deleteProjectUserByProjectsId(id)>0;
+    }
+
+    @Override
+    public ProjectUser getByUserIdAndProjectId(Integer userId, Integer projectId) {
+        return this.projectUserDao.getByUserIdAndProjectId(userId, projectId);
     }
 
 }
