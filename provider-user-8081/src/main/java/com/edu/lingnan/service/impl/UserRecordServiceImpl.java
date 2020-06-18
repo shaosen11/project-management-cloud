@@ -20,28 +20,6 @@ public class UserRecordServiceImpl implements UserRecordService {
     @Resource
     private UserRecordDao userRecordDao;
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
-    @Override
-    public UserRecord queryById(Integer id) {
-        return this.userRecordDao.queryById(id);
-    }
-
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
-    @Override
-    public List<UserRecord> queryAllByLimit(int offset, int limit) {
-        return this.userRecordDao.queryAllByLimit(offset, limit);
-    }
 
     /**
      * 新增数据
@@ -50,21 +28,10 @@ public class UserRecordServiceImpl implements UserRecordService {
      * @return 实例对象
      */
     @Override
-    public UserRecord insert(UserRecord userRecord) {
+    public boolean insert(UserRecord userRecord) {
         this.userRecordDao.insert(userRecord);
-        return userRecord;
+        return true;
     }
 
-    /**
-     * 修改数据
-     *
-     * @param userRecord 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public UserRecord update(UserRecord userRecord) {
-        this.userRecordDao.update(userRecord);
-        return this.queryById(userRecord.getId());
-    }
 
 }

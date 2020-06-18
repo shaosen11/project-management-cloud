@@ -23,14 +23,37 @@ public class SysUserController {
     private SysUserService sysUserService;
 
     /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
+     * 增
+     * @param sysUser
+     * @return
      */
-    @GetMapping("selectOne/{id}")
-    public SysUser selectOne(@PathVariable("id") Integer id) {
+    @PostMapping("/")
+    public boolean addSysUser(SysUser sysUser){
+        return sysUserService.insert(sysUser);
+    }
+
+    /**
+     * 查
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public SysUser getSysUser(@PathVariable("id") Integer id) {
         return this.sysUserService.queryById(id);
     }
 
+    /**
+     * 改
+     * @param sysUser
+     * @return
+     */
+    @PutMapping("/")
+    public boolean updateSysUser(SysUser sysUser){
+        return sysUserService.update(sysUser);
+    }
+
+    @GetMapping("/getUserCount")
+    public Integer userCount(){
+        return sysUserService.userCount();
+    }
 }

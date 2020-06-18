@@ -67,4 +67,9 @@ public class ProjectServiceImpl implements ProjectService {
         return this.queryById(project.getId());
     }
 
+    @Override
+    public Integer projectCount() {
+        return projectDao.projectCount();
+    }
+
 }

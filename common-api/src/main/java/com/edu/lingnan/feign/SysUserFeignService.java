@@ -18,14 +18,11 @@ import java.util.List;
 @FeignClient(value = "PRODIVER-USER")
 public interface SysUserFeignService {
 
-//    /**
-//     * 通过ID查询单条数据
-//     *
-//     * @param id 主键
-//     * @return 实例对象
-//     */
-//    @GetMapping("/sysUser/selectOne/{id}")
-//    SysUser queryById(@PathVariable("id") Integer id);
+    @GetMapping("/sysUser/{id}")
+    SysUser getSysUser(@PathVariable("id") Integer id);
+
+    @GetMapping("/sysUser/getUserCount")
+    Integer getUserCount();
 
 //    /**
 //     * 查询多条数据

@@ -33,4 +33,8 @@ public class ProjectController {
         return this.projectService.queryById(id);
     }
 
+    @GetMapping("getProjectCount")
+    public Integer getProjectCount() {
+        return this.projectService.projectCount();
+    }
 }

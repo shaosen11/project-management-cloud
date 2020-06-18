@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.lingnan.dao.MyUserDetailsDao">
+    <select id="findByEmail" resultType="com.edu.lingnan.entity.MyUserDetails">
+        select *
+        from project_management_user_cloud.sys_user u
+        where u.email = #{email}
+    </select>
+
+    <select id="findRoleByEmail" resultType="java.lang.String">
+        select role_code
+        from project_management_user_cloud.sys_role r
+        left join project_management_user_cloud.sys_user_role ur on r.id = ur.role_id
+        left join project_management_user_cloud.sys_user u on u.id = ur.user_id
+        where u.email = #{email}
+    </select>
+
+    <select id="findAuthorityByRoleCodes" resultType="java.lang.String">
+        select url
+        from project_management_user_cloud.sys_menu m
+        left join project_management_user_cloud.sys_role_menu rm on m.id = rm.menu_id
+        left join project_management_user_cloud.sys_role r on r.id = rm.role_id
+        where r.role_code in
+        <foreach collection="roleCodes" item="roleCode" open="(" separator="," close=")">
+            #{roleCode}
+        </foreach>
+    </select>
+
+</mapper>

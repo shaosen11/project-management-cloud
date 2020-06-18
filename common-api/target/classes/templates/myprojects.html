@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>MyProjects-ProjectManagment</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+    <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
+    <div th:replace="commom/bar :: commom_css"></div>
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="commom/bar :: topbar"></div>
+
+    <!-- Sidebar -->
+    <div th:replace="commom/bar :: sidebar"></div>
+    <!-- End Sidebar -->
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row row-nav-line">
+                                    <ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active show" id="pills-one-tab-nobd" data-toggle="pill" href="#pills-one-nobd" role="tab" aria-controls="pills-one-nobd" aria-selected="true">所有项目</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="pills-two-tab-nobd" data-toggle="pill" href="#pills-two-nobd" role="tab" aria-controls="pills-two-nobd" aria-selected="false" onclick="myProjectPage()">负责项目</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="pills-three-tab-nobd" data-toggle="pill" href="#pills-three-nobd" role="tab" aria-controls="pills-three-nobd" aria-selected="false" onclick="myJoinProjectPage()">参与项目</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body tab-pane fade show active" role="tabpanel" aria-labelledby="pills-one-tab-nobd">
+                                <div class="tab-content mt-2 mb-3" id="pills-without-border-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-one-nobd" role="tabpanel" aria-labelledby="pills-one-tab-nobd">
+                                        <!-- 项目列表1 -->
+                                        <div class="row">
+                                            <div class="input-group col-md-2" >
+                                                <h3 class="text-center" style="margin: auto">类型</h3>&nbsp;
+                                                <select id="typeName" class="form-control" onchange="searchByTypeOrSchedule(1)">
+                                                    <option value="null"> </option>
+                                                    <option value="Web应用开发">Web应用开发</option>
+                                                    <option value="大数据">大数据</option>
+                                                    <option value="物联网">物联网</option>
+                                                    <option value="人工智能">人工智能</option>
+                                                    <option value="微信小程序">微信小程序</option>
+                                                </select>
+                                            </div>
+                                            <div class="input-group col-md-2" >
+                                                <h3 class="text-center" style="margin: auto">进度</h3>&nbsp;
+                                                <select id="scheduleName" class="form-control" onchange="searchByTypeOrSchedule(1)">
+                                                    <option value="null"> </option>
+                                                    <option value="未开始">未开始</option>
+                                                    <option value="进行中">进行中</option>
+                                                    <option value="已完成">已完成</option>
+                                                </select>
+                                            </div>
+                                            <div class="input-group col-md-3">
+                                                <input type="text" class="form-control" placeholder="Search..." id="searchByName">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-secondary btn-search" onclick="searchByName(1)"><i class="fas fa-search"></i></button>
+                                                 </span>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                        <div class="col-md-8" style="float: left">
+                                            <!-- 分页容器：显示数据 -->
+                                            <div id="myProjectAll" class="row"></div>
+                                            <!-- 分页容器： 显示分页按钮-->
+                                            <div class="text-center" id="projectAllPage">
+                                                <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                                <ul id="myProjectAllPage" class="pagination"></ul>
+                                            </div>
+                                        </div>
+
+                                            <!-- 饼图1 -->
+                                            <div class="col-md-4" style="float: left">
+                                                <div id="piechart" style="width: 400px; height: 400px;"></div>
+                                            </div>
+
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-two-nobd" role="tabpanel" aria-labelledby="pills-two-tab-nobd">
+                                        <!-- 项目列表2 -->
+                                        <div class="row">
+                                            <div class="input-group col-md-2" >
+                                                <h3 class="text-center" style="margin: auto">类型</h3>&nbsp;
+                                                <select id="typeNameCharge" class="form-control" onchange="searchByTypeOrSchedule(2)">
+                                                    <option value="null"> </option>
+                                                    <option value="Web应用开发">Web应用开发</option>
+                                                    <option value="大数据">大数据</option>
+                                                    <option value="物联网">物联网</option>
+                                                    <option value="人工智能">人工智能</option>
+                                                    <option value="微信小程序">微信小程序</option>
+                                                </select>
+                                            </div>
+                                            <div class="input-group col-md-2" >
+                                                <h3 class="text-center" style="margin: auto">进度</h3>&nbsp;
+                                                <select id="scheduleNameCharge" class="form-control" onchange="searchByTypeOrSchedule(2)">
+                                                    <option value="null"> </option>
+                                                    <option value="未开始">未开始</option>
+                                                    <option value="进行中">进行中</option>
+                                                    <option value="已完成">已完成</option>
+                                                </select>
+                                            </div>
+                                            <div class="input-group col-md-3">
+                                                <input type="text" class="form-control" placeholder="Search..." id="searchByNameCharge">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-secondary btn-search" onclick="searchByName(2)"><i class="fas fa-search"></i></button>
+                                                 </span>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                        <div class="col-md-8" style="float: left">
+                                            <!-- 分页容器：显示数据 -->
+                                            <div id="myProjectCharge" class="row"></div>
+                                            <!-- 分页容器： 显示分页按钮-->
+                                            <div class="text-center">
+                                                <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                                <ul id="myProjectChargePage" class="pagination"></ul>
+                                            </div>
+                                        </div>
+
+                                        <!-- 饼图2 -->
+                                        <div class="col-md-4" style="float: left">
+                                            <div id="piechart2" style="width: 400px; height: 400px;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-three-nobd" role="tabpanel" aria-labelledby="pills-three-tab-nobd">
+                                        <!-- 项目列表3 -->
+                                        <div class="row">
+                                            <div class="input-group col-md-2" >
+                                                <h3 class="text-center" style="margin: auto">类型</h3>&nbsp;
+                                                <select id="typeNameJoin" class="form-control" onchange="searchByTypeOrSchedule(3)">
+                                                    <option value="null"> </option>
+                                                    <option value="Web应用开发">Web应用开发</option>
+                                                    <option value="大数据">大数据</option>
+                                                    <option value="物联网">物联网</option>
+                                                    <option value="人工智能">人工智能</option>
+                                                    <option value="微信小程序">微信小程序</option>
+                                                </select>
+                                            </div>
+                                            <div class="input-group col-md-2" >
+                                                <h3 class="text-center" style="margin: auto">进度</h3>&nbsp;
+                                                <select id="scheduleNameJoin" class="form-control" onchange="searchByTypeOrSchedule(3)">
+                                                    <option value="null"> </option>
+                                                    <option value="未开始">未开始</option>
+                                                    <option value="进行中">进行中</option>
+                                                    <option value="已完成">已完成</option>
+                                                </select>
+                                            </div>
+                                            <div class="input-group col-md-3">
+                                                <input type="text" class="form-control" placeholder="Search..." id="searchByNameJoin">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-secondary btn-search" onclick="searchByName(3)"><i class="fas fa-search"></i></button>
+                                                 </span>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                        <div class="col-md-8" style="float: left">
+                                            <!-- 分页容器：显示数据 -->
+                                            <div id="myProjectJoin" class="row"></div>
+                                            <!-- 分页容器： 显示分页按钮-->
+                                            <div class="text-center">
+                                                <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                                <ul id="myProjectJoinPage" class="pagination"></ul>
+                                            </div>
+                                        </div>
+
+                                        <!-- 饼图3 -->
+                                        <div class="col-md-4" style="float: left">
+                                            <div id="piechart3" style="width: 400px; height: 400px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!--公共JS-->
+<th:block th:replace="commom/bar :: commom_js" />
+<!--公共JS-->
+<th:block th:replace="commom/bar :: nav_js" />
+<script type="text/javascript">
+    var pieCharts = echarts.init(document.getElementById("piechart"));
+    pieCharts.showLoading();
+    var names = [];
+    $.ajax({
+            type: "post",
+            async: true,
+            url: "/getMyProjectData/[[${#authentication.principal.id}]]",
+            data: [],
+            dataType: "json",
+            success: function (result) {
+                pieCharts.hideLoading();
+                if(result){
+                    for(var i=0;i<result.length;i++){
+                        names.push(result[i].name);
+                    }
+                }
+                pieCharts.setOption({
+                    title: {
+                        text: '负责项目',
+                        subtext: '进度比',
+                        x: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        x: 'left',
+                        data: names
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: false},
+                            magicType: {
+                                show: true,
+                                type: ['pie', 'funnel'],
+                                option: {
+                                    funnel: {
+                                        x: '25%',
+                                        width: '50%',
+                                        funnelAlign: 'left',
+                                        max: 1548
+                                    }
+                                }
+                            },
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    calculable: true,
+                    series: [
+                        {
+                            name: '数量',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '60%'],
+                            data: result
+                        }
+                    ]
+                });
+            },
+            error: function (errorMsg) {
+                alert("图表数据请求失败！")
+                pieCharts.hideLoading();
+            }
+        })
+
+    var pieCharts2 = echarts.init(document.getElementById("piechart2"));
+    pieCharts2.showLoading();
+    var names2 = [];
+    $.ajax({
+            type: "post",
+            async: true,
+            url: "/getMyProjectData2/[[${#authentication.principal.id}]]",
+            data: [],
+            dataType: "json",
+            success: function (result) {
+                pieCharts2.hideLoading();
+                if(result){
+                    for(var i=0;i<result.length;i++){
+                        names2.push(result[i].name);
+                    }
+                }
+                 pieCharts2.setOption({
+                    title: {
+                        text: '负责项目',
+                        subtext: '进度比',
+                        x: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        x: 'left',
+                        data: names2
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: false},
+                            magicType: {
+                                show: true,
+                                type: ['pie', 'funnel'],
+                                option: {
+                                    funnel: {
+                                        x: '25%',
+                                        width: '50%',
+                                        funnelAlign: 'left',
+                                        max: 1548
+                                    }
+                                }
+                            },
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    calculable: true,
+                    series: [
+                        {
+                            name: '数量',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '60%'],
+                            data: result
+                        }
+                    ]
+                 });
+            },
+            error: function (errorMsg) {
+                alert("图表数据请求失败！")
+                pieCharts2.hideLoading();
+            }
+        })
+
+    var pieCharts3 = echarts.init(document.getElementById("piechart3"));
+    pieCharts3.showLoading();
+    var names3 = [];
+    $.ajax({
+            type: "post",
+            async: true,
+            url: "/getMyProjectData3/[[${#authentication.principal.id}]]",
+            data: [],
+            dataType: "json",
+            success: function (result) {
+                pieCharts3.hideLoading();
+                if(result){
+                    for(var i=0;i<result.length;i++){
+                        names3.push(result[i].name);
+                    }
+                }
+                 pieCharts3.setOption({
+                    title: {
+                        text: '负责项目',
+                        subtext: '进度比',
+                        x: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        x: 'left',
+                        data: names3
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: false},
+                            magicType: {
+                                show: true,
+                                type: ['pie', 'funnel'],
+                                option: {
+                                    funnel: {
+                                        x: '25%',
+                                        width: '50%',
+                                        funnelAlign: 'left',
+                                        max: 1548
+                                    }
+                                }
+                            },
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    calculable: true,
+                    series: [
+                        {
+                            name: '数量',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '60%'],
+                            data: result
+                        }
+                    ]
+
+                 });
+            },
+            error: function (errorMsg) {
+                alert("图表数据请求失败！")
+                pieCharts3.hideLoading();
+            }
+        })
+
+    //选项卡Echart
+    var charts = new Array();
+    charts.push(pieCharts);
+    charts.push(pieCharts2);
+    charts.push(pieCharts3);
+    $(function(){
+        $(window).resize(function() {
+            for(var i = 0; i < charts.length; i++) {
+                charts[i].resize();
+            }
+        });
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+            for(var i = 0; i < charts.length; i++) {
+                charts[i].resize();
+            }
+        });
+    })
+
+    function refrech() {
+        var url = "/my_project_refrech/[[${#authentication.principal.id}]]/1";
+        $('#div1').load(url);
+    }
+
+</script>
+<script type="text/javascript">
+    var userId = [[${#authentication.principal.id}]];
+
+    //加载我的项目
+    $(function () {
+        var divName = $('#myProjectAll');
+        $(divName).html("");
+        addMyProjectPage(userId, divName, myProjectAllPage,1);
+    })
+
+    //加载我负责的项目
+    function myProjectPage(){
+        var divName = $('#myProjectCharge');
+        $(divName).html("");
+        addMyProjectChargePage(userId, divName, myProjectChargePage,2);
+    }
+
+    //加载我参加的项目
+    function myJoinProjectPage(){
+        var divName = $('#myProjectJoin');
+        $(divName).html("");
+        addMyProjectJoinPage(userId, divName, myProjectJoinPage,3);
+    }
+
+    //我的所有项目
+    function addMyProjectPage(userId,div,ul,status) {
+        pageStart();//开始分页
+        function pageStart() {//分页函数
+            $.ajax({ //去后台查询第一页数据
+                type: "Get",
+                url: "/my_project_all",
+                dataType: "json",
+                data: {
+                    page: '1',
+                    userId: userId
+                }, //参数：当前页为1
+                success: function (data) {
+                    myprojectAppendHtml(data.list,div,status,1);//处理第一页的数据
+                    var options = {//根据后台返回的分页相关信息，设置插件参数
+                        bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                        currentPage: data.page, //当前页数
+                        totalPages: data.totalPage, //总页数
+                        numberOfPages: data.pageSize,//每页记录数
+                        itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                            switch (type) {
+                                case "first":
+                                    return "首";
+                                case "prev":
+                                    return "<";
+                                case "next":
+                                    return ">";
+                                case "last":
+                                    return "末";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
+                            $.ajax({//根据page去后台加载数据
+                                url: "/my_project_all",
+                                type: "get",
+                                dataType: "json",
+                                data: {
+                                    page: page,
+                                    userId: userId
+                                },
+                                success: function (data) {
+                                    myprojectAppendHtml(data.list,div,status,page);//处理数据
+                                }
+                            });
+                        }
+                    };
+                    $(ul).bootstrapPaginator(options);//设置分页
+                }
+            });
+        }
+    }
+
+    //我负责的项目
+    function addMyProjectChargePage(userId,div,ul,status) {
+        pageStart();//开始分页
+        function pageStart() {//分页函数
+            $.ajax({ //去后台查询第一页数据
+                type: "Get",
+                url: "/my_project_charge",
+                dataType: "json",
+                data: {
+                    page: '1',
+                    userId: userId
+                }, //参数：当前页为1
+                success: function (data) {
+                    myprojectAppendHtml(data.list,div,status,1);//处理第一页的数据
+                    var options = {//根据后台返回的分页相关信息，设置插件参数
+                        bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                        currentPage: data.page, //当前页数
+                        totalPages: data.totalPage, //总页数
+                        numberOfPages: data.pageSize,//每页记录数
+                        itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                            switch (type) {
+                                case "first":
+                                    return "首";
+                                case "prev":
+                                    return "<";
+                                case "next":
+                                    return ">";
+                                case "last":
+                                    return "末";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
+                            $.ajax({//根据page去后台加载数据
+                                url: "/my_project_charge",
+                                type: "get",
+                                dataType: "json",
+                                data: {
+                                    page: page,
+                                    userId: userId
+                                },
+                                success: function (data) {
+                                    myprojectAppendHtml(data.list,div,status,page);//处理数据
+                                }
+                            });
+                        }
+                    };
+                    $(ul).bootstrapPaginator(options);//设置分页
+                }
+            });
+        }
+    }
+
+    //我参加的项目
+    function addMyProjectJoinPage(userId,div,ul,status) {
+        pageStart();//开始分页
+        function pageStart() {//分页函数
+            $.ajax({ //去后台查询第一页数据
+                type: "Get",
+                url: "/my_project_join",
+                dataType: "json",
+                data: {
+                    page: '1',
+                    userId: userId
+                }, //参数：当前页为1
+                success: function (data) {
+                    myprojectAppendHtml(data.list,div,status,1);//处理第一页的数据
+                    var options = {//根据后台返回的分页相关信息，设置插件参数
+                        bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                        currentPage: data.page, //当前页数
+                        totalPages: data.totalPage, //总页数
+                        numberOfPages: data.pageSize,//每页记录数
+                        itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                            switch (type) {
+                                case "first":
+                                    return "首";
+                                case "prev":
+                                    return "<";
+                                case "next":
+                                    return ">";
+                                case "last":
+                                    return "末";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
+                            $.ajax({//根据page去后台加载数据
+                                url: "/my_project_join",
+                                type: "get",
+                                dataType: "json",
+                                data: {
+                                    page: page,
+                                    userId: userId
+                                },
+                                success: function (data) {
+                                    myprojectAppendHtml(data.list,div,status,page);//处理数据
+                                }
+                            });
+                        }
+                    };
+                    $(ul).bootstrapPaginator(options);//设置分页
+                }
+            });
+        }
+    }
+
+    //页面渲染
+    function myprojectAppendHtml(list,div,status,page) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        var userId = [[${#authentication.principal.id}]];
+        var tableShow = '';
+        for (var i = 0; i < list.length; i++) {
+            if(list[i].storeFlag==1){
+                var storecolor = "#F29F3F";
+                var storefunction = "cancelstore";
+            }else if(list[i].storeFlag==0){
+                var storecolor = "darkgrey";
+                var storefunction = "addstore";
+            }
+            if(list[i].likeFlag==1){
+                var likecolor = "#C1194E";
+                var likefunction = "cancellike";
+            }else if(list[i].likeFlag==0){
+                var likecolor = "darkgrey";
+                var likefunction = "addlike";
+            }
+
+         tableShow +=
+                '<div class="col-md-12 row">\n' +
+                '<div class="col-lg-10">\n' +
+                '<a href="/projects_view/' + list[i].projectId + '">\n' +
+                '<h2 style="color: #145180">\n' +
+                '<i class="fas fa-file-alt"></i>&nbsp;' + list[i].projectName +
+                '</h2>\n' +
+                '</a>\n' +
+                '<span style="color: #4e555b">\n' +
+                '<i class="fas fa-user-tie"></i>项目管理员：' + list[i].chargeUser +
+                '</span>&nbsp;&nbsp;&nbsp;&nbsp;\n' +
+                '<span style="color: #4e555b">\n' +
+                '<i class="fab fa-codiepie"></i>&nbsp;项目进度：' + list[i].schedule +
+                '</span>&nbsp;&nbsp;&nbsp;&nbsp;\n' +
+                '<span style="color: #4e555b">\n' +
+                '<i class="far fa-arrow-alt-circle-up"></i>上传次数：' + list[i].codeUpdateCount +
+                '</span>&nbsp;&nbsp;&nbsp;&nbsp;\n' +
+                '<span style="color: #4e555b">\n' +
+                '<i class="far fa-arrow-alt-circle-up"></i>我的上传次数：' + list[i].myUpdateCount +
+                '</span>\n' +
+                '</div>\n' +
+                '<div class="col-lg-2">\n' +
+                '<a onclick="' + storefunction + '(' + userId + ',' + list[i].projectId + ',' + status + ',' + page + ')" style="color: ' + storecolor + '">\n'+
+                '<i class="fas fa-star"></i><span>' + list[i].storeCount + '</span>\n' +
+                '</a>\n' +
+                '<a onclick="' + likefunction + '(' + userId + ',' + list[i].projectId + ',' + status + ',' + page + ')" style="color:' + likecolor + '">\n' +
+                 '<i class="fas fa-heart"></i><span>' + list[i].likeCount + '</span>\n' +
+                '</a>\n' +
+                '</div>\n' +
+                '<hr style="color: #4C5B5C" size="3" width="96%">\n' +
+                '</div>\n';
+        }
+        div.html(tableShow);
+    }
+
+    //页面渲染
+    function myprojectAppendHtml2(div) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        var tableShow = '';
+        tableShow +=
+                '<div class="col-md-12">\n' +
+                '<div class="text-center">\n'+
+                '<h3><b>无</b></h3>\n' +
+                '</div>\n'+
+                '</div>\n';
+        div.html(tableShow);
+    }
+
+    function cancelstore(userId,projectId,status,page) {
+        if(status == 1){
+            var searchValues = $("#searchByName").val();
+        }
+        else if(status == 2){
+            var searchValues = $("#searchByNameCharge").val();
+        }
+        else if(status == 3){
+            var searchValues = $("#searchByNameJoin").val();
+        }
+        $.ajax(
+            {
+                type: "Get",
+                url: "/my_project_del_refrech",
+                data: {
+                    userId: userId,
+                    projectId: projectId,
+                    page: page,
+                    status: status
+                },
+                dataType: "json",
+                success: function (data) {
+                    if(searchValues.length == 0){
+                        searchByTypeOrSchedule(status);
+                    }else{
+                        searchByName(status);
+                    }
+                }
+            }
+        );
+    }
+
+    function addstore(userId,projectId,status,page) {
+        if(status == 1){
+            var searchValues = $("#searchByName").val();
+        }
+        else if(status == 2){
+            var searchValues = $("#searchByNameCharge").val();
+        }
+        else if(status == 3){
+            var searchValues = $("#searchByNameJoin").val();
+        }
+        $.ajax(
+            {
+                type: "Get",
+                url: "/my_project_refrech",
+                data: {
+                    userId: userId,
+                    projectId: projectId,
+                    page: page,
+                    status: status
+                },
+                dataType: "json",
+                success: function (data) {
+                    if(searchValues.length == 0){
+                        searchByTypeOrSchedule(status);
+                    }else{
+                        searchByName(status);
+                    }
+                }
+            }
+        );
+    }
+
+    function cancellike(userId,projectId,status,page) {
+        if(status == 1){
+            var searchValues = $("#searchByName").val();
+        }
+        else if(status == 2){
+            var searchValues = $("#searchByNameCharge").val();
+        }
+        else if(status == 3){
+            var searchValues = $("#searchByNameJoin").val();
+        }
+        $.ajax(
+            {
+                type: "Get",
+                url: "/my_project_del_refrech_like",
+                data: {
+                    userId: userId,
+                    projectId: projectId,
+                    page: page,
+                    status: status
+                },
+                dataType: "json",
+                success: function (data) {
+                    if(searchValues.length == 0){
+                        searchByTypeOrSchedule(status);
+                    }else{
+                        searchByName(status);
+                    }
+                }
+            }
+        );
+    }
+
+    function addlike(userId,projectId,status,page) {
+        if(status == 1){
+            var searchValues = $("#searchByName").val();
+        }
+        else if(status == 2){
+            var searchValues = $("#searchByNameCharge").val();
+        }
+        else if(status == 3){
+            var searchValues = $("#searchByNameJoin").val();
+        }
+        $.ajax(
+            {
+                type: "Get",
+                url: "/my_project_refrech_like",
+                data: {
+                    userId: userId,
+                    projectId: projectId,
+                    page: page,
+                    status: status
+                },
+                dataType: "json",
+                success: function (data) {
+                    if(searchValues.length == 0){
+                        searchByTypeOrSchedule(status);
+                    }else{
+                        searchByName(status);
+                    }
+                }
+            }
+        );
+    }
+
+    function searchByTypeOrSchedule(status) {
+        if(status==1){//全部项目
+            var divName = $('#myProjectAll');
+            var type = $("#typeName").val();
+            var schedule = $("#scheduleName").val();
+            var url = "/get_project_by_type";
+            searchAllByTypeOrSchedule(divName,type,schedule,url,status,myProjectAllPage);
+        }else if(status==2){//负责项目
+            var divName = $('#myProjectCharge');
+            var type = $("#typeNameCharge").val();
+            var schedule = $("#scheduleNameCharge").val();
+            var url = "/get_project_charge_by_type";
+            searchAllByTypeOrSchedule(divName,type,schedule,url,status,myProjectChargePage);
+        }else if(status==3){//参与项目
+            var divName = $('#myProjectJoin');
+            var type = $("#typeNameJoin").val();
+            var schedule = $("#scheduleNameJoin").val();
+            var url = "/get_project_join_by_type";
+            searchAllByTypeOrSchedule(divName,type,schedule,url,status,myProjectJoinPage);
+        }
+    }
+
+    function searchByName(status) {
+        if(status==1){//全部项目
+            var divName = $('#myProjectAll');
+            var searchValues = $("#searchByName").val();
+            var url = "/get_project_by_name_or_user";
+            searchAllByName(divName,searchValues,url,status,myProjectAllPage);
+        }else if(status==2){//负责项目
+            var divName = $('#myProjectCharge');
+            var searchValues = $("#searchByNameCharge").val();
+            var url = "/get_project_charge_by_name_or_user";
+            searchAllByName(divName,searchValues,url,status,myProjectChargePage);
+        }else if(status==3){//参与项目
+            var divName = $('#myProjectJoin');
+            var searchValues = $("#searchByNameJoin").val();
+            var url = "/get_project_join_by_name_or_user";
+            searchAllByName(divName,searchValues,url,status,myProjectJoinPage);
+        }
+    }
+
+    //按类型、进度搜索
+    function searchAllByTypeOrSchedule(divName,type,schedule,url,status,ul){
+        $.ajax({
+            type: "Get",
+            url: url,
+            data: {
+                page: '1',
+                type:type,
+                schedule:schedule
+            },
+            success: function (data) {
+                myprojectAppendHtml(data.list,divName,status,1);//处理第一页的数据
+                var options = {//根据后台返回的分页相关信息，设置插件参数
+                    bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                    currentPage: data.page, //当前页数
+                    totalPages: data.totalPage, //总页数
+                    numberOfPages: data.pageSize,//每页记录数
+                    itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                        switch (type) {
+                            case "first":
+                                return "首";
+                            case "prev":
+                                return "<";
+                            case "next":
+                                return ">";
+                            case "last":
+                                return "末";
+                            case "page":
+                                return page;
+                        }
+                    },
+                    onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
+                        $.ajax({//根据page去后台加载数据
+                            url: url,
+                            type: "get",
+                            dataType: "json",
+                            data: {
+                                page: page,
+                                type:type,
+                                schedule:schedule
+                            },
+                            success: function (data) {
+                                myprojectAppendHtml(data.list,divName,status,page);//处理数据
+                            }
+                        });
+                    }
+                };
+                $(ul).bootstrapPaginator(options);//设置分页
+            },
+            error:function () {
+                myprojectAppendHtml2(divName);
+                var options2 = {//根据后台返回的分页相关信息，设置插件参数
+                    bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                    currentPage: 1, //当前页数
+                    totalPages: 1, //总页数
+                    numberOfPages: 5,//每页记录数
+                    itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                        switch (type) {
+                            case "first":
+                                return "首";
+                            case "prev":
+                                return "<";
+                            case "next":
+                                return ">";
+                            case "last":
+                                return "末";
+                            case "page":
+                                return page;
+                        }
+                    },
+                };
+                $(ul).bootstrapPaginator(options2);//设置分页
+            }
+        })
+    }
+
+    //对项目名、负责人搜索模糊查询
+    function searchAllByName(divName,searchValues,url,status,ul) {
+        $.ajax({
+            type: "Get",
+            url: url,
+            data: {
+                page: '1',
+                nameOrUser:searchValues
+            },
+            success: function (data) {
+                myprojectAppendHtml(data.list,divName,status,1);//处理第一页的数据
+                var options = {//根据后台返回的分页相关信息，设置插件参数
+                    bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                    currentPage: data.page, //当前页数
+                    totalPages: data.totalPage, //总页数
+                    numberOfPages: data.pageSize,//每页记录数
+                    itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                        switch (type) {
+                            case "first":
+                                return "首";
+                            case "prev":
+                                return "<";
+                            case "next":
+                                return ">";
+                            case "last":
+                                return "末";
+                            case "page":
+                                return page;
+                        }
+                    },
+                    onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
+                        $.ajax({//根据page去后台加载数据
+                            url: url,
+                            type: "get",
+                            dataType: "json",
+                            data: {
+                                page: page,
+                                nameOrUser:searchValues
+                            },
+                            success: function (data) {
+                                myprojectAppendHtml(data.list,divName,status,page);//处理数据
+                            }
+                        });
+                    }
+                };
+                $(ul).bootstrapPaginator(options);//设置分页
+            },
+            error:function () {
+                myprojectAppendHtml2(divName);
+                var options2 = {//根据后台返回的分页相关信息，设置插件参数
+                    bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                    currentPage: 1, //当前页数
+                    totalPages: 1, //总页数
+                    numberOfPages: 5,//每页记录数
+                    itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                        switch (type) {
+                            case "first":
+                                return "首";
+                            case "prev":
+                                return "<";
+                            case "next":
+                                return ">";
+                            case "last":
+                                return "末";
+                            case "page":
+                                return page;
+                        }
+                    },
+                };
+                $(ul).bootstrapPaginator(options2);//设置分页
+            }
+        })
+    }
+
+
+</script>
+</body>
+</html>

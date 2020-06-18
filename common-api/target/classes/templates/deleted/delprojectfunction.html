@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>DeleteProjectFunction-ProjectManagment</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+    <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
+    <div th:replace="commom/bar :: commom_css"></div>
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="commom/bar :: topbar"></div>
+
+    <!-- Sidebar -->
+    <div th:replace="/commom/bar :: sidebar"></div>
+    <!-- End Sidebar -->
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header">
+                    <h4 class="page-title">DataTables.Net</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <a href="#">
+                                <i class="flaticon-home"></i>
+                            </a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">Tables</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">Deleteuser</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-flex align-items-center">
+                                    <h4 class="card-title">已注销项目功能</h4>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!-- 信息表单 -->
+                                <div class="table-responsive">
+                                    <table id="add-row" class="display table table-striped table-hover" >
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>项目ID</th>
+                                            <th>项目名</th>
+                                            <th>功能ID</th>
+                                            <th>功能名</th>
+                                            <th>功能状态</th>
+                                            <th>发布用户</th>
+                                            <th>实现用户</th>
+                                            <th style="width: 10%">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>项目ID</th>
+                                            <th>项目名</th>
+                                            <th>功能ID</th>
+                                            <th>功能名</th>
+                                            <th>功能状态</th>
+                                            <th>发布用户</th>
+                                            <th>实现用户</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        <tr th:each="projectfunction:${delprojectfunctionlist}">
+                                            <td th:text="${projectfunction.id}"></td>
+                                            <td th:text="${projectfunction.projectsId}"></td>
+                                            <td th:text="${projectfunction.projectName}"></td>
+                                            <td th:text="${projectfunction.functionId}"></td>
+                                            <td th:text="${projectfunction.functionName}"></td>
+                                            <td th:text="待办的" th:if="${projectfunction.functionStatus} == 0"></td>
+                                            <td th:text="进行中" th:if="${projectfunction.functionStatus} == 1"></td>
+                                            <td th:text="已完成" th:if="${projectfunction.functionStatus} == 2"></td>
+                                            <td th:text="已验收" th:if="${projectfunction.functionStatus} == 3"></td>
+                                            <td th:text="${projectfunction.publishUserId}"></td>
+                                            <td th:text="${projectfunction.realizeUserId}"></td>
+                                            <td>
+                                                <div class="form-button-action">
+                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-success" th:onclick="reductionProjectFunction([[${projectfunction.id}]])">
+                                                            <i class="fa fa-check"></i>
+                                                        </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!--公共JS-->
+<th:block th:replace="commom/bar :: commom_js" />
+<!--公共JS-->
+<th:block th:replace="commom/bar :: nav_js" />
+
+
+<script type="text/javascript">
+    function reductionProjectFunction(id) {
+        $.ajax({
+            type: "post",
+            url: "/reduction_project_function",
+            dataType: "json",
+            data: {
+                id: id,
+            },
+            success: function (data) {
+                if (data==1) {
+                    swal("还原成功！", {
+                        icon : "success",
+                        buttons: false,
+                        timer: 1500,
+                    });
+                    setTimeout(function(){
+                        location.href = "/del_project_function_list";
+                    },1500);
+                }
+                else {
+                    swal("还原失败！",{
+                        icon: "error",
+                        buttons: {
+                            confirm: {
+                                className: 'btn btn-danger'
+                            }
+                        }
+                    })
+                }
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

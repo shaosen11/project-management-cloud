@@ -27,6 +27,11 @@ public interface ProjectFeignService {
     @GetMapping("project/get/{id}")
     Project queryById(@PathVariable("id") Integer id);
 
-
+    /**
+     * 统计系统项目数量
+     * @return
+     */
+    @GetMapping("project/getProjectCount")
+    Integer getProjectCount();
 
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.lingnan.dao.UserClickDao">
+
+    <resultMap type="com.edu.lingnan.entity.UserClick" id="UserClickMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="projectsId" column="projects_id" jdbcType="INTEGER"/>
+        <result property="clickTime" column="click_time" jdbcType="TIMESTAMP"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UserClickMap">
+        select
+          id, user_id, projects_id, click_time, delete_flag
+        from project_management_user_cloud.user_click
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="UserClickMap">
+        select
+          id, user_id, projects_id, click_time, delete_flag
+        from project_management_user_cloud.user_click
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="UserClickMap">
+        select
+          id, user_id, projects_id, click_time, delete_flag
+        from project_management_user_cloud.user_click
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="projectsId != null">
+                and projects_id = #{projectsId}
+            </if>
+            <if test="clickTime != null">
+                and click_time = #{clickTime}
+            </if>
+            <if test="deleteFlag != null">
+                and delete_flag = #{deleteFlag}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

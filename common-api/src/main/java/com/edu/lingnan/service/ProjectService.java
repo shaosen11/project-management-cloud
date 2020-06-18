@@ -44,5 +44,9 @@ public interface ProjectService {
      */
     Project update(Project project);
 
-
+    /**
+     * 统计系统项目数量
+     * @return
+     */
+    Integer projectCount();
 }

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>ProjectUser-ProjectManagment</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+    <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
+    <div th:replace="commom/bar :: commom_css"></div>
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="commom/bar :: topbar"></div>
+    <!-- Sidebar -->
+    <div th:replace="commom/bar :: projectsidebar"></div>
+    <!-- End Sidebar -->
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header col-md-6">
+                    <h4 class="page-title">[[${project.name}]]人员</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <a th:href="@{/}">
+                                <i class="flaticon-home"></i>
+                            </a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{/projects_view/{id}(id=${project.id})}">项目主面板</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{/project_user_view/{id}(id=${project.id})}">项目人员</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--功能点概览-->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card card-stats card-round">
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="icon-big text-center">
+                                            <i class="fas fa-users text-primary"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats">
+                                        <div class="numbers">
+                                            <p class="card-category">项目人数</p>
+                                            <h4 class="card-title" id="projectUserCount">[[${countByProjectId}]]</h4>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-stats card-round">
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="icon-big text-center">
+                                            <i class="fas fa-user-tie text-secondary"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats">
+                                        <div class="numbers">
+                                            <p class="card-category">管理员</p>
+                                            <h4 class="card-title" id="projectUserAdmin">[[${admin}]]</h4>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="icon-big text-center">
+                                            <i class="fas fa-user-astronaut text-info"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats">
+                                        <div class="numbers">
+                                            <p class="card-category">开发者</p>
+                                            <h4 class="card-title" id="projectUserCodeDevelop">[[${codeDevelop}]]</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--人员信息-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title"><h3>项目人员</h3></div>
+                            </div>
+                            <div class="card-body pb-0">
+                                <!-- 分页容器：显示数据 -->
+                                <div id="projectUserDiv"></div>
+                                <!-- 分页容器： 显示分页按钮-->
+                                <div class="text-right mt-3 mb-3">
+                                    <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                    <ul id="projectUserPage" class="pagination"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="mb-1 fw-bold"><h2>完成功能点</h2></span>
+                            </div>
+                            <div class="card-body">
+                                <p class="demo" id="finishFunction">
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="mb-1 fw-bold"><h2>正在开发功能点</h2></span>
+                            </div>
+                            <div class="card-body">
+                                <p class="demo" id="developingFunction">
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group col-md-12">
+                                    <div class="card-header">
+                                                <span class="text-center text-dark mb-1 fw-bold">
+                                                    <h2 id="personInformationDevelopment"></h2>
+                                                    <h2>贡献量</h2>
+                                                </span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="card card-info bg-secondary-gradient ">
+                                                <div class="card-body">
+                                                    <h4 class="mb-1 fw-bold">代码贡献量</h4>
+                                                    <div id="codeDevoteLine"
+                                                         class="chart-circle mt-4 mb-3"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card card-info bg-info-gradient">
+                                                <div class="card-body">
+                                                    <h4 class="mb-1 fw-bold">上传次数</h4>
+                                                    <div id="codeUpdate" class="chart-circle mt-4 mb-3"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+<!--                        <div class="card">-->
+<!--                            <div class="card-header">-->
+<!--                                <span class="mb-1 fw-bold"><h2>最近活动</h2></span>-->
+<!--                            </div>-->
+<!--                            <div class="card-body">-->
+<!--                                <ol class="activity-feed">-->
+<!--                                    <li class="feed-item feed-item-secondary">-->
+<!--                                        <time class="date" datetime="9-25">Sep 25</time>-->
+<!--                                        <span class="text">Responded to need <a-->
+<!--                                                href="#">"Volunteer opportunity"</a></span>-->
+<!--                                    </li>-->
+<!--                                    <li class="feed-item feed-item-success">-->
+<!--                                        <time class="date" datetime="9-24">Sep 24</time>-->
+<!--                                        <span class="text">Added an interest <a-->
+<!--                                                href="#">"Volunteer Activities"</a></span>-->
+<!--                                    </li>-->
+<!--                                    <li class="feed-item feed-item-info">-->
+<!--                                        <time class="date" datetime="9-23">Sep 23</time>-->
+<!--                                        <span class="text">Joined the group <a-->
+<!--                                                href="single-group.php">"Boardsmanship Forum"</a></span>-->
+<!--                                    </li>-->
+<!--                                    <li class="feed-item feed-item-warning">-->
+<!--                                        <time class="date" datetime="9-21">Sep 21</time>-->
+<!--                                        <span class="text">Responded to need <a-->
+<!--                                                href="#">"In-Kind Opportunity"</a></span>-->
+<!--                                    </li>-->
+<!--                                    <li class="feed-item feed-item-danger">-->
+<!--                                        <time class="date" datetime="9-18">Sep 18</time>-->
+<!--                                        <span class="text">Created need <a-->
+<!--                                                href="#">"Volunteer Opportunity"</a></span>-->
+<!--                                    </li>-->
+<!--                                    <li class="feed-item">-->
+<!--                                        <time class="date" datetime="9-17">Sep 17</time>-->
+<!--                                        <span class="text">Attending the event <a-->
+<!--                                                href="single-event.php">"Some New Event"</a></span>-->
+<!--                                    </li>-->
+<!--                                </ol>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--model框-->
+<div th:replace="commom/bar :: uploadfilemodel"></div>
+<div th:replace="commom/bar :: newprojectpackage"></div>
+<div class="modal fade" id="addFunction" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header no-bd">
+                <h5 class="modal-title">
+                        <span class="fw-mediumbold">
+                            New</span>
+                    <span class="fw-light">
+                            Function
+                        </span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="small">Create a new Function using this form, make sure you fill them all</p>
+                <div class="row">
+                    <div class="col-md-6 pr-0">
+                        <div class="form-group form-group-default">
+                            <label>功能名</label>
+                            <input id="addName" name="functionName" type="text" class="form-control"
+                                   placeholder="fill functionName" onBlur="checkFunctionName()">
+                            <span class="default" style="color: #3c763d" id="nameErr">请输入功能名称</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pr-0">
+                        <div class="form-group form-group-default">
+                            <label>实现用户</label>
+                            <input id="addRealizeUserId" name="realizeUserId" type="text" class="form-control"
+                                   placeholder="fill realizeUserId">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer no-bd">
+                <button type="button" class="btn btn-primary" onclick="addFunction()">Add</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--公共JS-->
+<th:block th:replace="commom/bar :: commom_js" />
+<!--公共JS-->
+<th:block th:replace="commom/bar :: nav_project_js" />
+
+
+<!--加载人员信息-->
+<script type="text/javascript">
+    $(function () {
+        addPersonManagerPage(projectId, null, projectUserDiv, projectUserPage);
+    })
+
+    function addPersonManagerPage(projectId, market, div, ul) {
+        pageStart();//开始分页
+        function pageStart() {//分页函数
+            $.ajax({ //去后台查询第一页数据
+                type: "get",
+                url: "/projectUserPage",
+                dataType: "json",
+                data: {
+                    page: '1',
+                    projectId: projectId,
+                    market: market
+                }, //参数：当前页为1
+                success: function (data) {
+                    appendPersonManagerHtml(data.list)//处理第一页的数据
+                    appendPersonInformationHtml(data.list[0].userId)
+                    var options = {//根据后台返回的分页相关信息，设置插件参数
+                        bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                        currentPage: data.page, //当前页数
+                        totalPages: data.totalPage, //总页数
+                        numberOfPages: data.pageSize,//每页记录数
+                        itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                            switch (type) {
+                                case "first":
+                                    return "首页";
+                                case "prev":
+                                    return "上一页";
+                                case "next":
+                                    return "下一页";
+                                case "last":
+                                    return "末页";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
+                            $.ajax({//根据page去后台加载数据
+                                url: "/projectUserPage",
+                                type: "get",
+                                dataType: "json",
+                                data: {
+                                    "page": page,
+                                    projectId: projectId,
+                                    market: market
+                                },
+                                success: function (data) {
+                                    appendPersonManagerHtml(data.list);//处理数据
+                                }
+                            });
+                        }
+                    };
+                    $(ul).bootstrapPaginator(options);//设置分页
+                }
+            });
+        }
+
+        //此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        function appendPersonManagerHtml(list) {
+            $(div).html("");
+            var tableShow = '';
+            for (var i = 0; i < list.length; i++) {
+                tableShow += '                         <div class="d-flex" onclick="javascript:appendPersonInformationHtml(' + list[i].userId + ')">\n' +
+                    '                                    <div class="avatar">\n' +
+                    '                                        <img src="/files/photo/' + list[i].myUserDetails.photo + '" alt="..." class="avatar-img rounded-circle">\n' +
+                    '                                    </div>\n' +
+                    '                                    <div class="flex-1 pt-1 ml-2">\n' +
+                    '                                        <h5 class="fw-bold mb-1">' + list[i].projectsUserDuty.dutyName + '</h5>\n' +
+                    '                                        <small class="text-muted">' + list[i].myUserDetails.username + '</small>\n' +
+                    '                                    </div>\n' +
+                    '                                    <div class="d-flex ml-auto align-items-center">\n' +
+                    '                                        <h3 class="text-info fw-bold">+' + list[i].codeDevoteLine + '</h3>\n' +
+                    '                                    </div>\n' +
+                    '                                </div>\n' +
+                    '                                <div class="separator-dashed"></div>'
+            }
+            $(div).html(tableShow)
+        }
+
+
+    }
+</script>
+<!--人员信息贡献比例图-->
+<script type="text/javascript">
+    function codeLineCicle(radius) {
+        // Cicle Chart
+        Circles.create({
+            id: 'codeDevoteLine',
+            radius: 50,
+            value: radius,
+            maxValue: 100,
+            width: 5,
+            text: function (value) {
+                return value + '%';
+            },
+            colors: ['#6677ee', '#fff'],
+            duration: 400,
+            wrpClass: 'circles-wrp',
+            textClass: 'circles-text',
+            styleWrapper: true,
+            styleText: true
+        })
+    }
+
+    function codeUpdateCile(radius) {
+        // Cicle Chart
+        Circles.create({
+            id: 'codeUpdate',
+            radius: 50,
+            value: radius,
+            maxValue: 100,
+            width: 5,
+            text: function (value) {
+                return value + '%';
+            },
+            colors: ['#36a3f7', '#fff'],
+            duration: 400,
+            wrpClass: 'circles-wrp',
+            textClass: 'circles-text',
+            styleWrapper: true,
+            styleText: true
+        })
+    }
+</script>
+<!--人员信息-->
+<script type="text/javascript">
+    function appendPersonInformationHtml(userId) {
+        $.ajax({
+            type: "get",
+            url: "/projectsUserDevotion",
+            dataType: "json",
+            data: {
+                projectId: projectId,
+                userId: userId
+            },
+            success: function (json) {
+                $("#personInformationDevelopment").text(json.myUserDetails.username);
+                codeLineCicle(json.codeDevoteLineRatio);
+                codeUpdateCile(json.codeUpdateRatio);
+                $("#personInformationName").text(json.myUserDetails.username);
+                $("#personInformationEmail").text(json.myUserDetails.email);
+                appendFinishFunction(projectId, userId);
+                appendDevelopIngFunction(projectId, userId);
+            }
+        })
+    }
+</script>
+<!--加载开发功能点-->
+<script type="text/javascript">
+    function appendFinishFunction(projectId, userId) {
+        $.ajax({
+            type: "get",
+            url: "/user_finish_function",
+            dataType: "json",
+            data: {
+                projectId: projectId,
+                userId: userId
+            },
+            success: function (json) {
+                appendFinishFunctionHtml(json);
+            }
+        })
+    }
+
+    function appendFinishFunctionHtml(list) {
+        $(finishFunction).html("");
+        var button = '';
+        for (var i = 0; i < list.length; i++) {
+            button += '<button class="btn btn-secondary">\n' +
+                '   <span class="btn-label">\n' +
+                '     <i class="fa fa-check"></i>\n' +
+                '   </span>\n' +
+                '   ' + list[i].functionName + '\n' +
+                ' </button>'
+        }
+        $(finishFunction).html(button)
+    }
+</script>
+<!--加载完成功能点-->
+<script type="text/javascript">
+    function appendDevelopIngFunction(projectId, userId) {
+        $.ajax({
+            type: "get",
+            url: "/user_developing_function",
+            dataType: "json",
+            data: {
+                projectId: projectId,
+                userId: userId
+            },
+            success: function (json) {
+                appendDevelopingFunctionHtml(json);
+            }
+        })
+    }
+
+    function appendDevelopingFunctionHtml(list) {
+        $(developingFunction).html("");
+        var button = '';
+        for (var i = 0; i < list.length; i++) {
+            button += '<button class="btn btn-info">\n' +
+                '   <span class="btn-label">\n' +
+                '     <i class="fa fa-sync-alt"></i>\n' +
+                '   </span>\n' +
+                '   ' + list[i].functionName + '\n' +
+                ' </button>'
+        }
+        $(developingFunction).html(button)
+    }
+</script>
+</body>
+</html>

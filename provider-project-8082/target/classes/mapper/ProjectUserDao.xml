@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.lingnan.dao.ProjectUserDao">
+
+    <resultMap type="com.edu.lingnan.entity.ProjectUser" id="ProjectUserMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="projectsId" column="projects_id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="dutyCode" column="duty_code" jdbcType="INTEGER"/>
+        <result property="codeDevoteLine" column="code_devote_line" jdbcType="INTEGER"/>
+        <result property="codeUpdate" column="code_update" jdbcType="INTEGER"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
+        <result property="joinTime" column="join_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ProjectUserMap">
+        select
+          id, projects_id, user_id, duty_code, code_devote_line, code_update, delete_flag, join_time
+        from project_management_project_cloud.project_user
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ProjectUserMap">
+        select
+          id, projects_id, user_id, duty_code, code_devote_line, code_update, delete_flag, join_time
+        from project_management_project_cloud.project_user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ProjectUserMap">
+        select
+          id, projects_id, user_id, duty_code, code_devote_line, code_update, delete_flag, join_time
+        from project_management_project_cloud.project_user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="projectsId != null">
+                and projects_id = #{projectsId}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="dutyCode != null">
+                and duty_code = #{dutyCode}
+            </if>
+            <if test="codeDevoteLine != null">
+                and code_devote_line = #{codeDevoteLine}
+            </if>
+            <if test="codeUpdate != null">
+                and code_update = #{codeUpdate}
+            </if>
+            <if test="deleteFlag != null">
+                and delete_flag = #{deleteFlag}
+            </if>
+            <if test="joinTime != null">
+                and join_time = #{joinTime}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

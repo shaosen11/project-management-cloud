@@ -22,15 +22,6 @@ public class UserRecordController {
     @Resource
     private UserRecordService userRecordService;
 
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("selectOne")
-    public UserRecord selectOne(Integer id) {
-        return this.userRecordService.queryById(id);
-    }
+
 
 }
