@@ -28,9 +28,19 @@ public class UserClickController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("selectOne")
-    public UserClick selectOne(Integer id) {
+    @GetMapping("queryById")
+    public UserClick queryById(Integer id) {
         return this.userClickService.queryById(id);
     }
 
+    /**
+     * 插入一条数据
+     * @param userClick 更新记录
+     * @return Boolean
+     */
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public Boolean insert(@RequestBody UserClick userClick){
+        Boolean flag = userClickService.insert(userClick);
+        return flag;
+    }
 }

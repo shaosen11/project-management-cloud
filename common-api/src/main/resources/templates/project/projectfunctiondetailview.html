@@ -234,7 +234,7 @@
         var projectFunctionId = "[[${projectsFunction.id}]]";
         $.ajax({
             type: "Get",
-            url: "/projectFunction",
+            url: "/project/projectFunction/getProjectFunctionById",
             data: {
                 id: projectFunctionId,
             },
@@ -249,22 +249,22 @@
                 $("#ProjectFunctionActualEndTime").text(result.actualEndTime);
                 $("#ProjectFunctionDescription").text(result.description);
                 if (result.functionStatus == 0) {
-                    $("#functionStatusText").text("状态：待办")
-                    $("#functionStatusNumber").text("25%")
-                    $("#functionStatusNumberClass").attr("class", "progress-bar bg-info w-25")
+                    $("#functionStatusText").text("状态：待办");
+                    $("#functionStatusNumber").text("25%");
+                    $("#functionStatusNumberClass").attr("class", "progress-bar bg-info w-25");
 
                 } else if (result.functionStatus == 1) {
-                    $("#functionStatusText").text("状态：进行中")
-                    $("#functionStatusNumber").text("50%")
-                    $("#functionStatusNumberClass").attr("class", "progress-bar bg-info w-50")
+                    $("#functionStatusText").text("状态：进行中");
+                    $("#functionStatusNumber").text("50%");
+                    $("#functionStatusNumberClass").attr("class", "progress-bar bg-info w-50");
                 } else if (result.functionStatus == 2) {
-                    $("#functionStatusText").text("状态：已完成")
-                    $("#functionStatusNumber").text("75%")
-                    $("#functionStatusNumberClass").attr("class", "progress-bar bg-info w-75")
+                    $("#functionStatusText").text("状态：已完成");
+                    $("#functionStatusNumber").text("75%");
+                    $("#functionStatusNumberClass").attr("class", "progress-bar bg-info w-75");
                 } else if (result.functionStatus == 3) {
-                    $("#functionStatusText").text("状态：已验收")
-                    $("#functionStatusNumber").text("100%")
-                    $("#functionStatusNumberClass").attr("class", "progress-bar bg-info w-100")
+                    $("#functionStatusText").text("状态：已验收");
+                    $("#functionStatusNumber").text("100%");
+                    $("#functionStatusNumberClass").attr("class", "progress-bar bg-info w-100");
                 }
                 dayDifference(result.plannedEndTime, result.functionStatus)
             }
@@ -275,7 +275,7 @@
         var date1 = date;  //开始时间
         var date2 = new Date();    //结束时间
         var date3 = new Date(date1).getTime() - date2.getTime();   //时间差的毫秒数
-        var days = Math.floor(date3 / (24 * 3600 * 1000))
+        var days = Math.floor(date3 / (24 * 3600 * 1000));
         if (functionStatus == 0 || functionStatus == 1) {
             if (days > 0) {
                 $("#dayDifference").text("距离验收还有" + days + "天")

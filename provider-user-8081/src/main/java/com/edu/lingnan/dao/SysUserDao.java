@@ -23,7 +23,7 @@ public interface SysUserDao extends BaseDao<SysUser>{
      * @param id 主键
      * @return 实例对象
      */
-    SysUser queryById(@Param("id") Integer id);
+    SysUser getById(@Param("id") Integer id);
 
     /**
      * 查询指定行数据

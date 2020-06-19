@@ -1,7 +1,6 @@
 package com.edu.lingnan.controller;
 
 import com.edu.lingnan.entity.Echarts;
-import com.edu.lingnan.entity.Project;
 import com.edu.lingnan.entity.ProjectUser;
 import com.edu.lingnan.entity.SysUser;
 import com.edu.lingnan.feign.ProjectUserFeignService;
@@ -72,10 +71,6 @@ public class ProjectUserController {
         return projectUserService.getDelProjectUserList();
     }
 
-    @GetMapping("getByUserIdAndProjectId/{userId}/{projectId}")
-    ProjectUser getByUserIdAndProjectId(@PathVariable("userId") Integer userId,@PathVariable("projectId") Integer projectId){
-        return projectUserService.getByUserIdAndProjectId(userId, projectId);
-    }
 
     @GetMapping("getCodeDevote/{projectId}")
     List<Echarts> getCodeDevote(@PathVariable("projectId") Integer projectId){
@@ -131,5 +126,16 @@ public class ProjectUserController {
     }
 
 
+    /**
+     * 通过ID查询单条数据
+     * @return 实例对象
+     */
+    @RequestMapping(value = "/getByUserIdAndProjectId", method = RequestMethod.GET)
+    public ProjectUser getByUserIdAndProjectId(@RequestParam("userId") Integer userId, @RequestParam("projectId")Integer projectId){
+        System.out.println("getByUserIdAndProjectId-->userId="+userId+"  projectId="+projectId);
+        ProjectUser projectUser = projectUserService.getByUserIdAndProjectId(userId,projectId);
+        System.out.println(projectUser);
+        return projectUser;
+    }
 
 }

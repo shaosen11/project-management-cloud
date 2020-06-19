@@ -5,11 +5,14 @@
     <resultMap type="com.edu.lingnan.entity.ProjectFunction" id="ProjectFunctionMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="projectsId" column="projects_id" jdbcType="INTEGER"/>
+        <result property="projectsName" column="projects_name" jdbcType="VARCHAR"/>
         <result property="functionId" column="function_id" jdbcType="INTEGER"/>
         <result property="functionName" column="function_name" jdbcType="VARCHAR"/>
         <result property="functionStatus" column="function_status" jdbcType="INTEGER"/>
         <result property="publishUserId" column="publish_user_id" jdbcType="INTEGER"/>
+        <result property="publishUserName" column="publish_user_name" jdbcType="VARCHAR"/>
         <result property="realizeUserId" column="realize_user_id" jdbcType="INTEGER"/>
+        <result property="realizeUserName" column="realize_user_name" jdbcType="VARCHAR"/>
         <result property="plannedStartTime" column="planned_start_time" jdbcType="OTHER"/>
         <result property="plannedEndTime" column="planned_end_time" jdbcType="OTHER"/>
         <result property="actualStartTime" column="actual_start_time" jdbcType="OTHER"/>
@@ -21,28 +24,85 @@
 
     <!--查询单个-->
     <select id="queryById" resultMap="ProjectFunctionMap">
-        select
-          id, projects_id, function_id, function_name, function_status, publish_user_id, realize_user_id, planned_start_time, planned_end_time, actual_start_time, actual_end_time, delete_flag, del_reason, description
-        from project_management_project_cloud.project_function
-        where id = #{id}
+        select pf.id as id, pf.projects_id as projects_id, p.name as projects_name, pf.function_id as function_id, pf.function_name as function_name,
+        pf.function_status as function_status, pf.publish_user_id as publish_user_id, su1.username as publish_user_name,
+        pf.realize_user_id as realize_user_id, su2.username as realize_user_name, pf.planned_start_time as planned_start_time,
+        pf.planned_end_time as planned_end_time, pf.actual_start_time as actual_start_time, pf.actual_end_time as actual_end_time, pf.delete_flag as delete_flag, pf.del_reason as del_reason, pf.description as description
+        FROM project_management_project_cloud.project_function pf left join project_management_user_cloud.sys_user su1 on pf.publish_user_id = su1.id
+        left join project_management_user_cloud.sys_user su2 on pf.realize_user_id = su2.id
+        right join project_management_project_cloud.project p on pf.projects_id = p.id
+        where pf.id = #{id}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="ProjectFunctionMap">
-        select
-          id, projects_id, function_id, function_name, function_status, publish_user_id, realize_user_id, planned_start_time, planned_end_time, actual_start_time, actual_end_time, delete_flag, del_reason, description
-        from project_management_project_cloud.project_function
+        select pf.id as id, pf.projects_id as projects_id, p.name as projects_name, pf.function_id as function_id, pf.function_name as function_name,
+        pf.function_status as function_status, pf.publish_user_id as publish_user_id, su1.username as publish_user_name,
+        pf.realize_user_id as realize_user_id, su2.username as realize_user_name, pf.planned_start_time as planned_start_time,
+        pf.planned_end_time as planned_end_time, pf.actual_start_time as actual_start_time, pf.actual_end_time as actual_end_time, pf.delete_flag as delete_flag, pf.del_reason as del_reason, pf.description as description
+        FROM project_management_project_cloud.project_function pf left join project_management_user_cloud.sys_user su1 on pf.publish_user_id = su1.id
+        left join project_management_user_cloud.sys_user su2 on pf.realize_user_id = su2.id
+        right join project_management_project_cloud.project p on pf.projects_id = p.id
+        <where>
+            <if test="projectFunction.id != null">
+                and pf.id = #{projectFunction.id}
+            </if>
+            <if test="projectFunction.projectsId != null">
+                and projects_id = #{projectFunction.projectsId}
+            </if>
+            <if test="projectFunction.functionId != null">
+                and function_id = #{projectFunction.functionId}
+            </if>
+            <if test="projectFunction.functionName != null and projectFunction.functionName != ''">
+                and function_name = #{projectFunction.functionName}
+            </if>
+            <if test="projectFunction.functionStatus != null">
+                and function_status = #{projectFunction.functionStatus}
+            </if>
+            <if test="projectFunction.publishUserId != null">
+                and publish_user_id = #{projectFunction.publishUserId}
+            </if>
+            <if test="projectFunction.realizeUserId != null">
+                and realize_user_id = #{projectFunction.realizeUserId}
+            </if>
+            <if test="projectFunction.plannedStartTime != null">
+                and planned_start_time = #{projectFunction.plannedStartTime}
+            </if>
+            <if test="projectFunction.plannedEndTime != null">
+                and planned_end_time = #{projectFunction.plannedEndTime}
+            </if>
+            <if test="projectFunction.actualStartTime != null">
+                and actual_start_time = #{projectFunction.actualStartTime}
+            </if>
+            <if test="projectFunction.actualEndTime != null">
+                and actual_end_time = #{projectFunction.actualEndTime}
+            </if>
+            <if test="projectFunction.deleteFlag != null">
+                and pf.delete_flag = #{projectFunction.deleteFlag}
+            </if>
+            <if test="projectFunction.delReason != null and projectFunction.delReason != ''">
+                and del_reason = #{projectFunction.delReason}
+            </if>
+            <if test="projectFunction.description != null and projectFunction.description != ''">
+                and description = #{projectFunction.description}
+            </if>
+        </where>
+        order by id
         limit #{offset}, #{limit}
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="ProjectFunctionMap">
-        select
-          id, projects_id, function_id, function_name, function_status, publish_user_id, realize_user_id, planned_start_time, planned_end_time, actual_start_time, actual_end_time, delete_flag, del_reason, description
-        from project_management_project_cloud.project_function
+        select pf.id as id, pf.projects_id as projects_id, p.name as projects_name, pf.function_id as function_id, pf.function_name as function_name,
+        pf.function_status as function_status, pf.publish_user_id as publish_user_id, su1.username as publish_user_name,
+        pf.realize_user_id as realize_user_id, su2.username as realize_user_name, pf.planned_start_time as planned_start_time,
+        pf.planned_end_time as planned_end_time, pf.actual_start_time as actual_start_time, pf.actual_end_time as actual_end_time, pf.delete_flag as delete_flag, pf.del_reason as del_reason, pf.description as description
+        FROM project_management_project_cloud.project_function pf left join project_management_user_cloud.sys_user su1 on pf.publish_user_id = su1.id
+        left join project_management_user_cloud.sys_user su2 on pf.realize_user_id = su2.id
+        right join project_management_project_cloud.project p on pf.projects_id = p.id
         <where>
             <if test="id != null">
-                and id = #{id}
+                and pf.id = #{id}
             </if>
             <if test="projectsId != null">
                 and projects_id = #{projectsId}
@@ -75,7 +135,7 @@
                 and actual_end_time = #{actualEndTime}
             </if>
             <if test="deleteFlag != null">
-                and delete_flag = #{deleteFlag}
+                and pf.delete_flag = #{deleteFlag}
             </if>
             <if test="delReason != null and delReason != ''">
                 and del_reason = #{delReason}
@@ -86,5 +146,94 @@
         </where>
     </select>
 
+    <!--查询指定行数据-->
+    <select id="queryAllByLimitByUserId" resultMap="ProjectFunctionMap">
+        select pf.id as id, pf.projects_id as projects_id, p.name as projects_name, pf.function_id as function_id, pf.function_name as function_name,
+        pf.function_status as function_status, pf.publish_user_id as publish_user_id, su1.username as publish_user_name,
+        pf.realize_user_id as realize_user_id, su2.username as realize_user_name, pf.planned_start_time as planned_start_time,
+        pf.planned_end_time as planned_end_time, pf.actual_start_time as actual_start_time, pf.actual_end_time as actual_end_time, pf.delete_flag as delete_flag, pf.del_reason as del_reason, pf.description as description
+        FROM project_management_project_cloud.project_function pf left join project_management_user_cloud.sys_user su1 on pf.publish_user_id = su1.id
+        left join project_management_user_cloud.sys_user su2 on pf.realize_user_id = su2.id
+        right join project_management_project_cloud.project p on pf.projects_id = p.id
+        where pf.delete_flag = 1 and projects_id = #{projectFunction.projectsId} and function_status = #{projectFunction.functionStatus} and  ( publish_user_id = #{projectFunction.publishUserId} or realize_user_id = #{projectFunction.realizeUserId} )
+        order by id
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAllByUserId" resultMap="ProjectFunctionMap">
+        select pf.id as id, pf.projects_id as projects_id, p.name as projects_name, pf.function_id as function_id, pf.function_name as function_name,
+        pf.function_status as function_status, pf.publish_user_id as publish_user_id, su1.username as publish_user_name,
+        pf.realize_user_id as realize_user_id, su2.username as realize_user_name, pf.planned_start_time as planned_start_time,
+        pf.planned_end_time as planned_end_time, pf.actual_start_time as actual_start_time, pf.actual_end_time as actual_end_time, pf.delete_flag as delete_flag, pf.del_reason as del_reason, pf.description as description
+        FROM project_management_project_cloud.project_function pf left join project_management_user_cloud.sys_user su1 on pf.publish_user_id = su1.id
+        left join project_management_user_cloud.sys_user su2 on pf.realize_user_id = su2.id
+        right join project_management_project_cloud.project p on pf.projects_id = p.id
+        where pf.delete_flag = 1 and projects_id = #{projectFunction.projectsId} and function_status = #{projectFunction.functionStatus} and  ( publish_user_id = #{projectFunction.publishUserId} or realize_user_id = #{projectFunction.realizeUserId} )
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryDelByLimitByUserId" resultMap="ProjectFunctionMap">
+        select pf.id as id, pf.projects_id as projects_id, p.name as projects_name, pf.function_id as function_id, pf.function_name as function_name,
+        pf.function_status as function_status, pf.publish_user_id as publish_user_id, su1.username as publish_user_name,
+        pf.realize_user_id as realize_user_id, su2.username as realize_user_name, pf.planned_start_time as planned_start_time,
+        pf.planned_end_time as planned_end_time, pf.actual_start_time as actual_start_time, pf.actual_end_time as actual_end_time, pf.delete_flag as delete_flag, pf.del_reason as del_reason, pf.description as description
+        FROM project_management_project_cloud.project_function pf left join project_management_user_cloud.sys_user su1 on pf.publish_user_id = su1.id
+        left join project_management_user_cloud.sys_user su2 on pf.realize_user_id = su2.id
+        right join project_management_project_cloud.project p on pf.projects_id = p.id
+        where pf.delete_flag = 0 and projects_id = #{projectFunction.projectsId}  and  ( publish_user_id = #{projectFunction.publishUserId} or realize_user_id = #{projectFunction.realizeUserId} )
+        order by id
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryDelByUserId" resultMap="ProjectFunctionMap">
+        select pf.id as id, pf.projects_id as projects_id, p.name as projects_name, pf.function_id as function_id, pf.function_name as function_name,
+        pf.function_status as function_status, pf.publish_user_id as publish_user_id, su1.username as publish_user_name,
+        pf.realize_user_id as realize_user_id, su2.username as realize_user_name, pf.planned_start_time as planned_start_time,
+        pf.planned_end_time as planned_end_time, pf.actual_start_time as actual_start_time, pf.actual_end_time as actual_end_time, pf.delete_flag as delete_flag, pf.del_reason as del_reason, pf.description as description
+        FROM project_management_project_cloud.project_function pf left join project_management_user_cloud.sys_user su1 on pf.publish_user_id = su1.id
+        left join project_management_user_cloud.sys_user su2 on pf.realize_user_id = su2.id
+        right join project_management_project_cloud.project p on pf.projects_id = p.id
+        where pf.delete_flag = 0 and projects_id = #{projectFunction.projectsId}  and  ( publish_user_id = #{projectFunction.publishUserId} or realize_user_id = #{projectFunction.realizeUserId} )
+    </select>
+
+    <!--通过ProjectsId删除记录-->
+    <update id="deleteProjectFunctionByProjectsId">
+        update project_management_project_cloud.project_function set delete_flag = 0 where projects_id = #{id}
+    </update>
+
+    <!--通过项目id查询功能点数量-->
+    <select id="countProjectFunctionByProjectId" resultType="Integer">
+        select count(*) from project_management_project_cloud.project_function
+        where projects_id = #{id} and delete_flag = 1
+    </select>
+
+    <!--通过项目id查询功能点数量-->
+    <select id="countByProjectIdAndStatus" resultType="Integer">
+        select count(*) from project_management_project_cloud.project_function
+        where projects_id = #{id} and delete_flag = 1 and function_status = #{functionStatus}
+    </select>
+
+    <!--通过项目id查询全部已取消功能点数量-->
+    <select id="countDelByProjectId" resultType="Integer">
+        select count(*) from project_management_project_cloud.project_function
+        where projects_id = #{id} and delete_flag = 0
+    </select>
+
+    <!-- 分页->通过项目id获得项目计划 -->
+    <select id="getProjectPlanFunctionsPage" resultMap="ProjectFunctionMap">
+        select pf.id as id, pf.projects_id as projects_id, p.name as projects_name, pf.function_id as function_id, pf.function_name as function_name,
+        pf.function_status as function_status, pf.publish_user_id as publish_user_id, su1.username as publish_user_name,
+        pf.realize_user_id as realize_user_id, su2.username as realize_user_name, pf.planned_start_time as planned_start_time,
+        pf.planned_end_time as planned_end_time, pf.actual_start_time as actual_start_time, pf.actual_end_time as actual_end_time, pf.delete_flag as delete_flag, pf.del_reason as del_reason, pf.description as description
+        FROM project_management_project_cloud.project_function pf
+        left join project_management_user_cloud.sys_user su1 on pf.publish_user_id = su1.id
+        left join project_management_user_cloud.sys_user su2 on pf.realize_user_id = su2.id
+        right join project_management_project_cloud.project p on pf.projects_id = p.id
+        where pf.delete_flag = 1 and pf.projects_id = #{projectsId}
+        order by pf.planned_start_time,pf.planned_end_time,pf.actual_start_time,pf.actual_end_time
+        limit #{offset},#{pageSize}
+    </select>
 
 </mapper>

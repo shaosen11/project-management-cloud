@@ -25,9 +25,9 @@
     </resultMap>
 
     <!--查询单个-->
-    <select id="getSysUser" resultMap="SysUserMap">
+    <select id="getById" resultMap="SysUserMap">
         select
-          id, email, username, password, phone, birthday, gender, address, introduce, tag, photo, last_login_time, create_time, enabled, account_non_expired, account_non_locked, credential_non_expired, validata_code, out_date
+          *
         from project_management_user_cloud.sys_user_copy1
         where id = #{id}
     </select>

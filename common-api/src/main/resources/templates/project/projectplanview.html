@@ -35,7 +35,7 @@
                             <i class="flaticon-right-arrow"></i>
                         </li>
                         <li class="nav-item">
-                            <a th:href="@{/projects_plan_view/{id}(id=${project.id})}">项目计划</a>
+                            <a th:href="@{/toProjectsPlanView/{id}(id=${project.id})}">项目计划</a>
                         </li>
                     </ul>
                 </div>
@@ -71,20 +71,20 @@
     $(function () {
         projectsPlanTime();
         projectsPlan();
-    })
+    });
 
     function projectsPlanTime() {
         var divName2 = $('#projectTime');
         $(divName2).html("");
         $.ajax({
             type: "get",
-            url: "/projects_plan_time",
+            url: "/project/projectFunction/getProjectsPlanTime",
             dataType: "json",
             data: {
                 projectId: projectId,
             },
             success: function (data) {
-                console.log(data)
+                console.log(data);
                 projectTimeAppendHtml(data.projects, divName2);
             }
         })
@@ -95,7 +95,7 @@
         $(divName).html("");
         $.ajax({
             type: "get",
-            url: "/projects_plan",
+            url: "/project/projectFunction/getProjectFunctionPlan",
             dataType: "json",
             data: {
                 page: '1',
@@ -125,7 +125,7 @@
                     onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
                         $.ajax({//根据page去后台加载数据
                             type: "get",
-                            url: "/projects_plan",
+                            url: "/project/projectFunction/getProjectFunctionPlan",
                             dataType: "json",
                             data: {
                                 page: page,

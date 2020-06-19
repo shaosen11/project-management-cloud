@@ -38,7 +38,7 @@ public interface ProjectUserFeignService {
     boolean deleteProjectUserByProjectsId(@RequestParam("projectId") Integer projectId);
 
     @PutMapping("projectUser/")
-    public boolean update(ProjectUser projectsUser);
+    boolean update(ProjectUser projectsUser);
 
     @PostMapping("projectUser/reductionProjectUser/{id}")
     boolean reductionProjectUser(@RequestParam("id") Integer id);
@@ -47,7 +47,7 @@ public interface ProjectUserFeignService {
     List<ProjectUser> getDelProjectUserList();
 
     @GetMapping("projectUser/getByUserIdAndProjectId/{userId}/{projectId}")
-    ProjectUser getByUserIdAndProjectId(@RequestParam("userId") Integer userId,@RequestParam("projectId") Integer projectId);
+    ProjectUser getByUserIdAndProjectId(@RequestParam("userId") Integer userId, @RequestParam("projectId") Integer projectId);
 
     @GetMapping("projectUser/getCodeDevote/{projectId}")
     List<Echarts> getCodeDevote(@RequestParam("projectId") Integer projectId);
@@ -56,7 +56,7 @@ public interface ProjectUserFeignService {
     List<Echarts> getCodeInsert(@RequestParam("projectId") Integer projectId);
 
     @GetMapping("projectUser/getCountByProjectId/{projectId}")
-    Integer getCountByProjectId(@RequestParam("projectId")Integer projectId);
+    Integer getCountByProjectId(@RequestParam("projectId") Integer projectId);
 
     @GetMapping("projectUser/getPageProjectUserByProjectId/{projectId}/{offset}/{pageSize}")
     List<ProjectUser> getPageProjectUserByProjectId(

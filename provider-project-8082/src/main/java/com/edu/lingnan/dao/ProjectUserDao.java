@@ -35,7 +35,7 @@ public interface ProjectUserDao extends BaseDao<ProjectUser>{
      * 删除项目用户信息通过项目id
      * @return
      */
-    boolean deleteProjectUserByProjectsId(Integer projectsId);
+    Integer deleteProjectUserByProjectsId(Integer projectsId);
 
     /**
      * 还原项目用户信息
@@ -133,6 +133,7 @@ public interface ProjectUserDao extends BaseDao<ProjectUser>{
      * @return
      */
     Integer getCountByProjectIdAndDuty(Integer projectId, Integer dutyCode);
+
 
 
 }

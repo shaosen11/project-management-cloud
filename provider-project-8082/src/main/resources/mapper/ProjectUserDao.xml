@@ -70,12 +70,6 @@
         where id = #{id}
     </update>
 
-    <!--通过ProjectsId删除一条记录-->
-    <update id="deleteProjectUserByProjectsId">
-        update project_management_project_cloud.project_user
-        set delete_flag = 0
-        where project_id = #{id}
-    </update>
 
     <!--还原一条记录-->
     <update id="reductionProjectUser">
@@ -85,13 +79,6 @@
     </update>
 
 
-    <select id="getByUserIdAndProjectId" resultMap="ProjectsUserList">
-        select *
-        from project_management_project_cloud.project_user
-        where delete_flag = 1
-          and user_id = #{userId}
-          and project_id = #{projectId}
-    </select>
 
     <select id="getById" resultType="com.edu.lingnan.entity.ProjectUser">
         select *
@@ -145,17 +132,17 @@
     </select>
 
     <!--查找所有项目功能点信息-->
-    <resultMap id="ProjectsUserList" type="ProjectUser">
+    <resultMap id="ProjectsUserList" type="com.edu.lingnan.entity.ProjectUser">
         <result column="id" property="id"></result>
         <result column="pid" property="projectId"></result>
         <result column="uid" property="userId"></result>
         <result column="duty_code" property="dutyCode"></result>
         <result column="code_devote_line" property="codeDevoteLine"></result>
         <result column="code_update" property="codeUpdate"></result>
-        <result column="user_id" property="SysUser.id"></result>
-        <result column="username" property="SysUser.username"></result>
-        <result column="email" property="SysUser.email"></result>
-        <result column="photo" property="SysUser.photo"></result>
+        <result column="user_id" property="sysUser.id"></result>
+        <result column="username" property="sysUser.username"></result>
+        <result column="email" property="sysUser.email"></result>
+        <result column="photo" property="sysUser.photo"></result>
         <collection property="projectUserDuty" column="{id=duty_code}"
                     select="com.edu.lingnan.dao.ProjectUserDutyDao.getById">
         </collection>
@@ -196,7 +183,7 @@
               (select user_id
                from project_management_project_cloud.project_user
                where delete_flag = 1
-                 and projects_id = #{projectId});
+                 and project_id = #{projectId});
     </select>
 
     <select id="getProjectUserNoInProjectByProjectId" resultType="com.edu.lingnan.entity.SysUser">
@@ -206,7 +193,7 @@
               (select user_id
                from project_management_project_cloud.project_user
                where delete_flag = 1
-                 and projects_id = #{projectId})
+                 and project_id = #{projectId})
         limit #{offset},#{pageSize}
     </select>
 
@@ -225,5 +212,15 @@
           and duty_code = #{dutyCode}
     </select>
 
+    <!--通过ProjectsId删除一条记录-->
+    <update id="deleteProjectUserByProjectsId">
+        update project_management_project_cloud.project_user set delete_flag = 0 where project_id = #{id}
+    </update>
+
+    <select id="getByUserIdAndProjectId" resultMap="ProjectUserMap">
+        select id, project_id, user_id, duty_code, code_devote_line, code_update, delete_flag, join_time
+        from project_management_project_cloud.project_user
+        where delete_flag = 1 and user_id = #{userId} and project_id = #{projectId}
+    </select>
 
 </mapper>

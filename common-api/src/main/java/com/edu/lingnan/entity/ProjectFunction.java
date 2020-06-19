@@ -20,6 +20,8 @@ public class ProjectFunction implements Serializable {
     private Integer id;
     
     private Integer projectsId;
+
+    private String projectsName;
     
     private Integer functionId;
     
@@ -28,8 +30,12 @@ public class ProjectFunction implements Serializable {
     private Integer functionStatus;
     
     private Integer publishUserId;
+
+    private String publishUserName;
     
     private Integer realizeUserId;
+
+    private String realizeUserName;
     
     private Object plannedStartTime;
     

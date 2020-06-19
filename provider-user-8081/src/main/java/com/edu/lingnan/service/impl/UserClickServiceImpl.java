@@ -15,7 +15,7 @@ import java.util.List;
  * @author makejava
  * @since 2020-06-11 21:18:31
  */
-@Service("userClickService")
+@Service("UserClickService")
 public class UserClickServiceImpl implements UserClickService {
     @Resource
     private UserClickDao userClickDao;
@@ -50,9 +50,8 @@ public class UserClickServiceImpl implements UserClickService {
      * @return 实例对象
      */
     @Override
-    public UserClick insert(UserClick userClick) {
-        this.userClickDao.insert(userClick);
-        return userClick;
+    public Boolean insert(UserClick userClick) {
+        return  this.userClickDao.insert(userClick) > 0;
     }
 
     /**

@@ -22,6 +22,16 @@ public class ProjectServiceImpl implements ProjectService {
 
 
     @Override
+    public Project queryById(Integer id) {
+        return projectDao.getById(id);
+    }
+
+    @Override
+    public List<Project> queryAll(Project project) {
+        return this.projectDao.queryAll(project);
+    }
+
+    @Override
     public Project getById(Integer id) {
         return projectDao.getById(id);
     }
@@ -58,7 +68,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project getAdminByUserIdAndProjectId(Integer userId, Integer projectId) {
-        return projectDao.getAdminByUserIdAndProjectId(userId, projectId);
+        return null;
     }
 
     @Override
@@ -74,5 +84,10 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Integer getProjectCount(){
         return projectDao.getProjectCount();
+    }
+
+    @Override
+    public List<Project> getAllDelProject() {
+        return projectDao.getAllDelProject();
     }
 }

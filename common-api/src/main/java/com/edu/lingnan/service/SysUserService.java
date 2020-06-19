@@ -20,7 +20,7 @@ public interface SysUserService {
      * @param id 主键
      * @return 实例对象
      */
-    SysUser queryById(Integer id);
+    SysUser getById(Integer id);
 
     /**
      * 新增数据

@@ -109,6 +109,80 @@
         where id = #{id}
     </update>
 
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ProjectMap">
+        select
+        id, name, charge_user_id, code_line_number, code_update_count, schedule_id, function_points, completed_function_points, last_update_time, type_id, store_count, like_count, click_count, delete_flag, characterization, create_time, user_count, document_count, planned_start_time, planned_end_time, actual_start_time, actual_end_time
+        from project_management_project_cloud.project
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="chargeUserId != null">
+                and charge_user_id = #{chargeUserId}
+            </if>
+            <if test="codeLineNumber != null">
+                and code_line_number = #{codeLineNumber}
+            </if>
+            <if test="codeUpdateCount != null">
+                and code_update_count = #{codeUpdateCount}
+            </if>
+            <if test="scheduleId != null">
+                and schedule_id = #{scheduleId}
+            </if>
+            <if test="functionPoints != null">
+                and function_points = #{functionPoints}
+            </if>
+            <if test="completedFunctionPoints != null">
+                and completed_function_points = #{completedFunctionPoints}
+            </if>
+            <if test="lastUpdateTime != null">
+                and last_update_time = #{lastUpdateTime}
+            </if>
+            <if test="typeId != null">
+                and type_id = #{typeId}
+            </if>
+            <if test="storeCount != null">
+                and store_count = #{storeCount}
+            </if>
+            <if test="likeCount != null">
+                and like_count = #{likeCount}
+            </if>
+            <if test="clickCount != null">
+                and click_count = #{clickCount}
+            </if>
+            <if test="deleteFlag != null">
+                and delete_flag = #{deleteFlag}
+            </if>
+            <if test="characterization != null and characterization != ''">
+                and characterization = #{characterization}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="userCount != null">
+                and user_count = #{userCount}
+            </if>
+            <if test="documentCount != null">
+                and document_count = #{documentCount}
+            </if>
+            <if test="plannedStartTime != null">
+                and planned_start_time = #{plannedStartTime}
+            </if>
+            <if test="plannedEndTime != null">
+                and planned_end_time = #{plannedEndTime}
+            </if>
+            <if test="actualStartTime != null">
+                and actual_start_time = #{actualStartTime}
+            </if>
+            <if test="actualEndTime != null">
+                and actual_end_time = #{actualEndTime}
+            </if>
+        </where>
+    </select>
 
 <!--    &lt;!&ndash;查找所有项目&ndash;&gt;-->
 <!--    <select id="getProject" resultType="ProjectsRecommendation">-->
@@ -275,6 +349,15 @@
         from project_management_project_cloud.project
         where delete_flag = 1
     </select>
+    <!--查询所有已注销项目信息-->
+    <select id="getAllDelProject" resultMap="ProjectMap">
+        select
+        id, name, charge_user_id, code_line_number, code_update_count, schedule_id, function_points, completed_function_points, last_update_time, type_id, store_count, like_count, click_count, delete_flag, characterization, create_time, user_count, document_count, planned_start_time, planned_end_time, actual_start_time, actual_end_time
+        from project_management_project_cloud.project
+        where delete_flag = 0
+    </select>
+
+
 
 <!--    &lt;!&ndash; 根据关键字模糊查询项目名 &ndash;&gt;-->
 <!--    <select id="getProjectNameByWord" resultType="String">-->

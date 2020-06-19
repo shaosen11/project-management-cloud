@@ -25,56 +25,66 @@ public class SysUserController {
 
     /**
      * 增
+     *
      * @param sysUser
      * @return
      */
     @PostMapping("/")
-    public boolean addSysUser(SysUser sysUser){
+    public boolean addSysUser(SysUser sysUser) {
         return sysUserService.insert(sysUser);
     }
 
     /**
      * 查
+     *
      * @param id
      * @return
      */
     @GetMapping("/{id}")
     public SysUser getSysUser(@PathVariable("id") Integer id) {
-        return this.sysUserService.queryById(id);
+        return sysUserService.getById(id);
+    }
+
+    @GetMapping("queryById/{id}")
+    public SysUser queryById(@PathVariable("id") Integer id) {
+        return this.sysUserService.getById(id);
     }
 
     /**
      * 改
+     *
      * @param sysUser
      * @return
      */
     @PutMapping("/")
-    public boolean updateSysUser(SysUser sysUser){
+    public boolean updateSysUser(SysUser sysUser) {
         return sysUserService.update(sysUser);
     }
 
     @GetMapping("/getUserCount")
-    public Integer userCount(){
+    public Integer userCount() {
         return sysUserService.userCount();
     }
 
     /**
      * 查询user的信息和项目
+     *
      * @param userId
      * @return
      */
     @GetMapping("getMyUserDetailsByUserId/{userId}")
-    public MyUserDetails getMyUserDetailsByUserId(@PathVariable("userId") Integer userId){
+    public MyUserDetails getMyUserDetailsByUserId(@PathVariable("userId") Integer userId) {
         return sysUserService.getMyUserDetailsByUserId(userId);
     }
 
     /**
      * 查询简要的用户信息
+     *
      * @param userId
      * @return
      */
     @GetMapping("getSimpleMyUserDetailsByUserId/{userId}")
-    public MyUserDetails getSimpleMyUserDetailsByUserId(Integer userId){
+    public MyUserDetails getSimpleMyUserDetailsByUserId(Integer userId) {
         return sysUserService.getSimpleMyUserDetailsByUserId(userId);
     }
 }

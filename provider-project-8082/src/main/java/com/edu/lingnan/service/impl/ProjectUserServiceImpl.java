@@ -48,7 +48,7 @@ public class ProjectUserServiceImpl implements ProjectUserService {
 
     @Override
     public boolean deleteProjectUserByProjectsId(Integer projectsId) {
-        return projectUserDao.deleteProjectUserByProjectsId(projectsId);
+        return projectUserDao.deleteProjectUserByProjectsId(projectsId) > 0;
     }
 
     @Override
@@ -116,6 +116,5 @@ public class ProjectUserServiceImpl implements ProjectUserService {
     public Integer getCountByProjectIdAndDuty(Integer projectId, Integer dutyCode) {
         return projectUserDao.getCountByProjectIdAndDuty(projectId, dutyCode);
     }
-
 
 }

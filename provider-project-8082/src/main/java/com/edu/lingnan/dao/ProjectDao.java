@@ -69,7 +69,18 @@ public interface ProjectDao extends BaseDao<Project>{
      */
     Project getAdminByUserIdAndProjectId(Integer userId, Integer projectId);
 
+    /**
+     * 通过实体作为筛选条件查询
+     * @param project 实例对象
+     * @return 对象列表
+     */
+    List<Project> queryAll(Project project);
 
+    /**
+     * 查询所有已注销项目信息
+     * @return
+     */
+    List<Project> getAllDelProject();
 
 //    /**
 //     * 查询所有项目主页信息

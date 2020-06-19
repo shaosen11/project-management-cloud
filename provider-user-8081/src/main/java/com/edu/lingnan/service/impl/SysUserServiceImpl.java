@@ -24,8 +24,8 @@ public class SysUserServiceImpl implements SysUserService {
     private SysUserDao sysUserDao;
 
     @Override
-    public SysUser queryById(Integer id) {
-        return sysUserDao.queryById(id);
+    public SysUser getById(Integer id) {
+        return sysUserDao.getById(id);
     }
 
     @Override

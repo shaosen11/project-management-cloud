@@ -34,7 +34,7 @@ public interface UserClickService {
      * @param userClick 实例对象
      * @return 实例对象
      */
-    UserClick insert(UserClick userClick);
+    Boolean insert(UserClick userClick);
 
     /**
      * 修改数据

@@ -66,27 +66,21 @@ public interface ProjectUserService {
     boolean update(ProjectUser projectUser);
 
     /**
-     * 还原项目用户信息
+     * 新增数据
      *
-     * @return
+     * @param projectUser 实例对象
+     * @return 实例对象
      */
     boolean reductionProjectUser(Integer id);
 
     /**
-     * 查询所有已注销项目用户信息
+     * 修改数据
      *
-     * @return
+     * @param projectUser 实例对象
+     * @return 实例对象
      */
     List<ProjectUser> getDelProjectUserList();
 
-    /**
-     * 通过用户Id和项目Id查询用户
-     *
-     * @param userId
-     * @param projectId
-     * @return
-     */
-    ProjectUser getByUserIdAndProjectId(Integer userId, Integer projectId);
 
     /**
      * 获取代码贡献量
@@ -160,4 +154,6 @@ public interface ProjectUserService {
      * @return
      */
     Integer getCountByProjectIdAndDuty(Integer projectId, Integer dutyCode);
+
+    ProjectUser getByUserIdAndProjectId(Integer userId, Integer projectId);
 }

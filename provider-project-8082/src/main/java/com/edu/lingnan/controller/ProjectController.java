@@ -1,6 +1,7 @@
 package com.edu.lingnan.controller;
 
 import com.edu.lingnan.entity.Project;
+import com.edu.lingnan.feign.ProjectFeignService;
 import com.edu.lingnan.service.ProjectService;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,12 +43,7 @@ public class ProjectController {
         return projectService.getProjectListByUserId(userId);
     }
 
-    @DeleteMapping("/{id}")
-    boolean deleteProject(@PathVariable("id") Integer id){
-        return projectService.deleteProject(id);
-    }
-
-    @PutMapping("/{id}")
+    @PutMapping("reductionProject/{id}")
     boolean reductionProject(@PathVariable("id") Integer id){
         return projectService.reductionProject(id);
     }
@@ -64,18 +60,85 @@ public class ProjectController {
         return projectService.getAdminByUserIdAndProjectId(userId, projectId);
     }
 
+
+
+    @GetMapping("getProjectCount")
+    public Integer getProjectCount() {
+        return this.projectService.getProjectCount();
+    }
+    /**
+     * 查询所有项目信息
+     * @return 数据
+     */
+    @GetMapping("/queryAll")
+    public List<Project> queryAll() {
+        List<Project> list = projectService.queryAll(new Project());
+        System.out.println("查询所有项目" + list);
+        return list;
+    }
+
+    /**
+     * 记录项目点击量
+     * @return 数据
+     */
+    @RequestMapping(value = "/updateProjectClickCountById", method = RequestMethod.PUT)
+    public Boolean updateProjectClickCountById(@RequestBody Integer projectId) {
+        Project project = projectService.queryById(projectId);
+        Integer num = project.getClickCount()+1;
+        project.setClickCount(num);
+        Boolean flag = projectService.update(project);
+        return flag;
+    }
+
+    /**
+     * 添加项目
+     * @return 数据
+     */
     @PostMapping("/")
-    public boolean insert(Project project) {
+    public Boolean addProject(@RequestBody Project project) {
+        System.out.println("添加项目：" + project);
         return projectService.insert(project);
     }
 
+    /**
+     * 修改项目
+     * @return 数据
+     */
     @PutMapping("/")
-    public boolean updete(Project project) {
+    public Boolean updateProject(@RequestBody Project project) {
+        System.out.println("修改项目：" + project);
         return projectService.update(project);
     }
 
-    @GetMapping("getProjectCount")
-    public Integer getProjectCount(){
-        return projectService.getProjectCount();
+    /**
+     * 删除项目
+     * @return 数据
+     */
+    @DeleteMapping("/{id}")
+    public Boolean deleteProject(@PathVariable("id") Integer id){
+        Project project = projectService.queryById(id);
+        project.setDeleteFlag(0);
+        return  projectService.update(project);
+    }
+
+    /**
+     * 查询所有注销项目信息
+     * @return 数据
+     */
+    @GetMapping("/getDeletedProject")
+    public List<Project> getDeletedProject() {
+        List<Project> list = projectService.getAllDelProject();
+        return list;
+    }
+
+    /**
+     * 还原用户项目
+     * @return 数据
+     */
+    @RequestMapping(value = "/updateDelProjectById", method = RequestMethod.PUT)
+    public Boolean updateDelProjectById(@RequestBody Integer id) {
+        Project project = projectService.queryById(id);
+        project.setDeleteFlag(1);
+        return  projectService.update(project);
     }
 }
