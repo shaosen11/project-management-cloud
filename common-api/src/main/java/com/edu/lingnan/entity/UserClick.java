@@ -22,7 +22,7 @@ public class UserClick implements Serializable {
     
     private Integer userId;
     
-    private Integer projectsId;
+    private Integer projectId;
     
     private Date clickTime;
     

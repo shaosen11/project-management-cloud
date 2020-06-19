@@ -38,7 +38,7 @@ public class ProjectUser implements Serializable {
     */
     private Date joinTime;
 
-    private SysUser sysUser;
+    private MyUserDetails myUserDetails;
     private ProjectUserDuty projectUserDuty;
     private Project project;
 

@@ -20,50 +20,30 @@ public class UserClickServiceImpl implements UserClickService {
     @Resource
     private UserClickDao userClickDao;
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
+
     @Override
-    public UserClick queryById(Integer id) {
-        return this.userClickDao.queryById(id);
+    public UserClick getUserClickByUserIdAndProjectId(Integer userId, Integer projectId) {
+        return userClickDao.getUserClickByUserIdAndProjectId(userId, projectId);
     }
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
+
     @Override
-    public List<UserClick> queryAllByLimit(int offset, int limit) {
-        return this.userClickDao.queryAllByLimit(offset, limit);
+    public boolean deleteUserClick(Integer userId, Integer projectId) {
+        return userClickDao.deleteUserClick(userId, projectId);
     }
 
-    /**
-     * 新增数据
-     *
-     * @param userClick 实例对象
-     * @return 实例对象
-     */
+    @Override
+    public boolean reductionUserClick(Integer userId, Integer projectId) {
+        return userClickDao.reductionUserClick(userId, projectId);
+    }
+
+    @Override
+    public Integer getCountProjectByClick(Integer id) {
+        return userClickDao.getCountProjectByClick(id);
+    }
+
     @Override
     public Boolean insert(UserClick userClick) {
-        return  this.userClickDao.insert(userClick) > 0;
+        return userClickDao.insert(userClick) > 0;
     }
-
-    /**
-     * 修改数据
-     *
-     * @param userClick 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public UserClick update(UserClick userClick) {
-        this.userClickDao.update(userClick);
-        return this.queryById(userClick.getId());
-    }
-
 }

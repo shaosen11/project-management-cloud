@@ -106,7 +106,7 @@ public interface SysUserService {
      * 查询我的项目
      * @return
      */
-    List<Myprojects> getMyProjects(Integer id);
+    List<Myprojects> getMyProjectsByUserId(Integer userId);
 
     /**
      * 分页--查询我的所有项目(user)

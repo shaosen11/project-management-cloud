@@ -23,7 +23,7 @@ public class ProjectCodeLine implements Serializable {
     /**
     * 项目id
     */
-    private Integer projectsId;
+    private Integer projectId;
     /**
     * 代码行
     */

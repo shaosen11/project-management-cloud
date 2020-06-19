@@ -82,6 +82,14 @@ public interface ProjectDao extends BaseDao<Project>{
      */
     List<Project> getAllDelProject();
 
+    /**
+     * 统计项目数量
+     * @return
+     */
+    Integer getProjectCount();
+
+    boolean updateProjectClickNumber(Integer projectId);
+
 //    /**
 //     * 查询所有项目主页信息
 //     * @return
@@ -94,7 +102,7 @@ public interface ProjectDao extends BaseDao<Project>{
 //     */
 //    List<ProjectRecommendation> getRecommendedCommodities(Integer userId,Integer projectId);
 //
-//    boolean updateProjectClickNumber(Integer projectId);
+//
 //
 //    /**
 //     * 获得今日点击量最多的项目信息。
@@ -126,11 +134,7 @@ public interface ProjectDao extends BaseDao<Project>{
 //     */
 //    Integer countProjectNumberByType(String type);
 //
-    /**
-     * 统计项目数量
-     * @return
-     */
-    Integer getProjectCount();
+
 //
 //    /**
 //     * 根据关键字模糊查询项目名

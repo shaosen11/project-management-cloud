@@ -141,4 +141,9 @@ public class ProjectController {
         project.setDeleteFlag(1);
         return  projectService.update(project);
     }
+
+    @PutMapping("updateProjectClickNumber/{projectId}")
+    public boolean updateProjectClickNumber(Integer projectId){
+        return projectService.updateProjectClickNumber(projectId);
+    }
 }

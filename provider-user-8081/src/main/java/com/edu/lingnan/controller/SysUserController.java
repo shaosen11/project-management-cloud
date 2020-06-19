@@ -1,12 +1,14 @@
 package com.edu.lingnan.controller;
 
 import com.edu.lingnan.entity.MyUserDetails;
+import com.edu.lingnan.entity.Myprojects;
 import com.edu.lingnan.entity.SysUser;
 import com.edu.lingnan.feign.SysUserFeignService;
 import com.edu.lingnan.service.SysUserService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (SysUser)表控制层
@@ -86,5 +88,16 @@ public class SysUserController {
     @GetMapping("getSimpleMyUserDetailsByUserId/{userId}")
     public MyUserDetails getSimpleMyUserDetailsByUserId(Integer userId) {
         return sysUserService.getSimpleMyUserDetailsByUserId(userId);
+    }
+
+
+    /**
+     * 查询我的所有项目(user)
+     *
+     * @return
+     */
+    @GetMapping("getMyProjectsByUserId/{userId}")
+    public List<Myprojects> getMyProjectsByUserId(Integer userId){
+        return sysUserService.getMyProjectsByUserId(userId);
     }
 }

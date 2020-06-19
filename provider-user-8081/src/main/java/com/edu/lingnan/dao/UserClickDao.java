@@ -18,30 +18,27 @@ import java.util.List;
 public interface UserClickDao extends BaseDao<UserClick>{
 
     /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
+     * 查询一条点击记录
+     * @return
      */
-    UserClick queryById(Integer id);
-
-    /**
-     * 查询指定行数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
-    List<UserClick> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    UserClick getUserClickByUserIdAndProjectId(@Param("userId") Integer userId, @Param("projectId") Integer projectId);
 
 
     /**
-     * 通过实体作为筛选条件查询
-     *
-     * @param userClick 实例对象
-     * @return 对象列表
+     * 删除点击记录
+     * @return
      */
-    List<UserClick> queryAll(UserClick userClick);
+    boolean deleteUserClick(@Param("userId") Integer userId, @Param("projectId") Integer projectId);
 
+    /**
+     * 还原点击记录
+     * @return
+     */
+    boolean reductionUserClick(@Param("userId") Integer userId, @Param("projectId") Integer projectId);
 
+    /**
+     * 查询项目点击次数
+     * @return
+     */
+    Integer getCountProjectByClick(Integer id);
 }

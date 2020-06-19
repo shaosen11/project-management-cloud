@@ -90,4 +90,10 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Project> getAllDelProject() {
         return projectDao.getAllDelProject();
     }
+
+    @Override
+    public boolean updateProjectClickNumber(Integer projectId) {
+        return projectDao.updateProjectClickNumber(projectId);
+    }
+
 }

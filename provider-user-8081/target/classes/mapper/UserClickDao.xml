@@ -5,49 +5,56 @@
     <resultMap type="com.edu.lingnan.entity.UserClick" id="UserClickMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
-        <result property="projectsId" column="projects_id" jdbcType="INTEGER"/>
+        <result property="projectId" column="project_id" jdbcType="INTEGER"/>
         <result property="clickTime" column="click_time" jdbcType="TIMESTAMP"/>
         <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="UserClickMap">
-        select
-          id, user_id, projects_id, click_time, delete_flag
+    <!--插入一条记录-->
+    <insert id="addUserClick">
+        insert into user_click
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="projectId != null">project_id,</if>
+            <if test="clickTime != null">click_time,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="projectId != null">#{projectId},</if>
+            <if test="clickTime != null">#{clickTime},</if>
+        </trim>
+    </insert>
+
+    <select id="getUserClickByUserIdAndProjectId" resultMap="UserClickMap">
+        select *
         from project_management_user_cloud.user_click
-        where id = #{id}
+        where user_id = #{userId}
+        and project_id = #{projectId}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="UserClickMap">
-        select
-          id, user_id, projects_id, click_time, delete_flag
-        from project_management_user_cloud.user_click
-        limit #{offset}, #{limit}
-    </select>
+    <!--删除一条记录-->
+    <update id="deleteUserClick">
+        update project_management_user_cloud.user_click
+        set delete_flag = 0
+        where user_id = #{userId}
+        and project_id = #{projectId}
+    </update>
 
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="UserClickMap">
-        select
-          id, user_id, projects_id, click_time, delete_flag
+    <!--还原一条记录-->
+    <update id="reductionUserClick">
+        update project_management_user_cloud.user_click
+        set delete_flag = 1
+        where user_id = #{userId}
+        and project_id = #{projectId}
+    </update>
+
+    <!--通过项目id查询点击量-->
+    <select id="getCountProjectByClick" resultType="Integer">
+        select count(*)
         from project_management_user_cloud.user_click
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="userId != null">
-                and user_id = #{userId}
-            </if>
-            <if test="projectsId != null">
-                and projects_id = #{projectsId}
-            </if>
-            <if test="clickTime != null">
-                and click_time = #{clickTime}
-            </if>
-            <if test="deleteFlag != null">
-                and delete_flag = #{deleteFlag}
-            </if>
-        </where>
+        where project_id = #{id}
+        and delete_flag = 1
     </select>
 
 

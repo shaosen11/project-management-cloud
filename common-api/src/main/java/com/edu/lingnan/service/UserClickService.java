@@ -12,21 +12,33 @@ import java.util.List;
 public interface UserClickService {
 
     /**
-     * 通过ID查询单条数据
+     * 查询一条点击记录
      *
-     * @param id 主键
-     * @return 实例对象
+     * @return
      */
-    UserClick queryById(Integer id);
+    UserClick getUserClickByUserIdAndProjectId(Integer userId, Integer projectId);
+
 
     /**
-     * 查询多条数据
+     * 删除点击记录
      *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
+     * @return
      */
-    List<UserClick> queryAllByLimit(int offset, int limit);
+    boolean deleteUserClick(Integer userId, Integer projectId);
+
+    /**
+     * 还原点击记录
+     *
+     * @return
+     */
+    boolean reductionUserClick(Integer userId, Integer projectId);
+
+    /**
+     * 查询项目点击次数
+     *
+     * @return
+     */
+    Integer getCountProjectByClick(Integer id);
 
     /**
      * 新增数据
@@ -35,14 +47,6 @@ public interface UserClickService {
      * @return 实例对象
      */
     Boolean insert(UserClick userClick);
-
-    /**
-     * 修改数据
-     *
-     * @param userClick 实例对象
-     * @return 实例对象
-     */
-    UserClick update(UserClick userClick);
 
 
 }

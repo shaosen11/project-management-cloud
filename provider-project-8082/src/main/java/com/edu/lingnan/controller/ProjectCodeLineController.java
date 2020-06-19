@@ -6,6 +6,7 @@ import com.edu.lingnan.service.ProjectCodeLineService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (ProjectCodeLine)表控制层
@@ -22,15 +23,29 @@ public class ProjectCodeLineController {
     @Resource
     private ProjectCodeLineService projectCodeLineService;
 
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("selectOne")
-    public ProjectCodeLine selectOne(Integer id) {
-        return this.projectCodeLineService.queryById(id);
+    @GetMapping("getProjectCodeLineByProjectIdAndToday/{projectId}")
+    public ProjectCodeLine getProjectCodeLineByProjectIdAndToday(@PathVariable("projectId") Integer projectId){
+        return projectCodeLineService.getProjectCodeLineByProjectIdAndToday(projectId);
+    }
+
+    @GetMapping("getProjectCodeLineByProjectIdAndLastDay/{projectId}")
+    public ProjectCodeLine getProjectCodeLineByProjectIdAndLastDay(@PathVariable("projectId")Integer projectId){
+        return projectCodeLineService.getProjectCodeLineByProjectIdAndLastDay(projectId);
+    }
+
+    @PostMapping("/")
+    public boolean insert(ProjectCodeLine projectCodeLine){
+        return projectCodeLineService.insert(projectCodeLine);
+    }
+
+    @PutMapping("/")
+    public boolean update(ProjectCodeLine projectCodeLine){
+        return projectCodeLineService.update(projectCodeLine);
+    }
+
+    @GetMapping("getAllProjectCodeLineByProjectId/{projectId}")
+    public List<ProjectCodeLine> getAllProjectCodeLineByProjectId(@PathVariable("projectId") Integer projectId){
+        return projectCodeLineService.getAllProjectCodeLineByProjectId(projectId);
     }
 
 }

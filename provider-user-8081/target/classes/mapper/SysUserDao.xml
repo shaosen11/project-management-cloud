@@ -84,7 +84,7 @@
                     select="com.edu.lingnan.dao.SysUserDao.getProjectTypeById">
         </collection>
     </resultMap>
-    <select id="getMyProjects" resultMap="myprojects">
+    <select id="getMyProjectsByUserId" resultMap="myprojects">
         select p.id                       as projectId,
                p.name                     as projectName,
                su.id                      as chargeUserId,
@@ -103,7 +103,7 @@
                (select count(*)
                 from project_management_user_cloud.user_like ul
                 where ul.user_id = #{userId}
-                  and ul.projects_id = p.id
+                  and ul.project_id = p.id
                   and ul.delete_flag = 1) as likeFlag
         from project_management_project_cloud.project_user pu
                  right join project_management_project_cloud.project p on pu.project_id = p.id
@@ -111,7 +111,7 @@
         where pu.delete_flag = 1
           and su.enabled = 1
           and p.delete_flag = 1
-          and pu.user_id = #{id}
+          and pu.user_id = #{userId}
     </select>
 
     <select id="userCount" resultType="integer">

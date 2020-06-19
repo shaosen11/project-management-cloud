@@ -59,7 +59,7 @@ public interface SysUserDao extends BaseDao<SysUser>{
      *
      * @return
      */
-    List<Myprojects> getMyProjects(@Param("id") Integer id);
+    List<Myprojects> getMyProjectsByUserId(@Param("userId") Integer userId);
 
     /**
      * 查询user的信息和项目

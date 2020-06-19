@@ -1,6 +1,7 @@
 package com.edu.lingnan.dao;
 
 import com.edu.lingnan.entity.Echarts;
+import com.edu.lingnan.entity.MyUserDetails;
 import com.edu.lingnan.entity.ProjectUser;
 import com.edu.lingnan.entity.SysUser;
 import org.apache.ibatis.annotations.Mapper;
@@ -55,7 +56,7 @@ public interface ProjectUserDao extends BaseDao<ProjectUser>{
      * @param projectId
      * @return
      */
-    ProjectUser getByUserIdAndProjectId(Integer userId, Integer projectId);
+    ProjectUser getByUserIdAndProjectId(@Param("userId") Integer userId,@Param("projectId") Integer projectId);
 
     /**
      * 通过Id查询
@@ -132,8 +133,8 @@ public interface ProjectUserDao extends BaseDao<ProjectUser>{
      * @param dutyCode
      * @return
      */
-    Integer getCountByProjectIdAndDuty(Integer projectId, Integer dutyCode);
+    Integer getCountByProjectIdAndDuty(@Param("projectId") Integer projectId,@Param("dutyCode") Integer dutyCode);
 
-
+    MyUserDetails getSimpleMyUserDetailsByUserId(@Param("id") Integer id);
 
 }

@@ -89,8 +89,8 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public List<Myprojects> getMyProjects(Integer id) {
-        return null;
+    public List<Myprojects> getMyProjectsByUserId(Integer userId) {
+        return sysUserDao.getMyProjectsByUserId(userId);
     }
 
     @Override

@@ -23,7 +23,7 @@ public interface ProjectFeignService {
      * @param id 主键
      * @return 实例对象
      */
-    @GetMapping("project/get/{id}")
+    @GetMapping("project/{id}")
     Project getById(@PathVariable("id") Integer id);
 
     @GetMapping("project/getProjectList")
@@ -54,6 +54,7 @@ public interface ProjectFeignService {
 
     @GetMapping("project/getProjectCount")
     Integer getProjectCount();
+
     /**
      * 查询所有项目信息
      * @return 数据
@@ -96,4 +97,6 @@ public interface ProjectFeignService {
     @RequestMapping(value = "project/updateDelProjectById", method = RequestMethod.PUT,consumes = "application/json")
     Boolean updateDelProjectById(@RequestBody Integer id);
 
+    @PutMapping("project/updateProjectClickNumber/{projectId}")
+    boolean updateProjectClickNumber(@PathVariable("projectId") Integer projectId);
 }

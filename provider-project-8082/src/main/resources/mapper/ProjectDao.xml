@@ -184,6 +184,13 @@
         </where>
     </select>
 
+    <!--更新信息-->
+    <update id="updateProjectClickNumber">
+        update project_management_project_cloud.project
+        set click_count = click_count+1
+        where id = #{projectId}
+    </update>
+
 <!--    &lt;!&ndash;查找所有项目&ndash;&gt;-->
 <!--    <select id="getProject" resultType="ProjectsRecommendation">-->
 <!--        select a.id                                      as projectId,-->

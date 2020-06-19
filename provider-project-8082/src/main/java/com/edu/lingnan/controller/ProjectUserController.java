@@ -27,17 +27,17 @@ public class ProjectUserController {
     private ProjectUserService projectUserService;
 
     @GetMapping("/getProjectUserList")
-    List<ProjectUser> getProjectUserList(){
+    List<ProjectUser> getProjectUserList() {
         return projectUserService.getProjectUserList();
     }
 
     @GetMapping("/{id}")
-    ProjectUser getById(@PathVariable("id") Integer id){
+    ProjectUser getById(@PathVariable("id") Integer id) {
         return projectUserService.getById(id);
     }
 
     @GetMapping("getDelById/{id}")
-    ProjectUser getDelById(@PathVariable("id") Integer id){
+    ProjectUser getDelById(@PathVariable("id") Integer id) {
         return projectUserService.getDelById(id);
     }
 
@@ -47,12 +47,12 @@ public class ProjectUserController {
     }
 
     @DeleteMapping("deleteProjectUser/{id}")
-    boolean deleteProjectUser(@PathVariable("id") Integer id){
+    boolean deleteProjectUser(@PathVariable("id") Integer id) {
         return projectUserService.deleteProjectUser(id);
     }
 
     @DeleteMapping("deleteProjectUserByProjectsId/{projectId}")
-    boolean deleteProjectUserByProjectsId(@PathVariable("projectId") Integer projectId){
+    boolean deleteProjectUserByProjectsId(@PathVariable("projectId") Integer projectId) {
         return projectUserService.deleteProjectUserByProjectsId(projectId);
     }
 
@@ -62,28 +62,28 @@ public class ProjectUserController {
     }
 
     @PostMapping("reductionProjectUser/{id}")
-    boolean reductionProjectUser(@PathVariable("id") Integer id){
+    boolean reductionProjectUser(@PathVariable("id") Integer id) {
         return projectUserService.reductionProjectUser(id);
     }
 
     @GetMapping("getDelProjectUserList")
-    List<ProjectUser> getDelProjectUserList(){
+    List<ProjectUser> getDelProjectUserList() {
         return projectUserService.getDelProjectUserList();
     }
 
 
     @GetMapping("getCodeDevote/{projectId}")
-    List<Echarts> getCodeDevote(@PathVariable("projectId") Integer projectId){
+    List<Echarts> getCodeDevote(@PathVariable("projectId") Integer projectId) {
         return projectUserService.getCodeDevote(projectId);
     }
 
     @GetMapping("getCodeInsert/{projectId}")
-    List<Echarts> getCodeInsert(@PathVariable("projectId") Integer projectId){
+    List<Echarts> getCodeInsert(@PathVariable("projectId") Integer projectId) {
         return projectUserService.getCodeInsert(projectId);
     }
 
     @GetMapping("getCountByProjectId/{projectId}")
-    Integer getCountByProjectId(@PathVariable("projectId")Integer projectId){
+    Integer getCountByProjectId(@PathVariable("projectId") Integer projectId) {
         return projectUserService.getCountByProjectId(projectId);
     }
 
@@ -91,17 +91,17 @@ public class ProjectUserController {
     List<ProjectUser> getPageProjectUserByProjectId(
             @PathVariable("projectId") Integer projectId,
             @PathVariable("offset") Integer offset,
-            @PathVariable("pageSize") Integer pageSize){
+            @PathVariable("pageSize") Integer pageSize) {
         return projectUserService.getPageProjectUserByProjectId(projectId, offset, pageSize);
     }
 
     @GetMapping("getAllProjectUserByProjectId/{projectId}")
-    List<ProjectUser> getAllProjectUserByProjectId(@PathVariable("projectId") Integer projectId){
+    List<ProjectUser> getAllProjectUserByProjectId(@PathVariable("projectId") Integer projectId) {
         return projectUserService.getAllProjectUserByProjectId(projectId);
     }
 
     @GetMapping("getCountNoInProjectByProjectId/{projectId}")
-    Integer getCountNoInProjectByProjectId(@PathVariable("projectId") Integer projectId){
+    Integer getCountNoInProjectByProjectId(@PathVariable("projectId") Integer projectId) {
         return projectUserService.getCountNoInProjectByProjectId(projectId);
     }
 
@@ -109,31 +109,32 @@ public class ProjectUserController {
     List<SysUser> getProjectUserNoInProjectByProjectId(
             @PathVariable("projectId") Integer projectId,
             @PathVariable("offset") Integer offset,
-            @PathVariable("pageSize") Integer pageSize){
+            @PathVariable("pageSize") Integer pageSize) {
         return projectUserService.getProjectUserNoInProjectByProjectId(projectId, offset, pageSize);
     }
 
     @GetMapping("getAllProjectByUserId/{userId}")
-    List<ProjectUser> getAllProjectByUserId(@PathVariable("userId") Integer userId){
+    List<ProjectUser> getAllProjectByUserId(@PathVariable("userId") Integer userId) {
         return projectUserService.getAllProjectUserByProjectId(userId);
     }
 
     @GetMapping("getCountByProjectIdAndDuty/{projectId}/{dutyCode}")
     Integer getCountByProjectIdAndDuty(
             @PathVariable("projectId") Integer projectId,
-            @PathVariable("dutyCode") Integer dutyCode){
+            @PathVariable("dutyCode") Integer dutyCode) {
         return projectUserService.getCountByProjectIdAndDuty(projectId, dutyCode);
     }
 
 
     /**
      * 通过ID查询单条数据
+     *
      * @return 实例对象
      */
-    @RequestMapping(value = "/getByUserIdAndProjectId", method = RequestMethod.GET)
-    public ProjectUser getByUserIdAndProjectId(@RequestParam("userId") Integer userId, @RequestParam("projectId")Integer projectId){
-        System.out.println("getByUserIdAndProjectId-->userId="+userId+"  projectId="+projectId);
-        ProjectUser projectUser = projectUserService.getByUserIdAndProjectId(userId,projectId);
+    @GetMapping("/getByUserIdAndProjectId/{userId}/{projectId}")
+    public ProjectUser getByUserIdAndProjectId(@PathVariable("userId") Integer userId, @PathVariable("projectId") Integer projectId) {
+        System.out.println("getByUserIdAndProjectId-->userId=" + userId + "  projectId=" + projectId);
+        ProjectUser projectUser = projectUserService.getByUserIdAndProjectId(userId, projectId);
         System.out.println(projectUser);
         return projectUser;
     }

@@ -11,6 +11,9 @@
         <result property="codeUpdate" column="code_update" jdbcType="INTEGER"/>
         <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
         <result property="joinTime" column="join_time" jdbcType="TIMESTAMP"/>
+        <collection property="projectUserDuty" column="{id=duty_code}"
+                    select="com.edu.lingnan.dao.ProjectUserDutyDao.getById">
+        </collection>
     </resultMap>
 
     <!--查找所有项目用户信息-->
@@ -25,7 +28,7 @@
     </resultMap>
     <select id="getProjectUserList" resultMap="pulist">
         select pu.id          as id,
-               pu.project_id as pid,
+               pu.project_id  as pid,
                pu.user_id     as uid,
                pu.code_update as codeupdate,
                u.username     as username,
@@ -50,7 +53,7 @@
     </resultMap>
     <select id="getDelProjectUserList" resultMap="delpulist">
         select pu.id          as id,
-               pu.project_id as pid,
+               pu.project_id  as pid,
                pu.user_id     as uid,
                pu.code_update as codeupdate,
                u.username     as username,
@@ -77,7 +80,6 @@
         set delete_flag = 1
         where id = #{id}
     </update>
-
 
 
     <select id="getById" resultType="com.edu.lingnan.entity.ProjectUser">
@@ -139,10 +141,13 @@
         <result column="duty_code" property="dutyCode"></result>
         <result column="code_devote_line" property="codeDevoteLine"></result>
         <result column="code_update" property="codeUpdate"></result>
-        <result column="user_id" property="sysUser.id"></result>
-        <result column="username" property="sysUser.username"></result>
-        <result column="email" property="sysUser.email"></result>
-        <result column="photo" property="sysUser.photo"></result>
+        <result column="user_id" property="myUserDetails.id"></result>
+        <result column="username" property="myUserDetails.username"></result>
+        <result column="email" property="myUserDetails.email"></result>
+        <result column="photo" property="myUserDetails.photo"></result>
+        <collection property="myUserDetails" column="{id=user_id}"
+                    select="com.edu.lingnan.dao.ProjectUserDao.getSimpleMyUserDetailsByUserId">
+        </collection>
         <collection property="projectUserDuty" column="{id=duty_code}"
                     select="com.edu.lingnan.dao.ProjectUserDutyDao.getById">
         </collection>
@@ -214,13 +219,31 @@
 
     <!--通过ProjectsId删除一条记录-->
     <update id="deleteProjectUserByProjectsId">
-        update project_management_project_cloud.project_user set delete_flag = 0 where project_id = #{id}
+        update project_management_project_cloud.project_user
+        set delete_flag = 0
+        where project_id = #{id}
     </update>
 
     <select id="getByUserIdAndProjectId" resultMap="ProjectUserMap">
-        select id, project_id, user_id, duty_code, code_devote_line, code_update, delete_flag, join_time
+        select id,
+               project_id,
+               user_id,
+               duty_code,
+               code_devote_line,
+               code_update,
+               delete_flag,
+               join_time
         from project_management_project_cloud.project_user
-        where delete_flag = 1 and user_id = #{userId} and project_id = #{projectId}
+        where delete_flag = 1
+          and user_id = #{userId}
+          and project_id = #{projectId}
     </select>
 
+
+    <select id="getSimpleMyUserDetailsByUserId" resultType="com.edu.lingnan.entity.MyUserDetails">
+        select id,username,email,photo
+        from project_management_user_cloud.sys_user
+        where enabled = 1
+          and id = #{id}
+    </select>
 </mapper>

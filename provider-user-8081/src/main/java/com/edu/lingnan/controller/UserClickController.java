@@ -23,24 +23,60 @@ public class UserClickController {
     private UserClickService userClickService;
 
     /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("queryById")
-    public UserClick queryById(Integer id) {
-        return this.userClickService.queryById(id);
-    }
-
-    /**
      * 插入一条数据
+     *
      * @param userClick 更新记录
      * @return Boolean
      */
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public Boolean insert(@RequestBody UserClick userClick){
+    public Boolean insert(@RequestBody UserClick userClick) {
         Boolean flag = userClickService.insert(userClick);
         return flag;
+    }
+
+    /**
+     * 查询一条点击记录
+     *
+     * @return
+     */
+    @GetMapping("getUserClickByUserIdAndProjectId/{userId}/{projectId}")
+    UserClick getUserClickByUserIdAndProjectId(
+            @PathVariable("userId") Integer userId,
+            @PathVariable("projectId") Integer projectId) {
+        return userClickService.getUserClickByUserIdAndProjectId(userId, projectId);
+    }
+
+    /**
+     * 删除点击记录
+     *
+     * @return
+     */
+    @DeleteMapping("deleteUserClick/{userId}/{projectId}")
+    boolean deleteUserClick(
+            @PathVariable("userId") Integer userId,
+            @PathVariable("projectId") Integer projectId) {
+        return userClickService.deleteUserClick(userId, projectId);
+    }
+
+    /**
+     * 还原点击记录
+     *
+     * @return
+     */
+    @PutMapping("reductionUserClick/{userId}/{projectId}")
+    boolean reductionUserClick(
+            @PathVariable("userId") Integer userId,
+            @PathVariable("projectId") Integer projectId) {
+        return userClickService.reductionUserClick(userId, projectId);
+    }
+
+    /**
+     * 查询项目点击次数
+     *
+     * @return
+     */
+    @GetMapping("getCountProjectByClick/{projectId}")
+    Integer getCountProjectByClick(@PathVariable("projectId") Integer projectId) {
+        return userClickService.getCountProjectByClick(projectId);
     }
 }

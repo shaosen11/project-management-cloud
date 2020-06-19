@@ -9,14 +9,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="provider-document-8083" />
         <module name="provider-project-8082" />
-        <module name="consumer-project-9002" />
         <module name="eureka-server-7001" />
         <module name="common-api" />
+        <module name="provider-login-8084" />
         <module name="zuul-8888" />
         <module name="consumer-user-9001" />
         <module name="consumer-login-9004" />
         <module name="consumer-total-9005" />
-        <module name="provider-login-8084" />
+        <module name="consumer-project-9002" />
         <module name="consumer-api" />
         <module name="provider-user-8081" />
         <module name="consumer-document-9003" />
