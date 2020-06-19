@@ -20,51 +20,9 @@ public class UserCodeUpdateRecordServiceImpl implements UserCodeUpdateRecordServ
     @Resource
     private UserCodeUpdateRecordDao userCodeUpdateRecordDao;
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
-    @Override
-    public UserCodeUpdateRecord queryById(Integer id) {
-        return this.userCodeUpdateRecordDao.queryById(id);
-    }
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
     @Override
-    public List<UserCodeUpdateRecord> queryAllByLimit(int offset, int limit) {
-        return this.userCodeUpdateRecordDao.queryAllByLimit(offset, limit);
+    public List<UserCodeUpdateRecord> getAllByUserId(Integer userId) {
+        return userCodeUpdateRecordDao.getAllByUserId(userId);
     }
-
-    /**
-     * 新增数据
-     *
-     * @param userCodeUpdateRecord 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public UserCodeUpdateRecord insert(UserCodeUpdateRecord userCodeUpdateRecord) {
-        this.userCodeUpdateRecordDao.insert(userCodeUpdateRecord);
-        return userCodeUpdateRecord;
-    }
-
-    /**
-     * 修改数据
-     *
-     * @param userCodeUpdateRecord 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public UserCodeUpdateRecord update(UserCodeUpdateRecord userCodeUpdateRecord) {
-        this.userCodeUpdateRecordDao.update(userCodeUpdateRecord);
-        return this.queryById(userCodeUpdateRecord.getId());
-    }
-
 }

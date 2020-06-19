@@ -18,34 +18,136 @@ import java.util.List;
 public interface ProjectDao extends BaseDao<Project>{
 
     /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
+     * 查询一条项目信息
+     * @return
      */
-    Project queryById(Integer id);
+    Project getById(Integer id);
 
     /**
-     * 查询指定行数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
+     * 查询一条没有被注销项目信息
+     * @return
      */
-    List<Project> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    Project getByIdAndNoDel(Integer id);
+
+    /**
+     * 查询所有项目信息
+     * @return
+     */
+    List<Project> getProjectList();
+
+    /**
+     * 通过userId查询所有项目
+     * @return
+     */
+    List<Project> getProjectListByUserId(Integer userId);
 
 
     /**
-     * 通过实体作为筛选条件查询
-     *
-     * @param project 实例对象
-     * @return 对象列表
+     * 删除项目
+     * @return
      */
-    List<Project> queryAll(Project project);
+    boolean deleteProject(Integer id);
 
+
+    /**
+     * 还原项目
+     * @return
+     */
+    boolean reductionProject(Integer id);
+
+    /**
+     * 查询所有已注销项目信息
+     * @return
+     */
+    List<Project> getDelProjectList();
+
+    /**
+     * 查找项目负责人
+     * @param userId
+     * @param projectId
+     * @return
+     */
+    Project getAdminByUserIdAndProjectId(Integer userId, Integer projectId);
+
+
+
+//    /**
+//     * 查询所有项目主页信息
+//     * @return
+//     */
+//    List<ProjectRecommendation> getProject(Integer userId, Integer pageNum, Integer pageSize);
+//
+//    /**
+//     * 查询当前推荐商品信息
+//     * @return
+//     */
+//    List<ProjectRecommendation> getRecommendedCommodities(Integer userId,Integer projectId);
+//
+//    boolean updateProjectClickNumber(Integer projectId);
+//
+//    /**
+//     * 获得今日点击量最多的项目信息。
+//     * @return
+//     */
+//    List<Project> getTodayProject();
+//
+//    /**
+//     * 获得本周点击量以及收藏人数最多的项目信息。
+//     * @return
+//     */
+//    List<Project> getWeekProject();
+//
+//    /**
+//     * 统计项目的记录数
+//     * @return
+//     */
+//    Integer countProjectRecommendation();
+//
+//    /**
+//     * 查询所有指定类型的项目
+//     * @return
+//     */
+//    List<ProjectRecommendation> getProjectByType(Integer pageNum, Integer pageSize,String type);
+//
+//    /**
+//     * 统计指定类型的项目数
+//     * @return
+//     */
+//    Integer countProjectNumberByType(String type);
+//
     /**
      * 统计项目数量
      * @return
      */
-    Integer projectCount();
+    Integer getProjectCount();
+//
+//    /**
+//     * 根据关键字模糊查询项目名
+//     * @return
+//     */
+//    List<String> getProjectNameByWord(String word);
+//
+//    /**
+//     * 根据关键字模糊查询项目类型
+//     * @return
+//     */
+//    List<String> getTypeByWord(String word);
+//
+//    /**
+//     * 根据关键字模糊查询用户名
+//     * @return
+//     */
+//    List<String> getUserNameByWord(String word);
+//
+//    /**
+//     * 根据关键字统计项目数
+//     * @return
+//     */
+//    Integer countProjectByWord(String word);
+//
+//    /**
+//     * 根据关键字模糊查询所有项目
+//     * @return
+//     */
+//    List<ProjectRecommendation> getMyProjectByWord(String word,Integer pageNum, Integer pageSize);
 }

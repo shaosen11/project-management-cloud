@@ -1,5 +1,6 @@
 package com.edu.lingnan.controller;
 
+import com.edu.lingnan.entity.MyUserDetails;
 import com.edu.lingnan.entity.SysUser;
 import com.edu.lingnan.feign.SysUserFeignService;
 import com.edu.lingnan.service.SysUserService;
@@ -55,5 +56,25 @@ public class SysUserController {
     @GetMapping("/getUserCount")
     public Integer userCount(){
         return sysUserService.userCount();
+    }
+
+    /**
+     * 查询user的信息和项目
+     * @param userId
+     * @return
+     */
+    @GetMapping("getMyUserDetailsByUserId/{userId}")
+    public MyUserDetails getMyUserDetailsByUserId(@PathVariable("userId") Integer userId){
+        return sysUserService.getMyUserDetailsByUserId(userId);
+    }
+
+    /**
+     * 查询简要的用户信息
+     * @param userId
+     * @return
+     */
+    @GetMapping("getSimpleMyUserDetailsByUserId/{userId}")
+    public MyUserDetails getSimpleMyUserDetailsByUserId(Integer userId){
+        return sysUserService.getSimpleMyUserDetailsByUserId(userId);
     }
 }

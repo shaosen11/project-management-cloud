@@ -1,10 +1,13 @@
 package com.edu.lingnan.feign;
 
 import com.edu.lingnan.entity.Message;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
@@ -18,46 +21,35 @@ import java.util.List;
 @FeignClient(value = "PRODIVER-USER")
 public interface MessageFeignService {
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
-    @GetMapping("/message/get/{id}")
-    Message queryById(@PathVariable("id") Integer id);
-//
-//    /**
-//     * 查询多条数据
-//     *
-//     * @param offset 查询起始位置
-//     * @param limit 查询条数
-//     * @return 对象列表
-//     */
-//    List<Message> queryAllByLimit(int offset, int limit);
-//
-    /**
-//     * 新增数据
-//     *
-//     * @param message 实例对象
-//     * @return 实例对象
-//     */
-//    Message insert(Message message);
-//
-//    /**
-//     * 修改数据
-//     *
-//     * @param message 实例对象
-//     * @return 实例对象
-//     */
-//    Message update(Message message);
-//
-//    /**
-//     * 通过主键删除数据
-//     *
-//     * @param id 主键
-//     * @return 是否成功
-//     */
-//    boolean deleteById(Integer id);
+    @GetMapping("/message/getByUserIdAndNeedToDo/{userId}/{needToDo}")
+    List<Message> getByUserIdAndNeedToDo(@RequestParam("userId") Integer userId, @RequestParam("needToDo") Integer needToDo);
 
+    @GetMapping("message/getByUserIdAndOffsetAndPageSize/{userId}/{needToDo}/{offset}/{pageSize}")
+    List<Message> getByUserIdAndOffsetAndPageSize(@RequestParam("userId") Integer userId,
+                                                  @RequestParam("needToDo") Integer needToDo,
+                                                  @RequestParam("offset") Integer offset,
+                                                  @RequestParam("pageSize") Integer pageSize);
+
+    @PostMapping("/message")
+    boolean insert(Message message);
+
+    @PutMapping("/message/updateAllMessageIsReadByUserId/{userId}/{isRead}")
+    boolean updateAllMessageIsReadByUserId(@RequestParam("userId") Integer userId,
+                                           @RequestParam("isRead") Integer isRead);
+
+    @GetMapping("/message/{id}")
+    Message getById(@RequestParam("id") Integer id);
+
+    @PutMapping("/message")
+    boolean update(Message message);
+
+    @PutMapping("/message/updateMessageIsReadByMessageId/{messageId}/{isRead}")
+    boolean updateMessageIsReadByMessageId(@RequestParam("messageId") Integer messageId,
+                                           @RequestParam("isRead") Integer isRead);
+
+    @GetMapping("/message/getMessageCount/{userId}")
+    Integer getMessageCount(@RequestParam("userId") Integer userId);
+
+    @GetMapping("/message/getMessageNeedToDoCount/{userId}")
+    Integer getMessageNeedToDoCount(@RequestParam("userId") Integer userId);
 }

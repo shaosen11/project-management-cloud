@@ -9,38 +9,10 @@
     </resultMap>
 
     <!--查询单个-->
-    <select id="queryById" resultMap="ProjectUserDutyMap">
+    <select id="getById" resultMap="ProjectUserDutyMap">
         select
           id, duty_name, delete_flag
         from project_management_project_cloud.project_user_duty
         where id = #{id}
     </select>
-
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="ProjectUserDutyMap">
-        select
-          id, duty_name, delete_flag
-        from project_management_project_cloud.project_user_duty
-        limit #{offset}, #{limit}
-    </select>
-
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="ProjectUserDutyMap">
-        select
-          id, duty_name, delete_flag
-        from project_management_project_cloud.project_user_duty
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="dutyName != null and dutyName != ''">
-                and duty_name = #{dutyName}
-            </if>
-            <if test="deleteFlag != null">
-                and delete_flag = #{deleteFlag}
-            </if>
-        </where>
-    </select>
-
-
 </mapper>

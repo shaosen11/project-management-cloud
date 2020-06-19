@@ -22,15 +22,10 @@ public class ProjectMessageTypeController {
     @Resource
     private ProjectMessageTypeService projectMessageTypeService;
 
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("selectOne")
-    public ProjectMessageType selectOne(Integer id) {
-        return this.projectMessageTypeService.queryById(id);
+    @GetMapping("/{id}")
+    public ProjectMessageType getById(Integer id){
+        return projectMessageTypeService.getById(id);
     }
+
 
 }

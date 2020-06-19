@@ -12,37 +12,81 @@ import java.util.List;
 public interface MessageService {
 
     /**
-     * 通过ID查询单条数据
+     * 通过userId查询所有消息
      *
-     * @param id 主键
-     * @return 实例对象
+     * @param userId
+     * @param needToDo
+     * @return
      */
-    Message queryById(Integer id);
+    List<Message> getByUserIdAndNeedToDo(Integer userId, Integer needToDo);
 
     /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
+     * 通过userId查询所有消息
+     * @param userId
+     * @param needToDo
+     * @param offset
+     * @param pageSize
+     * @return
      */
-    List<Message> queryAllByLimit(int offset, int limit);
+    List<Message> getByUserIdAndOffsetAndPageSize(Integer userId, Integer needToDo, Integer offset, Integer pageSize);
 
     /**
-     * 新增数据
+     * 插入一条消息
      *
-     * @param message 实例对象
-     * @return 实例对象
+     * @param message
+     * @return
      */
-    Message insert(Message message);
+    boolean insert(Message message);
 
     /**
-     * 修改数据
+     * 标记所有消息为已读
      *
-     * @param message 实例对象
-     * @return 实例对象
+     * @param userId
+     * @param isRead
+     * @return
      */
-    Message update(Message message);
+    boolean updateAllMessageIsReadByUserId(Integer userId, Integer isRead);
+
+
+    /**
+     * 通过id查找消息
+     *
+     * @param id
+     * @return
+     */
+    Message getById(Integer id);
+
+    /**
+     * 更新消息
+     *
+     * @param message
+     * @return
+     */
+    boolean update(Message message);
+
+    /**
+     * 标记消息为已读
+     *
+     * @param messageId
+     * @return
+     */
+    boolean updateMessageIsReadByMessageId(Integer messageId, Integer isRead);
+
+    /**
+     * 获取消息数量
+     *
+     * @param userId
+     * @return
+     */
+    Integer getMessageCount(Integer userId);
+
+    /**
+     * 获取待办消息数量
+     *
+     * @param userId
+     * @return
+     */
+    Integer getMessageNeedToDoCount(Integer userId);
 
 
 }

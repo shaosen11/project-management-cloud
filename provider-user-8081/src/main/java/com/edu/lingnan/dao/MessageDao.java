@@ -15,34 +15,73 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface MessageDao extends BaseDao<Message>{
+public interface MessageDao extends BaseDao<Message> {
 
     /**
-     * 通过ID查询单条数据
+     * 通过userId查询所有消息
      *
-     * @param id 主键
-     * @return 实例对象
+     * @param userId
+     * @param needToDo
+     * @return
      */
-    Message queryById(Integer id);
+    List<Message> getByUserIdAndNeedToDo(@Param("userId") Integer userId, @Param("needToDo") Integer needToDo);
 
     /**
-     * 查询指定行数据
+     * 通过userId查询所有消息
      *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
+     * @param userId
+     * @param needToDo
+     * @param offset
+     * @param pageSize
+     * @return
      */
-    List<Message> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    List<Message> getByUserIdAndOffsetAndPageSize(
+            @Param("userId") Integer userId,
+            @Param("needToDo") Integer needToDo,
+            @Param("offset") Integer offset,
+            @Param("pageSize") Integer pageSize);
 
 
     /**
-     * 通过实体作为筛选条件查询
+     * 标记所有消息为已读
      *
-     * @param message 实例对象
-     * @return 对象列表
+     * @param userId
+     * @param isRead
+     * @return
      */
-    List<Message> queryAll(Message message);
+    boolean updateAllMessageIsReadByUserId(@Param("userId") Integer userId, @Param("isRead") Integer isRead);
 
+    /**
+     * 通过id查找消息
+     *
+     * @param id
+     * @return
+     */
+    Message getById(Integer id);
+
+    /**
+     * 标记消息为已读
+     *
+     * @param messageId
+     * @return
+     */
+    boolean updateMessageIsReadByMessageId(@Param("messageId") Integer messageId, @Param("isRead") Integer isRead);
+
+    /**
+     * 获取消息数量
+     *
+     * @param userId
+     * @return
+     */
+    Integer getMessageCount(@Param("userId") Integer userId);
+
+    /**
+     * 获取待办消息数量
+     *
+     * @param userId
+     * @return
+     */
+    Integer getMessageNeedToDoCount(@Param("userId") Integer userId);
 
 
 }

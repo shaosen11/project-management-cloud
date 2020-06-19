@@ -20,51 +20,49 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
     @Resource
     private ProjectMessageDao projectMessageDao;
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
+
     @Override
-    public ProjectMessage queryById(Integer id) {
-        return this.projectMessageDao.queryById(id);
+    public List<ProjectMessage> getByProjectIdAndUserId(Integer projectId, Integer userId, Integer offset, Integer pageSize) {
+        return projectMessageDao.getByProjectIdAndUserId(projectId, userId, offset, pageSize);
     }
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
     @Override
-    public List<ProjectMessage> queryAllByLimit(int offset, int limit) {
-        return this.projectMessageDao.queryAllByLimit(offset, limit);
+    public boolean insert(ProjectMessage projectsMessage) {
+        return projectMessageDao.insert(projectsMessage) > 0;
     }
 
-    /**
-     * 新增数据
-     *
-     * @param projectMessage 实例对象
-     * @return 实例对象
-     */
     @Override
-    public ProjectMessage insert(ProjectMessage projectMessage) {
-        this.projectMessageDao.insert(projectMessage);
-        return projectMessage;
+    public List<ProjectMessage> getByProjectId(Integer projectId, Integer offset, Integer pageSize) {
+        return projectMessageDao.getByProjectId(projectId, offset, pageSize);
     }
 
-    /**
-     * 修改数据
-     *
-     * @param projectMessage 实例对象
-     * @return 实例对象
-     */
     @Override
-    public ProjectMessage update(ProjectMessage projectMessage) {
-        this.projectMessageDao.update(projectMessage);
-        return this.queryById(projectMessage.getId());
+    public boolean update(ProjectMessage projectsMessage) {
+        return projectMessageDao.update(projectsMessage);
     }
 
+    @Override
+    public boolean updateProjectMessageIsReadByProjectMessageId(Integer projectMessageId) {
+        return projectMessageDao.updateProjectMessageIsReadByProjectMessageId(projectMessageId);
+    }
+
+    @Override
+    public List<ProjectMessage> getAllNeedToByProjectId(Integer projectId, Integer offset, Integer pageSize) {
+        return projectMessageDao.getAllNeedToByProjectId(projectId, offset, pageSize);
+    }
+
+    @Override
+    public ProjectMessage getById(Integer id) {
+        return projectMessageDao.getById(id);
+    }
+
+    @Override
+    public Integer getProjectMessageCount(Integer projectId, Integer userId) {
+        return projectMessageDao.getProjectMessageCount(projectId, userId);
+    }
+
+    @Override
+    public Integer getProjectMessageNeedToDoCount(Integer projectId) {
+        return projectMessageDao.getProjectMessageNeedToDoCount(projectId);
+    }
 }

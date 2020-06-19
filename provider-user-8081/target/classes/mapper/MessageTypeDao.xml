@@ -12,46 +12,11 @@
     </resultMap>
 
     <!--查询单个-->
-    <select id="queryById" resultMap="MessageTypeMap">
+    <select id="getById" resultMap="MessageTypeMap">
         select
           id, type, icon, background, delete_flag, background2
         from project_management_user_cloud.message_type
         where id = #{id}
-    </select>
-
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="MessageTypeMap">
-        select
-          id, type, icon, background, delete_flag, background2
-        from project_management_user_cloud.message_type
-        limit #{offset}, #{limit}
-    </select>
-
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="MessageTypeMap">
-        select
-          id, type, icon, background, delete_flag, background2
-        from project_management_user_cloud.message_type
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="type != null and type != ''">
-                and type = #{type}
-            </if>
-            <if test="icon != null and icon != ''">
-                and icon = #{icon}
-            </if>
-            <if test="background != null and background != ''">
-                and background = #{background}
-            </if>
-            <if test="deleteFlag != null">
-                and delete_flag = #{deleteFlag}
-            </if>
-            <if test="background2 != null and background2 != ''">
-                and background2 = #{background2}
-            </if>
-        </where>
     </select>
 
 

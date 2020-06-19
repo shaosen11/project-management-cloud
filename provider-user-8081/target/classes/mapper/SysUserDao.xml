@@ -26,88 +26,120 @@
 
     <!--查询单个-->
     <select id="queryById" resultMap="SysUserMap">
-        select
-          id, email, username, password, phone, birthday, gender, address, introduce, tag, photo, last_login_time, create_time, enabled, account_non_expired, account_non_locked, credential_non_expired, validata_code, out_date
+        select id,
+               email,
+               username,
+               password,
+               phone,
+               birthday,
+               gender,
+               address,
+               introduce,
+               tag,
+               photo,
+               last_login_time,
+               create_time,
+               enabled,
+               account_non_expired,
+               account_non_locked,
+               credential_non_expired,
+               validata_code,
+               out_date
         from project_management_user_cloud.sys_user
         where id = #{id}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="SysUserMap">
-        select
-          id, email, username, password, phone, birthday, gender, address, introduce, tag, photo, last_login_time, create_time, enabled, account_non_expired, account_non_locked, credential_non_expired, validata_code, out_date
-        from project_management_user_cloud.sys_user
-        limit #{offset}, #{limit}
+    <!--查询项目进度-->
+    <select id="getProjectScheduleById" resultType="com.edu.lingnan.entity.ProjectSchedule">
+        select *
+        from project_management_project_cloud.project_schedule
+        where id = #{id}
     </select>
 
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="SysUserMap">
-        select
-          id, email, username, password, phone, birthday, gender, address, introduce, tag, photo, last_login_time, create_time, enabled, account_non_expired, account_non_locked, credential_non_expired, validata_code, out_date
-        from project_management_user_cloud.sys_user
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="email != null and email != ''">
-                and email = #{email}
-            </if>
-            <if test="username != null and username != ''">
-                and username = #{username}
-            </if>
-            <if test="password != null and password != ''">
-                and password = #{password}
-            </if>
-            <if test="phone != null and phone != ''">
-                and phone = #{phone}
-            </if>
-            <if test="birthday != null">
-                and birthday = #{birthday}
-            </if>
-            <if test="gender != null">
-                and gender = #{gender}
-            </if>
-            <if test="address != null and address != ''">
-                and address = #{address}
-            </if>
-            <if test="introduce != null and introduce != ''">
-                and introduce = #{introduce}
-            </if>
-            <if test="tag != null and tag != ''">
-                and tag = #{tag}
-            </if>
-            <if test="photo != null and photo != ''">
-                and photo = #{photo}
-            </if>
-            <if test="lastLoginTime != null">
-                and last_login_time = #{lastLoginTime}
-            </if>
-            <if test="createTime != null">
-                and create_time = #{createTime}
-            </if>
-            <if test="enabled != null">
-                and enabled = #{enabled}
-            </if>
-            <if test="accountNonExpired != null">
-                and account_non_expired = #{accountNonExpired}
-            </if>
-            <if test="accountNonLocked != null">
-                and account_non_locked = #{accountNonLocked}
-            </if>
-            <if test="credentialNonExpired != null">
-                and credential_non_expired = #{credentialNonExpired}
-            </if>
-            <if test="validataCode != null and validataCode != ''">
-                and validata_code = #{validataCode}
-            </if>
-            <if test="outDate != null">
-                and out_date = #{outDate}
-            </if>
-        </where>
+    <!--查询项目进度-->
+    <select id="getProjectTypeById" resultType="com.edu.lingnan.entity.ProjectType">
+        select *
+        from project_management_project_cloud.project_type
+        where id = #{id}
+    </select>
+
+
+    <!--查找我的所有项目-->
+    <resultMap id="myprojects" type="com.edu.lingnan.entity.Myprojects">
+        <result column="projectId" property="projectId"></result>
+        <result column="projectName" property="projectName"></result>
+        <result column="chargeUserId" property="chargeUserId"></result>
+        <result column="chargeUser" property="chargeUser"></result>
+        <result column="schedule" property="schedule"></result>
+        <result column="codeUpdateCount" property="codeUpdateCount"></result>
+        <result column="myUpdateCount" property="myUpdateCount"></result>
+        <result column="storeCount" property="storeCount"></result>
+        <result column="likeCount" property="likeCount"></result>
+        <result column="storeFlag" property="storeFlag"></result>
+        <result column="likeFlag" property="likeFlag"></result>
+        <collection property="projectSchedule" column="{id=schedule_id}"
+                    select="com.edu.lingnan.dao.SysUserDao.getProjectScheduleById">
+        </collection>
+        <collection property="projectType" column="{id=type_id}"
+                    select="com.edu.lingnan.dao.SysUserDao.getProjectTypeById">
+        </collection>
+    </resultMap>
+    <select id="getMyProjects" resultMap="myprojects">
+        select p.id                       as projectId,
+               p.name                     as projectName,
+               su.id                      as chargeUserId,
+               su.username                as chargeUser,
+               p.schedule_id              as schedule_id,
+               p.type_id                  as type_id,
+               p.code_update_count        as codeUpdateCount,
+               pu.code_update             as myUpdateCount,
+               p.store_count              as storeCount,
+               p.like_count               as likeCount,
+               (select count(*)
+                from project_management_user_cloud.user_store us
+                where us.user_id = #{userId}
+                  and us.projects_id = p.id
+                  and us.delete_flag = 1) as storeFlag,
+               (select count(*)
+                from project_management_user_cloud.user_like ul
+                where ul.user_id = #{userId}
+                  and ul.projects_id = p.id
+                  and ul.delete_flag = 1) as likeFlag
+        from project_management_project_cloud.project_user pu
+                 right join project_management_project_cloud.project p on pu.project_id = p.id
+                 right join project_management_user_cloud.sys_user su on p.charge_user_id = su.id
+        where pu.delete_flag = 1
+          and su.enabled = 1
+          and p.delete_flag = 1
+          and pu.user_id = #{id}
     </select>
 
     <select id="userCount" resultType="integer">
-        select count(*) from sys_user where enabled = 1
+        select count(*)
+        from project_management_user_cloud.sys_user
+        where enabled = 1
+    </select>
+
+    <resultMap id="MyUserDetailsAndProjectList" type="com.edu.lingnan.entity.MyUserDetails">
+        <collection property="myprojectsList" column="{id=id}"
+                    select="com.edu.lingnan.dao.SysUserDao.getMyProjects">
+        </collection>
+        <collection property="userCodeUpdateRecordList" column="{userId=id}"
+                    select="com.edu.lingnan.dao.UserCodeUpdateRecordDao.getAllByUserId">
+        </collection>
+    </resultMap>
+    <select id="getMyUserDetailsByUserId" resultMap="MyUserDetailsAndProjectList">
+        select id, username, email, photo
+        from project_management_user_cloud.sys_user
+        where enabled = 1
+          and id = #{userId}
+    </select>
+
+    <select id="getSimpleMyUserDetailsByUserId" resultType="com.edu.lingnan.entity.MyUserDetails">
+        select id,username,email,photo
+        from project_management_user_cloud.sys_user
+        where enabled = 1
+          and id = #{id}
     </select>
 
 </mapper>

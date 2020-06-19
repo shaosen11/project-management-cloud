@@ -3,6 +3,10 @@ package com.edu.lingnan.feign;
 import com.edu.lingnan.entity.ProjectMessage;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
@@ -16,45 +20,42 @@ import java.util.List;
 @FeignClient(value = "PROVIDER-PROJECT")
 public interface ProjectMessageFeignService {
 
-//    /**
-//     * 通过ID查询单条数据
-//     *
-//     * @param id 主键
-//     * @return 实例对象
-//     */
-//    ProjectMessage queryById(Integer id);
-//
-//    /**
-//     * 查询多条数据
-//     *
-//     * @param offset 查询起始位置
-//     * @param limit 查询条数
-//     * @return 对象列表
-//     */
-//    List<ProjectMessage> queryAllByLimit(int offset, int limit);
-//
-//    /**
-//     * 新增数据
-//     *
-//     * @param projectMessage 实例对象
-//     * @return 实例对象
-//     */
-//    ProjectMessage insert(ProjectMessage projectMessage);
-//
-//    /**
-//     * 修改数据
-//     *
-//     * @param projectMessage 实例对象
-//     * @return 实例对象
-//     */
-//    ProjectMessage update(ProjectMessage projectMessage);
-//
-//    /**
-//     * 通过主键删除数据
-//     *
-//     * @param id 主键
-//     * @return 是否成功
-//     */
-//    boolean deleteById(Integer id);
+    @GetMapping("projectMessage/getByProjectIdAndUserId/{projectId}/{userId}/{offset}/{pageSize}")
+    List<ProjectMessage> getByProjectIdAndUserId(
+            @RequestParam("projectId") Integer projectId,
+            @RequestParam("userId") Integer userId,
+            @RequestParam("offset") Integer offset,
+            @RequestParam("pageSize") Integer pageSize);
 
+    @PostMapping("projectMessage/")
+    boolean insert(ProjectMessage projectsMessage);
+
+    @GetMapping("projectMessage/getByProjectId/{projectId}/{offset}/{pageSize}")
+    List<ProjectMessage> getByProjectId(
+            @RequestParam("projectId") Integer projectId,
+            @RequestParam("offset") Integer offset,
+            @RequestParam("pageSize") Integer pageSize);
+
+    @PutMapping("projectMessage/")
+    boolean update(ProjectMessage projectsMessage);
+
+    @PutMapping("projectMessage/updateProjectMessageIsReadByProjectMessageId/{projectMessageId}")
+    boolean updateProjectMessageIsReadByProjectMessageId(@RequestParam("projectMessageId") Integer projectMessageId);
+
+    @GetMapping("projectMessage/getAllNeedToByProjectId/{projectId}/{offset}/{pageSize}")
+    List<ProjectMessage> getAllNeedToByProjectId(
+            @RequestParam("projectId") Integer projectId,
+            @RequestParam("offset") Integer offset,
+            @RequestParam("pageSize") Integer pageSize);
+
+    @GetMapping("projectMessage/{id}")
+    ProjectMessage getById(@RequestParam("id") Integer id);
+
+    @GetMapping("projectMessage/getProjectMessageCount/{projectId}/{userId}")
+    Integer getProjectMessageCount(
+            @RequestParam("projectId") Integer projectId,
+            @RequestParam("userId") Integer userId);
+
+    @GetMapping("projectMessage/getProjectMessageNeedToDoCount/{projectId}")
+    Integer getProjectMessageNeedToDoCount(@RequestParam("projectId") Integer projectId);
 }

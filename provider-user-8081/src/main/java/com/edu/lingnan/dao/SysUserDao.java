@@ -1,6 +1,6 @@
 package com.edu.lingnan.dao;
 
-import com.edu.lingnan.entity.SysUser;
+import com.edu.lingnan.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -23,7 +23,7 @@ public interface SysUserDao extends BaseDao<SysUser>{
      * @param id 主键
      * @return 实例对象
      */
-    SysUser queryById(Integer id);
+    SysUser queryById(@Param("id") Integer id);
 
     /**
      * 查询指定行数据
@@ -49,4 +49,31 @@ public interface SysUserDao extends BaseDao<SysUser>{
      * @return
      */
     Integer userCount();
+
+    ProjectSchedule getProjectScheduleById(@Param("id") Integer id);
+
+    ProjectType getProjectTypeById(@Param("id") Integer id);
+
+    /**
+     * 查询我的所有项目(user)
+     *
+     * @return
+     */
+    List<Myprojects> getMyProjects(@Param("id") Integer id);
+
+    /**
+     * 查询user的信息和项目
+     *
+     * @param userId
+     * @return
+     */
+    MyUserDetails getMyUserDetailsByUserId(@Param("userId") Integer userId);
+
+    /**
+     * 查询简要的用户信息
+     *
+     * @param id
+     * @return
+     */
+    MyUserDetails getSimpleMyUserDetailsByUserId(@Param("id") Integer id);
 }

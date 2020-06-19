@@ -6,6 +6,7 @@ import com.edu.lingnan.service.ProjectUserCooperationService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (ProjectUserCooperation)表控制层
@@ -22,15 +23,28 @@ public class ProjectUserCooperationController {
     @Resource
     private ProjectUserCooperationService projectUserCooperationService;
 
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("selectOne")
-    public ProjectUserCooperation selectOne(Integer id) {
-        return this.projectUserCooperationService.queryById(id);
+    @GetMapping("/getByProjectIdAndInProjectUserIdAndNotInProjectUserIdAndInviteAndFinish/{projectId}/{inProjectUserId}/{notInProjectUserId}/{inviteFlag}/{finishFlag}")
+    ProjectUserCooperation getByProjectIdAndInProjectUserIdAndNotInProjectUserIdAndInviteAndFinish(Integer projectId, Integer inProjectUserId, Integer notInProjectUserId, Integer inviteFlag, Integer finishFlag) {
+        return projectUserCooperationService.getByProjectIdAndInProjectUserIdAndNotInProjectUserIdAndInviteAndFinish(projectId, inProjectUserId, notInProjectUserId, inviteFlag, finishFlag);
     }
 
+    @PostMapping("/")
+    boolean insert(ProjectUserCooperation projectsUserCooperation){
+        return projectUserCooperationService.insert(projectsUserCooperation);
+    }
+
+    @PutMapping("/")
+    boolean update(ProjectUserCooperation projectsUserCooperation){
+        return projectUserCooperationService.update(projectsUserCooperation);
+    }
+
+    @GetMapping("/{id}")
+    ProjectUserCooperation getById(@PathVariable("id") Integer id){
+        return projectUserCooperationService.getById(id);
+    }
+
+    @GetMapping("/getByProjectIdAndNotInProjectUserIdAndInviteAndFinish/{projectId}/{notInProjectUserId}/{inviteFlag}/{finishFlag}")
+    List<ProjectUserCooperation> getByProjectIdAndNotInProjectUserIdAndInviteAndFinish(Integer projectId, Integer notInProjectUserId, Integer inviteFlag, Integer finishFlag){
+        return projectUserCooperationService.getByProjectIdAndNotInProjectUserIdAndInviteAndFinish(projectId, notInProjectUserId, inviteFlag, finishFlag);
+    }
 }

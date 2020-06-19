@@ -18,30 +18,35 @@ import java.util.List;
 public interface ProjectUserCooperationDao extends BaseDao<ProjectUserCooperation>{
 
     /**
-     * 通过ID查询单条数据
+     * 查找项目有没有邀请过此人，并且未完成邀请
      *
-     * @param id 主键
-     * @return 实例对象
+     * @param projectId
+     * @param inProjectUserId
+     * @param notInProjectUserId
+     * @param inviteFlag
+     * @param finishFlag
+     * @return
      */
-    ProjectUserCooperation queryById(Integer id);
+    ProjectUserCooperation getByProjectIdAndInProjectUserIdAndNotInProjectUserIdAndInviteAndFinish(Integer projectId, Integer inProjectUserId, Integer notInProjectUserId, Integer inviteFlag, Integer finishFlag);
 
     /**
-     * 查询指定行数据
+     * 通过id查找
      *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
+     * @param id
+     * @return
      */
-    List<ProjectUserCooperation> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
-
+    ProjectUserCooperation getById(Integer id);
 
     /**
-     * 通过实体作为筛选条件查询
+     * 获取项目对个人的所有邀请
      *
-     * @param projectUserCooperation 实例对象
-     * @return 对象列表
+     * @param projectId
+     * @param notInProjectUserId
+     * @param inviteFlag
+     * @param finishFlag
+     * @return
      */
-    List<ProjectUserCooperation> queryAll(ProjectUserCooperation projectUserCooperation);
+    List<ProjectUserCooperation> getByProjectIdAndNotInProjectUserIdAndInviteAndFinish(Integer projectId, Integer notInProjectUserId, Integer inviteFlag, Integer finishFlag);
 
 
 }

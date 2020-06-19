@@ -28,100 +28,320 @@
     </resultMap>
 
     <!--查询单个-->
-    <select id="queryById" resultMap="ProjectMap">
-        select
-          id, name, charge_user_id, code_line_number, code_update_count, schedule_id, function_points, completed_function_points, last_update_time, type_id, store_count, like_count, click_count, delete_flag, characterization, create_time, user_count, document_count, planned_start_time, planned_end_time, actual_start_time, actual_end_time
+    <select id="getById" resultMap="ProjectMap">
+        select id,
+               name,
+               charge_user_id,
+               code_line_number,
+               code_update_count,
+               schedule_id,
+               function_points,
+               completed_function_points,
+               last_update_time,
+               type_id,
+               store_count,
+               like_count,
+               click_count,
+               delete_flag,
+               characterization,
+               create_time,
+               user_count,
+               document_count,
+               planned_start_time,
+               planned_end_time,
+               actual_start_time,
+               actual_end_time
         from project_management_project_cloud.project
         where id = #{id}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="ProjectMap">
-        select
-          id, name, charge_user_id, code_line_number, code_update_count, schedule_id, function_points, completed_function_points, last_update_time, type_id, store_count, like_count, click_count, delete_flag, characterization, create_time, user_count, document_count, planned_start_time, planned_end_time, actual_start_time, actual_end_time
+    <!--根据id查找一条没有被注销记录-->
+    <select id="getByIdAndNoDel" resultType="com.edu.lingnan.entity.Project">
+        select *
         from project_management_project_cloud.project
-        limit #{offset}, #{limit}
+        where id = #{id}
+          and delete_flag = 1
     </select>
 
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="ProjectMap">
-        select
-          id, name, charge_user_id, code_line_number, code_update_count, schedule_id, function_points, completed_function_points, last_update_time, type_id, store_count, like_count, click_count, delete_flag, characterization, create_time, user_count, document_count, planned_start_time, planned_end_time, actual_start_time, actual_end_time
+    <select id="getAdminByUserIdAndProjectId" resultType="com.edu.lingnan.entity.Project">
+        select *
         from project_management_project_cloud.project
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="name != null and name != ''">
-                and name = #{name}
-            </if>
-            <if test="chargeUserId != null">
-                and charge_user_id = #{chargeUserId}
-            </if>
-            <if test="codeLineNumber != null">
-                and code_line_number = #{codeLineNumber}
-            </if>
-            <if test="codeUpdateCount != null">
-                and code_update_count = #{codeUpdateCount}
-            </if>
-            <if test="scheduleId != null">
-                and schedule_id = #{scheduleId}
-            </if>
-            <if test="functionPoints != null">
-                and function_points = #{functionPoints}
-            </if>
-            <if test="completedFunctionPoints != null">
-                and completed_function_points = #{completedFunctionPoints}
-            </if>
-            <if test="lastUpdateTime != null">
-                and last_update_time = #{lastUpdateTime}
-            </if>
-            <if test="typeId != null">
-                and type_id = #{typeId}
-            </if>
-            <if test="storeCount != null">
-                and store_count = #{storeCount}
-            </if>
-            <if test="likeCount != null">
-                and like_count = #{likeCount}
-            </if>
-            <if test="clickCount != null">
-                and click_count = #{clickCount}
-            </if>
-            <if test="deleteFlag != null">
-                and delete_flag = #{deleteFlag}
-            </if>
-            <if test="characterization != null and characterization != ''">
-                and characterization = #{characterization}
-            </if>
-            <if test="createTime != null">
-                and create_time = #{createTime}
-            </if>
-            <if test="userCount != null">
-                and user_count = #{userCount}
-            </if>
-            <if test="documentCount != null">
-                and document_count = #{documentCount}
-            </if>
-            <if test="plannedStartTime != null">
-                and planned_start_time = #{plannedStartTime}
-            </if>
-            <if test="plannedEndTime != null">
-                and planned_end_time = #{plannedEndTime}
-            </if>
-            <if test="actualStartTime != null">
-                and actual_start_time = #{actualStartTime}
-            </if>
-            <if test="actualEndTime != null">
-                and actual_end_time = #{actualEndTime}
-            </if>
-        </where>
+        where charge_user_id = #{userId}
+          and id = #{projectId}
     </select>
 
     <!--查找所有项目-->
-    <select id="projectCount" resultType="Integer">
+    <select id="getProjectList" resultType="com.edu.lingnan.entity.Project">
+        select *
+        from project_management_project_cloud.project
+        where delete_flag = 1
+    </select>
+
+    <!--通过id查询所有项目-->
+    <select id="getProjectListByUserId" resultType="com.edu.lingnan.entity.Project">
+        select *
+        from project_management_project_cloud.project
+        where id in (
+            select project_id
+            from project_management_project_cloud.project_user
+            where user_id = #{userId})
+          and delete_flag = 1
+    </select>
+
+    <!--查找所有被注销项目-->
+    <select id="getDelProjectList" resultType="com.edu.lingnan.entity.Project">
+        select *
+        from project_management_project_cloud.project
+        where delete_flag = 0
+    </select>
+
+    <!--删除一条记录-->
+    <update id="deleteProject">
+        update project_management_project_cloud.project
+        set delete_flag = 0
+        where id = #{id}
+    </update>
+
+    <!--还原一条记录-->
+    <update id="reductionProject">
+        update project_management_project_cloud.project
+        set delete_flag = 1
+        where id = #{id}
+    </update>
+
+
+<!--    &lt;!&ndash;查找所有项目&ndash;&gt;-->
+<!--    <select id="getProject" resultType="ProjectsRecommendation">-->
+<!--        select a.id                                      as projectId,-->
+<!--               b.id                                      as userId,-->
+<!--               a.name,-->
+<!--               b.username,-->
+<!--               a.type,-->
+<!--               a.characterization                        as characterization,-->
+<!--               a.store_count                             as storeCount,-->
+<!--               a.click_count                             as clickCount,-->
+<!--               (select count(*)-->
+<!--                from project_management_user_cloud.user_store us-->
+<!--                where us.user_id = #{userId}-->
+<!--                  and us.projects_id = a.id-->
+<!--                  and us.delete_flag = 1)                as storeFlag,-->
+<!--               hour(timediff(now(), last_update_time))   as updateTime,-->
+<!--               DATE_FORMAT(last_update_time, '%Y-%m-%d') as updateDate,-->
+<!--               DATE_FORMAT(a.create_time, '%Y-%m-%d')    as createDate,-->
+<!--               getFirstHanZiCode(b.username)             as firstname-->
+<!--        from project_management_project_cloud.project a,-->
+<!--             project_management_user_cloud.sys_user b-->
+<!--        where a.charge_user_id = b.id-->
+<!--          and a.delete_flag = 1-->
+<!--          and b.enabled = 1-->
+<!--        order by a.id desc-->
+<!--        limit #{pageNum},#{pageSize};-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash;更新信息&ndash;&gt;-->
+<!--    <update id="updateProjectClickNumber">-->
+<!--        update project_management_project_cloud.project-->
+<!--        set click_count = click_count + 1-->
+<!--        where id = #{projectId}-->
+<!--    </update>-->
+
+<!--    <resultMap id="getTodayProjectsInfo" type="map">-->
+<!--        <result column="projectId" property="projectId"/>-->
+<!--        <result column="userId" property="userId"/>-->
+<!--        <result column="name" property="name"/>-->
+<!--        <result column="username" property="username"/>-->
+<!--        <result column="type" property="type"/>-->
+<!--        <result column="characterization" property="characterization"/>-->
+<!--    </resultMap>-->
+<!--    &lt;!&ndash;获得今日点击量人数最多的项目信息&ndash;&gt;-->
+<!--    <select id="getTodayProject" resultMap="getTodayProjectsInfo">-->
+<!--        select a.id as projectId, b.id as userId, a.name, b.username, a.type, a.characterization as characterization-->
+<!--        from project_management_project_cloud.project a,-->
+<!--             sys_user b-->
+<!--        where a.charge_user_id = b.id-->
+<!--          and a.delete_flag = 1-->
+<!--          and b.delete_flag = 1-->
+<!--          and a.id in (select DISTINCT projects_id from user_click where to_days(click_time) = to_days(now()))-->
+<!--        order by click_count desc, like_count desc-->
+<!--        limit 10;-->
+<!--    </select>-->
+
+<!--    <resultMap id="getWeekProjectsInfo" type="map">-->
+<!--        <result column="projectId" property="projectId"/>-->
+<!--        <result column="userId" property="userId"/>-->
+<!--        <result column="name" property="name"/>-->
+<!--        <result column="username" property="username"/>-->
+<!--        <result column="type" property="type"/>-->
+<!--        <result column="characterization" property="characterization"/>-->
+<!--    </resultMap>-->
+<!--    &lt;!&ndash;获得本周点击量人数最多的项目信息&ndash;&gt;-->
+<!--    <select id="getWeekProject" resultMap="getWeekProjectsInfo">-->
+<!--        select a.id as projectId, b.id as userId, a.name, b.username, a.type, a.characterization as characterization-->
+<!--        from project_management_project_cloud.project a,-->
+<!--             project_management_user_cloud.sys_user b-->
+<!--        where a.charge_user_id = b.id-->
+<!--          and a.delete_flag = 1-->
+<!--          and b.enabled = 1-->
+<!--          and a.id in (select DISTINCT projects_id-->
+<!--                       from project_management_user_cloud.user_click-->
+<!--                       where click_time between date_sub(now(), interval 7 DAY) and now())-->
+<!--        order by click_count desc, like_count desc-->
+<!--        limit 10;-->
+<!--    </select>-->
+
+
+<!--    &lt;!&ndash;查找所有项目&ndash;&gt;-->
+<!--    <select id="getRecommendedCommodities" resultType="ProjectsRecommendation">-->
+<!--        select a.id                                      as projectId,-->
+<!--               b.id                                      as userId,-->
+<!--               a.name,-->
+<!--               b.username,-->
+<!--               a.type,-->
+<!--               a.characterization                        as characterization,-->
+<!--               a.store_count                             as storeCount,-->
+<!--               a.click_count                             as clickCount,-->
+<!--               (select count(*)-->
+<!--                from user_store us-->
+<!--                where us.user_id = #{userId}-->
+<!--                  and us.projects_id = a.id-->
+<!--                  and us.delete_flag = 1)                as storeFlag,-->
+<!--               hour(timediff(now(), last_update_time))   as updateTime,-->
+<!--               DATE_FORMAT(last_update_time, '%Y-%m-%d') as updateDate,-->
+<!--               DATE_FORMAT(a.create_time, '%Y-%m-%d')    as createDate,-->
+<!--               getFirstHanZiCode(b.username)             as firstname-->
+<!--        from project_management_project_cloud.project a,-->
+<!--             sys_user b-->
+<!--        where a.charge_user_id = b.id-->
+<!--          and a.id = #{projectId}-->
+<!--          and a.delete_flag = 1-->
+<!--          and b.delete_flag = 1-->
+<!--        order by rand()-->
+<!--        limit 10;-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash;查找所有项目&ndash;&gt;-->
+<!--    <select id="countProjectsRecommendation" resultType="Integer">-->
+<!--        select count(*)-->
+<!--        from project_management_project_cloud.project a,-->
+<!--             sys_user b-->
+<!--        where a.charge_user_id = b.id-->
+<!--          and a.delete_flag = 1-->
+<!--          and b.delete_flag = 1;-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash;查找指定类型的所有项目&ndash;&gt;-->
+<!--    <select id="getProjectsByType" resultType="ProjectsRecommendation">-->
+<!--        select a.id                                      as projectId,-->
+<!--               b.id                                      as userId,-->
+<!--               a.name,-->
+<!--               b.username,-->
+<!--               a.type,-->
+<!--               a.characterization                        as characterization,-->
+<!--               a.store_count                             as storeCount,-->
+<!--               a.click_count                             as clickCount,-->
+<!--               (select count(*)-->
+<!--                from user_store us-->
+<!--                where us.user_id = b.id-->
+<!--                  and us.projects_id = a.id-->
+<!--                  and us.delete_flag = 1)                as storeFlag,-->
+<!--               hour(timediff(now(), last_update_time))   as updateTime,-->
+<!--               DATE_FORMAT(last_update_time, '%Y-%m-%d') as updateDate,-->
+<!--               DATE_FORMAT(a.create_time, '%Y-%m-%d')    as createDate,-->
+<!--               getFirstHanZiCode(b.username)             as firstname-->
+<!--        from project_management_project_cloud.project a,-->
+<!--             sys_user b-->
+<!--        where a.charge_user_id = b.id-->
+<!--          and a.type = #{type}-->
+<!--          and a.delete_flag = 1-->
+<!--          and b.delete_flag = 1-->
+<!--        order by a.id desc-->
+<!--        limit #{pageNum},#{pageSize};-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash;查找所有项目&ndash;&gt;-->
+<!--    <select id="countProjectsNumberByType" resultType="Integer">-->
+<!--        select count(*)-->
+<!--        from project_management_project_cloud.project a,-->
+<!--             sys_user b-->
+<!--        where a.charge_user_id = b.id-->
+<!--          and a.type = #{type}-->
+<!--          and a.delete_flag = 1-->
+<!--          and b.delete_flag = 1;-->
+<!--    </select>-->
+
+    <!--查找所有项目-->
+    <select id="getProjectCount" resultType="Integer">
         select count(*)
         from project_management_project_cloud.project
         where delete_flag = 1
     </select>
+
+<!--    &lt;!&ndash; 根据关键字模糊查询项目名 &ndash;&gt;-->
+<!--    <select id="getProjectNameByWord" resultType="String">-->
+<!--        select DISTINCT name-->
+<!--        from project_management_project_cloud.project-->
+<!--        where delete_flag = 1-->
+<!--          and name like CONCAT('%', #{word}, '%')-->
+<!--        limit 10-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 模糊查询得到用户名 &ndash;&gt;-->
+<!--    <select id="getUserNameByWord" resultType="String">-->
+<!--        select DISTINCT username-->
+<!--        from sys_user-->
+<!--        where delete_flag = 1-->
+<!--          and username like CONCAT('%', #{word}, '%')-->
+<!--        limit 10-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 根据关键字模糊查询项目类型 &ndash;&gt;-->
+<!--    <select id="getTypeByWord" resultType="String">-->
+<!--        select DISTINCT type-->
+<!--        from project_management_project_cloud.project-->
+<!--        where delete_flag = 1-->
+<!--          and type like CONCAT('%', #{word}, '%')-->
+<!--        limit 10-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 根据关键字统计项目数 &ndash;&gt;-->
+<!--    <select id="countProjectsByWord" resultType="integer">-->
+<!--        select count(*)-->
+<!--        from project_management_project_cloud.project p,-->
+<!--             sys_user su-->
+<!--        where p.charge_user_id = su.id-->
+<!--          and p.delete_flag = 1-->
+<!--          and su.delete_flag = 1-->
+<!--          and (p.name like CONCAT('%', #{word}, '%') or su.username like CONCAT('%', #{word}, '%') or-->
+<!--               p.type like CONCAT('%', #{word}, '%'))-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash;根据关键字模糊查询所有项目&ndash;&gt;-->
+<!--    <select id="getMyProjectsByWord" resultType="ProjectsRecommendation">-->
+<!--        select a.id                                      as projectId,-->
+<!--               b.id                                      as userId,-->
+<!--               a.name,-->
+<!--               b.username,-->
+<!--               a.type,-->
+<!--               a.characterization                        as characterization,-->
+<!--               a.store_count                             as storeCount,-->
+<!--               a.click_count                             as clickCount,-->
+<!--               (select count(*)-->
+<!--                from user_store us-->
+<!--                where us.user_id = b.id-->
+<!--                  and us.projects_id = a.id-->
+<!--                  and us.delete_flag = 1)                as storeFlag,-->
+<!--               hour(timediff(now(), last_update_time))   as updateTime,-->
+<!--               DATE_FORMAT(last_update_time, '%Y-%m-%d') as updateDate,-->
+<!--               DATE_FORMAT(a.create_time, '%Y-%m-%d')    as createDate,-->
+<!--               getFirstHanZiCode(b.username)             as firstname-->
+<!--        from project_management_project_cloud.project a,-->
+<!--             sys_user b-->
+<!--        where a.charge_user_id = b.id-->
+<!--          and a.delete_flag = 1-->
+<!--          and b.delete_flag = 1-->
+<!--          and (a.name like CONCAT('%', #{word}, '%') or b.username like CONCAT('%', #{word}, '%') or-->
+<!--               a.type like CONCAT('%', #{word}, '%'))-->
+<!--        order by a.id desc-->
+<!--        limit #{pageNum},#{pageSize};-->
+<!--    </select>-->
 </mapper>

@@ -20,7 +20,7 @@ public class ProjectUser implements Serializable {
     @Id
     private Integer id;
     
-    private Integer projectsId;
+    private Integer projectId;
     
     private Integer userId;
     /**
@@ -38,5 +38,8 @@ public class ProjectUser implements Serializable {
     */
     private Date joinTime;
 
+    private SysUser sysUser;
+    private ProjectUserDuty projectUserDuty;
+    private Project project;
 
 }

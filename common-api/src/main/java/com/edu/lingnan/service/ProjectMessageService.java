@@ -12,37 +12,83 @@ import java.util.List;
 public interface ProjectMessageService {
 
     /**
-     * 通过ID查询单条数据
+     * 通过projectId和userId查询所有个人消息
      *
-     * @param id 主键
-     * @return 实例对象
+     * @param projectId
+     * @param userId
+     * @param offset
+     * @param pageSize
+     * @return
      */
-    ProjectMessage queryById(Integer id);
+    List<ProjectMessage> getByProjectIdAndUserId(Integer projectId, Integer userId, Integer offset, Integer pageSize);
 
     /**
-     * 查询多条数据
+     * 插入一条项目信息
      *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
+     * @param projectsMessage
      */
-    List<ProjectMessage> queryAllByLimit(int offset, int limit);
+    boolean insert(ProjectMessage projectsMessage);
 
     /**
-     * 新增数据
+     * 通过projectId查询所有项目消息
      *
-     * @param projectMessage 实例对象
-     * @return 实例对象
+     * @param projectId
+     * @param offset
+     * @param pageSize
+     * @return
      */
-    ProjectMessage insert(ProjectMessage projectMessage);
+    List<ProjectMessage> getByProjectId(Integer projectId, Integer offset, Integer pageSize);
 
     /**
-     * 修改数据
+     * 修改项目消息
      *
-     * @param projectMessage 实例对象
-     * @return 实例对象
+     * @param projectsMessage
+     * @return
      */
-    ProjectMessage update(ProjectMessage projectMessage);
+    boolean update(ProjectMessage projectsMessage);
+
+    /**
+     * 修改项目消息已读
+     *
+     * @param projectMessageId
+     * @return
+     */
+    boolean updateProjectMessageIsReadByProjectMessageId(Integer projectMessageId);
+
+    /**
+     * 通过projectId查询所有待办消息
+     *
+     * @param projectId
+     * @param offset
+     * @param pageSize
+     * @return
+     */
+    List<ProjectMessage> getAllNeedToByProjectId(Integer projectId, Integer offset, Integer pageSize);
+
+    /**
+     * 通过id查找项目消息
+     *
+     * @param id
+     * @return
+     */
+    ProjectMessage getById(Integer id);
+
+    /**
+     * 获取项目消息数量
+     *
+     * @param projectId
+     * @param userId
+     * @return
+     */
+    Integer getProjectMessageCount(Integer projectId, Integer userId);
+
+    /**
+     * 获取项目消息数量
+     *
+     * @param projectId
+     * @return
+     */
+    Integer getProjectMessageNeedToDoCount(Integer projectId);
 
 
 }

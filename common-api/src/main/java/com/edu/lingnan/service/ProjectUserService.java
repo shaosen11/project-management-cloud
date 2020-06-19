@@ -1,6 +1,10 @@
 package com.edu.lingnan.service;
 
+
+import com.edu.lingnan.entity.Echarts;
 import com.edu.lingnan.entity.ProjectUser;
+import com.edu.lingnan.entity.SysUser;
+
 import java.util.List;
 
 /**
@@ -12,37 +16,148 @@ import java.util.List;
 public interface ProjectUserService {
 
     /**
-     * 通过ID查询单条数据
+     * 查询所有项目用户信息
      *
-     * @param id 主键
-     * @return 实例对象
+     * @return
      */
-    ProjectUser queryById(Integer id);
+    List<ProjectUser> getProjectUserList();
 
     /**
-     * 查询多条数据
+     * 通过Id查询
      *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
+     * @return
      */
-    List<ProjectUser> queryAllByLimit(int offset, int limit);
+    ProjectUser getById(Integer id);
 
     /**
-     * 新增数据
+     * 通过Id查询已注销的记录
      *
-     * @param projectUser 实例对象
-     * @return 实例对象
+     * @return
      */
-    ProjectUser insert(ProjectUser projectUser);
+    ProjectUser getDelById(Integer id);
 
     /**
-     * 修改数据
+     * 添加项目用户信息
      *
-     * @param projectUser 实例对象
-     * @return 实例对象
+     * @param projectUser
+     * @return
      */
-    ProjectUser update(ProjectUser projectUser);
+    boolean insert(ProjectUser projectUser);
+
+    /**
+     * 删除项目用户信息
+     *
+     * @return
+     */
+    boolean deleteProjectUser(Integer id);
+
+    /**
+     * 删除项目用户信息通过项目id
+     *
+     * @return
+     */
+    boolean deleteProjectUserByProjectsId(Integer projectsId);
+
+    /**
+     * 修改项目用户信息
+     *
+     * @return
+     */
+    boolean update(ProjectUser projectUser);
+
+    /**
+     * 还原项目用户信息
+     *
+     * @return
+     */
+    boolean reductionProjectUser(Integer id);
+
+    /**
+     * 查询所有已注销项目用户信息
+     *
+     * @return
+     */
+    List<ProjectUser> getDelProjectUserList();
+
+    /**
+     * 通过用户Id和项目Id查询用户
+     *
+     * @param userId
+     * @param projectId
+     * @return
+     */
+    ProjectUser getByUserIdAndProjectId(Integer userId, Integer projectId);
+
+    /**
+     * 获取代码贡献量
+     *
+     * @param projectId
+     * @return
+     */
+    List<Echarts> getCodeDevote(Integer projectId);
+
+    /**
+     * 获取代码上传次数
+     *
+     * @param projectId
+     * @return
+     */
+    List<Echarts> getCodeInsert(Integer projectId);
+
+    /**
+     * 查询项目总共人数
+     *
+     * @param projectId
+     * @return
+     */
+    Integer getCountByProjectId(Integer projectId);
+
+    /**
+     * 通过项目id查找分页项目成员
+     *
+     * @param projectId
+     * @return
+     */
+    List<ProjectUser> getPageProjectUserByProjectId(Integer projectId, Integer offset, Integer pageSize);
+
+    /**
+     * 通过项目id查找所有项目成员
+     *
+     * @param projectId
+     * @return
+     */
+    List<ProjectUser> getAllProjectUserByProjectId(Integer projectId);
 
 
+
+    /**
+     * 查询项目总共人数
+     *
+     * @param projectId
+     * @return
+     */
+    Integer getCountNoInProjectByProjectId(Integer projectId);
+
+    /**
+     * 通过项目id查找不在项目的成员
+     *
+     * @param projectId
+     * @return
+     */
+    List<SysUser> getProjectUserNoInProjectByProjectId(Integer projectId, Integer offset, Integer pageSize);
+
+    /**
+     * 通过userId查询
+     *
+     * @return
+     */
+    List<ProjectUser> getAllProjectByUserId(Integer userId);
+
+    /**
+     * 获取项目各类人数
+     * @param projectId
+     * @param dutyCode
+     * @return
+     */
+    Integer getCountByProjectIdAndDuty(Integer projectId, Integer dutyCode);
 }

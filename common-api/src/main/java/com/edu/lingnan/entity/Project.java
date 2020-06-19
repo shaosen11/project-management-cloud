@@ -105,6 +105,7 @@ public class Project implements Serializable {
     * 实际结束时间
     */
     private Object actualEndTime;
-
+    private ProjectType projectType;
+    private ProjectSchedule projectSchedule;
 
 }

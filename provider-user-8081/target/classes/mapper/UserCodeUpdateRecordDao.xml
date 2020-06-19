@@ -10,44 +10,12 @@
         <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="UserCodeUpdateRecordMap">
-        select
-          id, userId, time, code_update_count, delete_flag
-        from project_management_user_cloud.user_code_update_record
-        where id = #{id}
-    </select>
-
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="UserCodeUpdateRecordMap">
-        select
-          id, userId, time, code_update_count, delete_flag
-        from project_management_user_cloud.user_code_update_record
-        limit #{offset}, #{limit}
-    </select>
-
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="UserCodeUpdateRecordMap">
-        select
-          id, userId, time, code_update_count, delete_flag
-        from project_management_user_cloud.user_code_update_record
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="userid != null">
-                and userId = #{userid}
-            </if>
-            <if test="time != null">
-                and time = #{time}
-            </if>
-            <if test="codeUpdateCount != null">
-                and code_update_count = #{codeUpdateCount}
-            </if>
-            <if test="deleteFlag != null">
-                and delete_flag = #{deleteFlag}
-            </if>
-        </where>
+    <select id="getAllByUserId" resultType="com.edu.lingnan.entity.UserCodeUpdateRecord">
+        select * 
+        from project_management_user_cloud.user_code_update_record 
+        where delete_flag = 1 
+          and userId = #{userId} 
+        order by time
     </select>
 
 

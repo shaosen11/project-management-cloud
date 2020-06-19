@@ -20,56 +20,59 @@ public class ProjectServiceImpl implements ProjectService {
     @Resource
     private ProjectDao projectDao;
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
-    @Override
-    public Project queryById(Integer id) {
-        return this.projectDao.queryById(id);
-    }
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
     @Override
-    public List<Project> queryAllByLimit(int offset, int limit) {
-        return this.projectDao.queryAllByLimit(offset, limit);
-    }
-
-    /**
-     * 新增数据
-     *
-     * @param project 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public Project insert(Project project) {
-        this.projectDao.insert(project);
-        return project;
-    }
-
-    /**
-     * 修改数据
-     *
-     * @param project 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public Project update(Project project) {
-        this.projectDao.update(project);
-        return this.queryById(project.getId());
+    public Project getById(Integer id) {
+        return projectDao.getById(id);
     }
 
     @Override
-    public Integer projectCount() {
-        return projectDao.projectCount();
+    public Project getByIdAndNoDel(Integer id) {
+        return projectDao.getByIdAndNoDel(id);
     }
 
+    @Override
+    public List<Project> getProjectList() {
+        return projectDao.getProjectList();
+    }
+
+    @Override
+    public List<Project> getProjectListByUserId(Integer userId) {
+        return projectDao.getProjectListByUserId(userId);
+    }
+
+    @Override
+    public boolean deleteProject(Integer id) {
+        return projectDao.deleteProject(id);
+    }
+
+    @Override
+    public boolean reductionProject(Integer id) {
+        return projectDao.reductionProject(id);
+    }
+
+    @Override
+    public List<Project> getDelProjectList() {
+        return projectDao.getDelProjectList();
+    }
+
+    @Override
+    public Project getAdminByUserIdAndProjectId(Integer userId, Integer projectId) {
+        return projectDao.getAdminByUserIdAndProjectId(userId, projectId);
+    }
+
+    @Override
+    public boolean insert(Project project) {
+        return projectDao.insert(project) > 0;
+    }
+
+    @Override
+    public boolean update(Project project) {
+        return projectDao.update(project);
+    }
+
+    @Override
+    public Integer getProjectCount(){
+        return projectDao.getProjectCount();
+    }
 }

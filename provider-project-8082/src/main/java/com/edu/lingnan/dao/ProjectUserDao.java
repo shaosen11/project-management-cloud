@@ -1,6 +1,8 @@
 package com.edu.lingnan.dao;
 
+import com.edu.lingnan.entity.Echarts;
 import com.edu.lingnan.entity.ProjectUser;
+import com.edu.lingnan.entity.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -18,30 +20,119 @@ import java.util.List;
 public interface ProjectUserDao extends BaseDao<ProjectUser>{
 
     /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
+     * 查询所有项目用户信息
+     * @return
      */
-    ProjectUser queryById(Integer id);
+    List<ProjectUser> getProjectUserList();
 
     /**
-     * 查询指定行数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
+     * 删除项目用户信息
+     * @return
      */
-    List<ProjectUser> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    boolean delete(Integer id);
+
+    /**
+     * 删除项目用户信息通过项目id
+     * @return
+     */
+    boolean deleteProjectUserByProjectsId(Integer projectsId);
+
+    /**
+     * 还原项目用户信息
+     * @return
+     */
+    boolean reductionProjectUser(Integer id);
+
+    /**
+     * 查询所有已注销项目用户信息
+     * @return
+     */
+    List<ProjectUser> getDelProjectUserList();
+
+    /**
+     * 通过用户Id和项目Id查询用户
+     * @param userId
+     * @param projectId
+     * @return
+     */
+    ProjectUser getByUserIdAndProjectId(Integer userId, Integer projectId);
+
+    /**
+     * 通过Id查询
+     * @return
+     */
+    ProjectUser getById(Integer id);
+
+    /**
+     * 通过Id查询已注销的记录
+     * @return
+     */
+    ProjectUser getDelById(Integer id);
+
+    /**
+     * 获取代码贡献量
+     * @param projectId
+     * @return
+     */
+    List<Echarts> getCodeDevote(Integer projectId);
+
+    /**
+     * 获取代码上传次数
+     * @param projectId
+     * @return
+     */
+    List<Echarts> getCodeInsert(Integer projectId);
+
+    /**
+     * 查询项目总共人数
+     * @param projectId
+     * @return
+     */
+    Integer getCountByProjectId(Integer projectId);
+
+    /**
+     * 通过项目id查找所有项目成员
+     * @param projectId
+     * @return
+     */
+    List<ProjectUser> getPageProjectUserByProjectId(Integer projectId, Integer offset, Integer pageSize);
+
+    /**
+     * 通过项目id查找所有项目成员
+     *
+     * @param projectId
+     * @return
+     */
+    List<ProjectUser> getAllProjectUserByProjectId(Integer projectId);
 
 
     /**
-     * 通过实体作为筛选条件查询
-     *
-     * @param projectUser 实例对象
-     * @return 对象列表
+     * 查询项目总共人数
+     * @param projectId
+     * @return
      */
-    List<ProjectUser> queryAll(ProjectUser projectUser);
+    Integer getCountNoInProjectByProjectId(Integer projectId);
+
+    /**
+     * 通过项目id查找不在项目的成员
+     * @param projectId
+     * @return
+     */
+    List<SysUser> getProjectUserNoInProjectByProjectId(Integer projectId, Integer offset, Integer pageSize);
+
+    /**
+     * 通过userId查询
+     * @return
+     */
+    List<ProjectUser> getAllProjectByUserId(Integer userId);
+
+    /**
+     * 获取项目各类人数
+     * @param projectId
+     * @param dutyCode
+     * @return
+     */
+    Integer getCountByProjectIdAndDuty(Integer projectId, Integer dutyCode);
 
 
 }

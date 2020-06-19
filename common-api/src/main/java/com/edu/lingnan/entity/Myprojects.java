@@ -19,5 +19,7 @@ public class Myprojects {
     private Integer storeCount;
     private Integer storeFlag;
     private Integer likeFlag;
+    private ProjectSchedule projectSchedule;
+    private ProjectType projectType;
 }
 

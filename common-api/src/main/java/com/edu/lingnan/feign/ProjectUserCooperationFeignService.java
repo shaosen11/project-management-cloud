@@ -3,6 +3,10 @@ package com.edu.lingnan.feign;
 import com.edu.lingnan.entity.ProjectUserCooperation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
@@ -16,45 +20,27 @@ import java.util.List;
 @FeignClient(value = "PROVIDER-PROJECT")
 public interface ProjectUserCooperationFeignService {
 
-//    /**
-//     * 通过ID查询单条数据
-//     *
-//     * @param id 主键
-//     * @return 实例对象
-//     */
-//    ProjectUserCooperation queryById(Integer id);
-//
-//    /**
-//     * 查询多条数据
-//     *
-//     * @param offset 查询起始位置
-//     * @param limit 查询条数
-//     * @return 对象列表
-//     */
-//    List<ProjectUserCooperation> queryAllByLimit(int offset, int limit);
-//
-//    /**
-//     * 新增数据
-//     *
-//     * @param projectUserCooperation 实例对象
-//     * @return 实例对象
-//     */
-//    ProjectUserCooperation insert(ProjectUserCooperation projectUserCooperation);
-//
-//    /**
-//     * 修改数据
-//     *
-//     * @param projectUserCooperation 实例对象
-//     * @return 实例对象
-//     */
-//    ProjectUserCooperation update(ProjectUserCooperation projectUserCooperation);
-//
-//    /**
-//     * 通过主键删除数据
-//     *
-//     * @param id 主键
-//     * @return 是否成功
-//     */
-//    boolean deleteById(Integer id);
+    @GetMapping("/getByProjectIdAndInProjectUserIdAndNotInProjectUserIdAndInviteAndFinish/{projectId}/{inProjectUserId}/{notInProjectUserId}/{inviteFlag}/{finishFlag}")
+    ProjectUserCooperation getByProjectIdAndInProjectUserIdAndNotInProjectUserIdAndInviteAndFinish(
+            @RequestParam("projectId") Integer projectId,
+            @RequestParam("inProjectUserId") Integer inProjectUserId,
+            @RequestParam("notInProjectUserId") Integer notInProjectUserId,
+            @RequestParam("inviteFlag") Integer inviteFlag,
+            @RequestParam("finishFlag") Integer finishFlag);
 
+    @PostMapping("/")
+    boolean insert(ProjectUserCooperation projectsUserCooperation);
+
+    @PutMapping("/")
+    boolean update(ProjectUserCooperation projectsUserCooperation);
+
+    @GetMapping("/{id}")
+    ProjectUserCooperation getById(@RequestParam("id") Integer id);
+
+    @GetMapping("/getByProjectIdAndNotInProjectUserIdAndInviteAndFinish/{projectId}/{notInProjectUserId}/{inviteFlag}/{finishFlag}")
+    List<ProjectUserCooperation> getByProjectIdAndNotInProjectUserIdAndInviteAndFinish(
+            @RequestParam("projectId") Integer projectId,
+            @RequestParam("notInProjectUserId") Integer notInProjectUserId,
+            @RequestParam("inviteFlag") Integer inviteFlag,
+            @RequestParam("finishFlag") Integer finishFlag);
 }
