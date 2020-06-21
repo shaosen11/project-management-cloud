@@ -20,51 +20,18 @@ public class ProjectMessageNeedToDoRelationshipServiceImpl implements ProjectMes
     @Resource
     private ProjectMessageNeedToDoRelationshipDao projectMessageNeedToDoRelationshipDao;
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
     @Override
-    public ProjectMessageNeedToDoRelationship queryById(Integer id) {
-        return this.projectMessageNeedToDoRelationshipDao.queryById(id);
+    public ProjectMessageNeedToDoRelationship getByProjectMessageId(Integer projectMessageId) {
+        return projectMessageNeedToDoRelationshipDao.getByProjectMessageId(projectMessageId);
     }
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
     @Override
-    public List<ProjectMessageNeedToDoRelationship> queryAllByLimit(int offset, int limit) {
-        return this.projectMessageNeedToDoRelationshipDao.queryAllByLimit(offset, limit);
+    public ProjectMessageNeedToDoRelationship getByDocumentId(Integer documentId) {
+        return projectMessageNeedToDoRelationshipDao.getByDocumentId(documentId);
     }
 
-    /**
-     * 新增数据
-     *
-     * @param projectMessageNeedToDoRelationship 实例对象
-     * @return 实例对象
-     */
     @Override
-    public ProjectMessageNeedToDoRelationship insert(ProjectMessageNeedToDoRelationship projectMessageNeedToDoRelationship) {
-        this.projectMessageNeedToDoRelationshipDao.insert(projectMessageNeedToDoRelationship);
-        return projectMessageNeedToDoRelationship;
+    public void insert(ProjectMessageNeedToDoRelationship projectsMessageNeedToDoRelationship) {
+        projectMessageNeedToDoRelationshipDao.insert(projectsMessageNeedToDoRelationship);
     }
-
-    /**
-     * 修改数据
-     *
-     * @param projectMessageNeedToDoRelationship 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public ProjectMessageNeedToDoRelationship update(ProjectMessageNeedToDoRelationship projectMessageNeedToDoRelationship) {
-        this.projectMessageNeedToDoRelationshipDao.update(projectMessageNeedToDoRelationship);
-        return this.queryById(projectMessageNeedToDoRelationship.getId());
-    }
-
 }

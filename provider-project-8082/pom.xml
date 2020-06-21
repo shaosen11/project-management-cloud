@@ -80,5 +80,6 @@
             <artifactId>mybatis-plus</artifactId>
             <version>3.0-RELEASE</version>
         </dependency>
+
     </dependencies>
 </project>

@@ -12,37 +12,39 @@ import java.util.List;
 public interface ProjectCodeLineService {
 
     /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
+     * 查询今天有没有记录
+     * @param projectsId
+     * @return
      */
-    ProjectCodeLine queryById(Integer id);
+    ProjectCodeLine getProjectCodeLineByProjectIdAndToday(Integer projectsId);
 
     /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
+     * 查询最近有没有记录
+     * @param projectsId
+     * @return
      */
-    List<ProjectCodeLine> queryAllByLimit(int offset, int limit);
+    ProjectCodeLine getProjectCodeLineByProjectIdAndLastDay(Integer projectsId);
 
     /**
-     * 新增数据
-     *
-     * @param projectCodeLine 实例对象
-     * @return 实例对象
+     * 插入一条项目代码行记录
+     * @param bean
+     * @return
      */
-    ProjectCodeLine insert(ProjectCodeLine projectCodeLine);
+    boolean insert(ProjectCodeLine bean);
 
     /**
-     * 修改数据
-     *
-     * @param projectCodeLine 实例对象
-     * @return 实例对象
+     * 更新一条代码行记录
+     * @param bean
+     * @return
      */
-    ProjectCodeLine update(ProjectCodeLine projectCodeLine);
+    boolean update(ProjectCodeLine bean);
+
+    /**
+     * 查询项目所有代码行记录
+     * @param projectId
+     * @return
+     */
+    List<ProjectCodeLine> getAllProjectCodeLineByProjectId(Integer projectId);
 
 
 }

@@ -20,51 +20,50 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     private MessageDao messageDao;
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
     @Override
-    public Message queryById(Integer id) {
-        return this.messageDao.queryById(id);
+    public List<Message> getByUserIdAndNeedToDo(Integer userId, Integer needToDo) {
+        return messageDao.getByUserIdAndNeedToDo(userId, needToDo);
     }
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
     @Override
-    public List<Message> queryAllByLimit(int offset, int limit) {
-        return this.messageDao.queryAllByLimit(offset, limit);
+    public List<Message> getByUserIdAndOffsetAndPageSize(Integer userId, Integer needToDo, Integer offset, Integer pageSize) {
+        return messageDao.getByUserIdAndOffsetAndPageSize(userId, needToDo, offset, pageSize);
     }
 
-    /**
-     * 新增数据
-     *
-     * @param message 实例对象
-     * @return 实例对象
-     */
+
     @Override
-    public Message insert(Message message) {
-        this.messageDao.insert(message);
-        return message;
+    public boolean insert(Message message) {
+        return messageDao.insert(message) > 0;
     }
 
-    /**
-     * 修改数据
-     *
-     * @param message 实例对象
-     * @return 实例对象
-     */
     @Override
-    public Message update(Message message) {
-        this.messageDao.update(message);
-        return this.queryById(message.getId());
+    public boolean updateAllMessageIsReadByUserId(Integer userId, Integer isRead) {
+        return messageDao.updateAllMessageIsReadByUserId(userId, isRead);
+    }
+
+    @Override
+    public Message getById(Integer id) {
+        return messageDao.getById(id);
+    }
+
+    @Override
+    public boolean update(Message message) {
+        return messageDao.update(message);
+    }
+
+    @Override
+    public boolean updateMessageIsReadByMessageId(Integer messageId, Integer isRead) {
+        return messageDao.updateMessageIsReadByMessageId(messageId, isRead);
+    }
+
+    @Override
+    public Integer getMessageCount(Integer userId) {
+        return messageDao.getMessageCount(userId);
+    }
+
+    @Override
+    public Integer getMessageNeedToDoCount(Integer userId) {
+        return messageDao.getMessageNeedToDoCount(userId);
     }
 
 

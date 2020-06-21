@@ -9,42 +9,31 @@
         <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="ProjectMessageNeedToDoRelationshipMap">
-        select
-          id, project_message_id, document_id, delete_flag
+    <select id="getByProjectMessageId" resultMap="ProjectMessageNeedToDoRelationshipMap">
+        select *
         from project_management_project_cloud.project_message_need_to_do_relationship
-        where id = #{id}
+        where delete_flag = 1
+          and project_message_id = #{projectMessageId}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="ProjectMessageNeedToDoRelationshipMap">
-        select
-          id, project_message_id, document_id, delete_flag
+    <select id="getByDocumentId" resultMap="ProjectMessageNeedToDoRelationshipMap">
+        select *
         from project_management_project_cloud.project_message_need_to_do_relationship
-        limit #{offset}, #{limit}
+        where delete_flag = 1
+          and document_id = #{documentId}
     </select>
 
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="ProjectMessageNeedToDoRelationshipMap">
-        select
-          id, project_message_id, document_id, delete_flag
-        from project_management_project_cloud.project_message_need_to_do_relationship
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="projectMessageId != null">
-                and project_message_id = #{projectMessageId}
-            </if>
-            <if test="documentId != null">
-                and document_id = #{documentId}
-            </if>
-            <if test="deleteFlag != null">
-                and delete_flag = #{deleteFlag}
-            </if>
-        </where>
-    </select>
-
-
+    <!--插入一条关系-->
+    <insert id="insert" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        insert into project_management_project_cloud.project_message_need_to_do_relationship
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectMessageId != null">project_message_id,</if>
+            <if test="documentId != null">document_id,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectMessageId != null">#{projectMessageId},</if>
+            <if test="documentId != null">#{documentId},</if>
+        </trim>
+    </insert>
 </mapper>

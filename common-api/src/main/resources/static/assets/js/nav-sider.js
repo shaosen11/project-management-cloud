@@ -1,5 +1,6 @@
 $(function () {
     if (userId != "") {
+        console.log(userId);
         user_projects(userId);
         messageCount();
         judgeProjectManagementAdmin();
@@ -9,7 +10,7 @@ $(function () {
 //用户项目列表
 function user_projects(userId) {
     $.ajax({
-        url: "/user_projects",
+        url: "/getProjectsByUserId",
         type: "get",
         data: {
             userId: userId

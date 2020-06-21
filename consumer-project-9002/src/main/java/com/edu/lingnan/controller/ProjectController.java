@@ -50,7 +50,7 @@ public class ProjectController {
     @GetMapping("/{id}")
     @ResponseBody
     public Project selectOne(@PathVariable("id") Integer id) {
-        return this.projectFeignService.queryById(id);
+        return this.projectFeignService.getById(id);
     }
 
     /**
@@ -84,7 +84,7 @@ public class ProjectController {
         userClick1.setClickTime(now);
         userClickFeignService.insert(userClick1);
         //获取项目信息
-        Project project2 = projectFeignService.queryById(projectId);
+        Project project2 = projectFeignService.getById(projectId);
         model.addAttribute("project", project2);
         model.addAttribute("projectId", projectId);
         return "project/projectview";

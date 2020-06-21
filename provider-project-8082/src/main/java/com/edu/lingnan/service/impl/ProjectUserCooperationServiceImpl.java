@@ -20,51 +20,29 @@ public class ProjectUserCooperationServiceImpl implements ProjectUserCooperation
     @Resource
     private ProjectUserCooperationDao projectUserCooperationDao;
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
     @Override
-    public ProjectUserCooperation queryById(Integer id) {
-        return this.projectUserCooperationDao.queryById(id);
+    public ProjectUserCooperation getByProjectIdAndInProjectUserIdAndNotInProjectUserIdAndInviteAndFinish(Integer projectId, Integer inProjectUserId, Integer notInProjectUserId, Integer inviteFlag, Integer finishFlag) {
+        return projectUserCooperationDao.getByProjectIdAndInProjectUserIdAndNotInProjectUserIdAndInviteAndFinish(projectId, inProjectUserId, notInProjectUserId, inviteFlag, finishFlag);
     }
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
     @Override
-    public List<ProjectUserCooperation> queryAllByLimit(int offset, int limit) {
-        return this.projectUserCooperationDao.queryAllByLimit(offset, limit);
+    public boolean insert(ProjectUserCooperation projectsUserCooperation) {
+        return projectUserCooperationDao.insert(projectsUserCooperation) > 0;
     }
 
-    /**
-     * 新增数据
-     *
-     * @param projectUserCooperation 实例对象
-     * @return 实例对象
-     */
     @Override
-    public ProjectUserCooperation insert(ProjectUserCooperation projectUserCooperation) {
-        this.projectUserCooperationDao.insert(projectUserCooperation);
-        return projectUserCooperation;
+    public boolean update(ProjectUserCooperation projectsUserCooperation) {
+        return projectUserCooperationDao.update(projectsUserCooperation);
     }
 
-    /**
-     * 修改数据
-     *
-     * @param projectUserCooperation 实例对象
-     * @return 实例对象
-     */
     @Override
-    public ProjectUserCooperation update(ProjectUserCooperation projectUserCooperation) {
-        this.projectUserCooperationDao.update(projectUserCooperation);
-        return this.queryById(projectUserCooperation.getId());
+    public ProjectUserCooperation getById(Integer id) {
+        return projectUserCooperationDao.getById(id);
+    }
+
+    @Override
+    public List<ProjectUserCooperation> getByProjectIdAndNotInProjectUserIdAndInviteAndFinish(Integer projectId, Integer notInProjectUserId, Integer invite, Integer finish) {
+        return projectUserCooperationDao.getByProjectIdAndNotInProjectUserIdAndInviteAndFinish(projectId, notInProjectUserId, invite, finish);
     }
 
 }

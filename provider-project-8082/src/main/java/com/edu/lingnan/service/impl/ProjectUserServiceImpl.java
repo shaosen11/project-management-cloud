@@ -1,8 +1,10 @@
 package com.edu.lingnan.service.impl;
 
+import com.edu.lingnan.entity.Echarts;
+import com.edu.lingnan.entity.MyUserDetails;
 import com.edu.lingnan.entity.ProjectUser;
 import com.edu.lingnan.dao.ProjectUserDao;
-import com.edu.lingnan.feign.ProjectUserFeignService;
+import com.edu.lingnan.entity.SysUser;
 import com.edu.lingnan.service.ProjectUserService;
 import org.springframework.stereotype.Service;
 
@@ -20,65 +22,100 @@ public class ProjectUserServiceImpl implements ProjectUserService {
     @Resource
     private ProjectUserDao projectUserDao;
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
     @Override
-    public ProjectUser queryById(Integer id) {
-        return this.projectUserDao.queryById(id);
+    public List<ProjectUser> getProjectUserList() {
+        return projectUserDao.getProjectUserList();
     }
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
     @Override
-    public List<ProjectUser> queryAllByLimit(int offset, int limit) {
-        return this.projectUserDao.queryAllByLimit(offset, limit);
+    public ProjectUser getById(Integer id) {
+        return projectUserDao.getById(id);
     }
 
-    /**
-     * 新增数据
-     *
-     * @param projectUser 实例对象
-     * @return 实例对象
-     */
     @Override
-    public ProjectUser insert(ProjectUser projectUser) {
-        this.projectUserDao.insert(projectUser);
-        return projectUser;
+    public ProjectUser getDelById(Integer id) {
+        return projectUserDao.getDelById(id);
     }
 
-    /**
-     * 修改数据
-     * @param projectUser 实例对象
-     * @return 实例对象
-     */
     @Override
-    public ProjectUser update(ProjectUser projectUser) {
-        this.projectUserDao.update(projectUser);
-        return this.queryById(projectUser.getId());
+    public boolean insert(ProjectUser projectUser) {
+        return projectUserDao.insert(projectUser) > 0;
     }
 
-    /**
-     * 删除项目用户信息通过项目id
-     * @param id 项目id
-     * @return boolean
-     */
     @Override
-    public boolean deleteProjectUserByProjectsId(Integer id) {
-        return this.projectUserDao.deleteProjectUserByProjectsId(id)>0;
+    public boolean deleteProjectUser(Integer id) {
+        return projectUserDao.delete(id);
+    }
+
+    @Override
+    public boolean deleteProjectUserByProjectsId(Integer projectsId) {
+        return projectUserDao.deleteProjectUserByProjectsId(projectsId) > 0;
+    }
+
+    @Override
+    public boolean update(ProjectUser projectsUser) {
+        return projectUserDao.update(projectsUser);
+    }
+
+    @Override
+    public boolean reductionProjectUser(Integer id) {
+        return projectUserDao.reductionProjectUser(id);
+    }
+
+    @Override
+    public List<ProjectUser> getDelProjectUserList() {
+        return projectUserDao.getDelProjectUserList();
     }
 
     @Override
     public ProjectUser getByUserIdAndProjectId(Integer userId, Integer projectId) {
-        return this.projectUserDao.getByUserIdAndProjectId(userId, projectId);
+        return projectUserDao.getByUserIdAndProjectId(userId, projectId);
+    }
+
+    @Override
+    public List<Echarts> getCodeDevote(Integer projectId) {
+        return projectUserDao.getCodeDevote(projectId);
+    }
+
+    @Override
+    public List<Echarts> getCodeInsert(Integer projectId) {
+        return projectUserDao.getCodeInsert(projectId);
+    }
+
+    @Override
+    public Integer getCountByProjectId(Integer projectId) {
+        return projectUserDao.getCountByProjectId(projectId);
+    }
+
+    @Override
+    public List<ProjectUser> getPageProjectUserByProjectId(Integer projectId, Integer offset, Integer pageSize) {
+        return projectUserDao.getPageProjectUserByProjectId(projectId, offset, pageSize);
+    }
+
+    @Override
+    public List<ProjectUser> getAllProjectUserByProjectId(Integer projectId) {
+        return projectUserDao.getAllProjectUserByProjectId(projectId);
+    }
+
+    @Override
+    public Integer getCountNoInProjectByProjectId(Integer projectId) {
+        return projectUserDao.getCountNoInProjectByProjectId(projectId);
+    }
+
+    @Override
+    public List<MyUserDetails> getProjectUserNoInProjectByProjectId(Integer projectId, Integer offset, Integer pageSize) {
+        return projectUserDao.getProjectUserNoInProjectByProjectId(projectId, offset, pageSize);
+    }
+
+    @Override
+    public List<ProjectUser> getAllProjectByUserId(Integer userId) {
+        return projectUserDao.getAllProjectByUserId(userId);
+    }
+
+
+    @Override
+    public Integer getCountByProjectIdAndDuty(Integer projectId, Integer dutyCode) {
+        return projectUserDao.getCountByProjectIdAndDuty(projectId, dutyCode);
     }
 
 }

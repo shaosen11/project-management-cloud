@@ -19,24 +19,33 @@ public class ProjectUser implements Serializable {
 
     @Id
     private Integer id;
-    
-    private Integer projectsId;
-    
+
+    private Integer projectId;
+
     private Integer userId;
     /**
-    * 1是创建人，2是管理员，3是开发者
-    */
+     * 1是创建人，2是管理员，3是开发者
+     */
     private Integer dutyCode;
-    
+
     private Integer codeDevoteLine;
-    
+
     private Integer codeUpdate;
-    
+
     private Integer deleteFlag;
     /**
-    * 加入项目时间
-    */
+     * 加入项目时间
+     */
     private Date joinTime;
 
+    private MyUserDetails myUserDetails;
+
+    private ProjectUserDuty projectUserDuty;
+
+    private Project project;
+
+    private Double codeDevoteLineRatio;
+
+    private Double codeUpdateRatio;
 
 }

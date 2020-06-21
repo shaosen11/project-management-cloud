@@ -12,59 +12,72 @@
         <result property="isRead" column="is_read" jdbcType="INTEGER"/>
         <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
         <result property="needToDo" column="need_to_do" jdbcType="INTEGER"/>
+        <collection property="messageType" column="{id=type_id}"
+                    select="com.edu.lingnan.dao.MessageTypeDao.getById">
+        </collection>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="MessageMap">
-        select
-          id, type_id, from_user_id, to_user_id, message, time, is_read, delete_flag, need_to_do
+    <select id="getByUserIdAndNeedToDo" resultMap="MessageMap">
+        select *
         from project_management_user_cloud.message
-        where id = #{id}
+        where is_read = 1
+          and delete_flag = 1
+          and to_user_id = #{userId}
+          and need_to_do = #{needToDo}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="MessageMap">
-        select
-          id, type_id, from_user_id, to_user_id, message, time, is_read, delete_flag, need_to_do
+    <select id="getByUserIdAndOffsetAndPageSize" resultMap="MessageMap">
+        select *
         from project_management_user_cloud.message
-        limit #{offset}, #{limit}
+        where is_read = 1
+          and delete_flag = 1
+          and to_user_id = #{userId}
+          and need_to_do = #{needToDo}
+        order by time desc
+        limit #{offset},#{pageSize}
     </select>
 
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="MessageMap">
-        select
-          id, type_id, from_user_id, to_user_id, message, time, is_read, delete_flag, need_to_do
-        from project_management_user_cloud.message
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="typeId != null">
-                and type_id = #{typeId}
-            </if>
-            <if test="fromUserId != null">
-                and from_user_id = #{fromUserId}
-            </if>
-            <if test="toUserId != null">
-                and to_user_id = #{toUserId}
-            </if>
-            <if test="message != null and message != ''">
-                and message = #{message}
-            </if>
-            <if test="time != null and time != ''">
-                and time = #{time}
-            </if>
+    <update id="updateAllMessageIsReadByUserId">
+        update project_management_user_cloud.message set
+        <trim suffixOverrides=",">
             <if test="isRead != null">
-                and is_read = #{isRead}
+                is_read = #{isRead},
             </if>
-            <if test="deleteFlag != null">
-                and delete_flag = #{deleteFlag}
-            </if>
-            <if test="needToDo != null">
-                and need_to_do = #{needToDo}
-            </if>
-        </where>
+        </trim>
+        where delete_flag = 1 and to_user_id = #{userId} and need_to_do = 0
+    </update>
+
+    <select id="getById" resultType="com.edu.lingnan.entity.Message">
+        select *
+        from project_management_user_cloud.message
+        where delete_flag = 1
+          and id = #{id}
     </select>
 
+    <update id="updateMessageIsReadByMessageId">
+        update project_management_user_cloud.message set
+        <trim suffixOverrides=",">
+            <if test="isRead != null">
+                is_read = #{isRead},
+            </if>
+        </trim>
+        where delete_flag = 1 and id = #{messageId}
+    </update>
 
+    <select id="getMessageCount" resultType="int">
+        select count(*)
+        from project_management_user_cloud.message
+        where delete_flag = 1
+          and is_read = 1
+          and to_user_id = #{userId}
+    </select>
+
+    <select id="getMessageNeedToDoCount" resultType="int">
+        select count(*)
+        from project_management_user_cloud.message
+        where delete_flag = 1
+          and is_read = 1
+          and need_to_do = 1
+          and to_user_id = #{userId}
+    </select>
 </mapper>

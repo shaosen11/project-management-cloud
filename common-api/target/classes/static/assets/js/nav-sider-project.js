@@ -1,5 +1,4 @@
 $(function () {
-    console.log(projectId);
     projects_package(projectId);
     package_list(projectId);
     $("#packageName").keyup(function () {
@@ -14,7 +13,7 @@ $(function () {
 //项目包结构
 function projects_package(projectId) {
     $.ajax({
-        url: "/projectsPackages?projectId=" + projectId,
+        url: "/projectPackages?projectId=" + projectId,
         type: "get",
         datatype: "json",
         success: function (data) {
@@ -50,18 +49,18 @@ function projects_package(projectId) {
                 var ul = document.createElement("ul");
                 ul.className = 'nav nav-collapse';
                 div.appendChild(ul);
-                for (var j = 0; j < data[i].projectsPackageList.length; j++) {
-                    if (data[i].projectsPackageList[j].documentName != null) {
+                for (var j = 0; j < data[i].projectPackageList.length; j++) {
+                    if (data[i].projectPackageList[j].documentName != null) {
                         //创建二级li
                         var li1 = document.createElement("li");
                         ul.append(li1);
                         var a1 = document.createElement("a");
-                        a1.href = '/document/' + projectId + '/' + data[i].projectsPackageList[j].documentName;
+                        a1.href = '/document/' + projectId + '/' + data[i].projectPackageList[j].documentName;
                         li1.appendChild(a1);
                         //创建span
                         var span1 = document.createElement("span");
                         span1.className = "sub-item";
-                        span1.innerHTML = data[i].projectsPackageList[j].documentName;
+                        span1.innerHTML = data[i].projectPackageList[j].documentName;
                         a1.appendChild(span1);
                     }
                 }
@@ -73,7 +72,7 @@ function projects_package(projectId) {
 //项目包列表
 function package_list(projectId) {
     $.ajax({
-        url: '/projectsPackages?projectId=' + projectId,
+        url: '/projectPackages?projectId=' + projectId,
         type: "get",
         dataType: "json",
         success: function (data) {
@@ -108,7 +107,7 @@ function checkPackage() {
     var packageNamecss = $("#packageName");
     $.ajax({
         type: "get",
-        url: "/projectsPackage",
+        url: "/projectPackage",
         data: {
             "projectId": projectId,
             "packageName": packageName

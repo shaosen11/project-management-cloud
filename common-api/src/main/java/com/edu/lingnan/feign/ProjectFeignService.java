@@ -3,10 +3,8 @@ package com.edu.lingnan.feign;
 import com.edu.lingnan.entity.Project;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -26,14 +24,37 @@ public interface ProjectFeignService {
      * @return 实例对象
      */
     @GetMapping("project/{id}")
-    Project queryById(@PathVariable("id") Integer id);
+    Project getById(@PathVariable("id") Integer id);
 
-    /**
-     * 统计系统项目数量
-     * @return
-     */
+    @GetMapping("project/getProjectList")
+    List<Project> getProjectList();
+
+    @GetMapping("project/getProjectListByUserId/{userId}")
+    List<Project> getProjectListByUserId(@RequestParam("userId") Integer userId);
+
+    @DeleteMapping("project/{id}")
+    boolean deleteProject(@RequestParam("id") Integer id);
+
+    @PutMapping("project/reductionProject/{id}")
+    boolean reductionProject(@RequestParam("id") Integer id);
+
+    @GetMapping("project/getDelProjectList")
+    List<Project> getDelProjectList();
+
+    @GetMapping("project/getAdminByUserIdAndProjectId/{userId}/{projectId}")
+    Project getAdminByUserIdAndProjectId(
+            @RequestParam("userId") Integer userId,
+            @RequestParam("projectId") Integer projectId);
+
+    @PostMapping("project/")
+    boolean insert(Project project);
+
+    @PutMapping("project/")
+    boolean updete(Project project);
+
     @GetMapping("project/getProjectCount")
     Integer getProjectCount();
+
     /**
      * 查询所有项目信息
      * @return 数据
@@ -56,13 +77,6 @@ public interface ProjectFeignService {
     Boolean addProject(@RequestBody Project project);
 
     /**
-     * 删除项目
-     * @return 数据
-     */
-    @DeleteMapping("project/{id}")
-    Boolean deleteProject(@PathVariable("id") Integer id) ;
-
-    /**
      * 修改项目信息
      * @return 数据
      */
@@ -83,4 +97,6 @@ public interface ProjectFeignService {
     @RequestMapping(value = "project/updateDelProjectById", method = RequestMethod.PUT,consumes = "application/json")
     Boolean updateDelProjectById(@RequestBody Integer id);
 
+    @PutMapping("project/updateProjectClickNumber/{projectId}")
+    boolean updateProjectClickNumber(@PathVariable("projectId") Integer projectId);
 }

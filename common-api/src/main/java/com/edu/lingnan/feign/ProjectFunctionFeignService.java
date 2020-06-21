@@ -27,7 +27,7 @@ public interface ProjectFunctionFeignService {
      * @return
      */
     @DeleteMapping("projectFunction/deleteProjectFunctionByProjectsId/{id}")
-    Boolean deleteProjectFunctionByProjectsId(@PathVariable("id") Integer id);
+    Boolean deleteProjectFunctionByProjectsId(@RequestParam("id") Integer id);
 
     /**
      * 通过ID查询单条数据
@@ -36,7 +36,7 @@ public interface ProjectFunctionFeignService {
      * @return 实例对象
      */
     @GetMapping("projectFunction/{projectFunctionId}")
-    ProjectFunction queryById(@PathVariable("projectFunctionId") Integer projectFunctionId);
+    ProjectFunction queryById(@RequestParam("projectFunctionId") Integer projectFunctionId);
 
     /**
      * 获取功能点页面进度条数据

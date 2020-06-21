@@ -22,16 +22,5 @@ public class MessageController {
     @Autowired
     private MessageFeignService messageFeignService;
 
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("get/{id}")
-    @ResponseBody
-    public Message selectOne(@PathVariable("id") Integer id) {
-        return messageFeignService.queryById(id);
-    }
 
 }

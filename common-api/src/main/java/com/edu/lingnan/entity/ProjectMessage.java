@@ -65,5 +65,6 @@ public class ProjectMessage implements Serializable {
     */
     private Integer needToDo;
 
+    private ProjectMessageType projectMessageType;
 
 }

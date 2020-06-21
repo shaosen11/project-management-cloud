@@ -18,30 +18,11 @@ import java.util.List;
 public interface UserCodeUpdateRecordDao extends BaseDao<UserCodeUpdateRecord>{
 
     /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
+     * 查找用户所有贡献图
+     * @param userId
+     * @return
      */
-    UserCodeUpdateRecord queryById(Integer id);
-
-    /**
-     * 查询指定行数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
-    List<UserCodeUpdateRecord> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
-
-
-    /**
-     * 通过实体作为筛选条件查询
-     *
-     * @param userCodeUpdateRecord 实例对象
-     * @return 对象列表
-     */
-    List<UserCodeUpdateRecord> queryAll(UserCodeUpdateRecord userCodeUpdateRecord);
+    List<UserCodeUpdateRecord> getAllByUserId(@Param("userId") Integer userId);
 
 
 }

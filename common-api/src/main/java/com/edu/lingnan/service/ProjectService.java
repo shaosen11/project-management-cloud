@@ -56,7 +56,23 @@ public interface ProjectService {
      */
     List<Project> getAllDelProject();
 
+    Project getById(Integer id);
 
+    Project getByIdAndNoDel(Integer id);
+
+    List<Project> getProjectList();
+
+    List<Project> getProjectListByUserId(Integer userId);
+
+    boolean deleteProject(Integer id);
+
+    boolean reductionProject(Integer id);
+
+    List<Project> getDelProjectList();
+
+    Project getAdminByUserIdAndProjectId(Integer userId, Integer projectId);
+    boolean updateProjectClickNumber(Integer projectId);
+    Integer getProjectCount();
     /**
      * 统计系统项目数量
      * @return

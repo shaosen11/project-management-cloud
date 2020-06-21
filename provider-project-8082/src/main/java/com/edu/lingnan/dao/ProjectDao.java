@@ -16,15 +16,37 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface ProjectDao extends  BaseDao<Project>{
+public interface ProjectDao extends BaseDao<Project>{
 
     /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
+     * 查询一条项目信息
+     * @return
+     */
+    Project getById(Integer id);
+
+    /**
+     * 查询一条没有被注销项目信息
+     * @return
+     */
+    Project getByIdAndNoDel(Integer id);
+
+    /**
+     * 查询所有项目信息
+     * @return
      */
     Project queryById(Integer id);
+
+    /**
+     * 查询所有项目信息
+     * @return
+     */
+    List<Project> getProjectList();
+
+    /**
+     * 通过userId查询所有项目
+     * @return
+     */
+    List<Project> getProjectListByUserId(Integer userId);
 
     /**
      * 查询指定行数据
@@ -35,6 +57,33 @@ public interface ProjectDao extends  BaseDao<Project>{
      */
     List<Project> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
+
+    /**
+     * 删除项目
+     * @return
+     */
+    boolean deleteProject(Integer id);
+
+
+    /**
+     * 还原项目
+     * @return
+     */
+    boolean reductionProject(Integer id);
+
+    /**
+     * 查询所有已注销项目信息
+     * @return
+     */
+    List<Project> getDelProjectList();
+
+    /**
+     * 查找项目负责人
+     * @param userId
+     * @param projectId
+     * @return
+     */
+    Project getAdminByUserIdAndProjectId(Integer userId, Integer projectId);
 
     /**
      * 通过实体作为筛选条件查询
@@ -54,6 +103,11 @@ public interface ProjectDao extends  BaseDao<Project>{
      */
     List<Project> getAllDelProject();
 
+    /**
+     * 统计项目数量
+     * @return
+     */
+    Integer getProjectCount();
     /**
      * 查询我所有的项目进度数量(饼图1)
      *
@@ -105,6 +159,7 @@ public interface ProjectDao extends  BaseDao<Project>{
      */
     List<MyProject> getMyChargeProjectPage(@Param("userId")Integer userId, @Param("offset")Integer offset, @Param("pageSize")Integer pageSize);
 
+    boolean updateProjectClickNumber(Integer projectId);
     /**
      * 分页--查询我参加的项目
      * @return

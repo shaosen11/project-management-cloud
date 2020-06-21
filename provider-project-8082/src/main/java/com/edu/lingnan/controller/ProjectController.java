@@ -1,8 +1,8 @@
 package com.edu.lingnan.controller;
 
 import com.edu.lingnan.entity.Project;
-import com.edu.lingnan.service.*;
-import org.springframework.ui.Model;
+import com.edu.lingnan.feign.ProjectFeignService;
+import com.edu.lingnan.service.ProjectService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -23,20 +23,48 @@ public class ProjectController {
     @Resource
     private ProjectService projectService;
 
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
     @GetMapping("/{id}")
-    public Project queryById(@PathVariable("id") Integer id) {
-        return this.projectService.queryById(id);
+    Project getById(@PathVariable("id") Integer id){
+        return projectService.getById(id);
     }
+
+    @GetMapping("getByIdAndNoDel/{id}")
+    Project getByIdAndNoDel(@PathVariable("id") Integer id){
+        return projectService.getByIdAndNoDel(id);
+    }
+
+    @GetMapping("getProjectList")
+    List<Project> getProjectList(){
+        return projectService.getProjectList();
+    }
+
+    @GetMapping("getProjectListByUserId/{userId}")
+    List<Project> getProjectListByUserId(@PathVariable("userId") Integer userId){
+        return projectService.getProjectListByUserId(userId);
+    }
+
+    @PutMapping("reductionProject/{id}")
+    boolean reductionProject(@PathVariable("id") Integer id){
+        return projectService.reductionProject(id);
+    }
+
+    @GetMapping("getDelProjectList")
+    List<Project> getDelProjectList(){
+        return projectService.getDelProjectList();
+    }
+
+    @GetMapping("getAdminByUserIdAndProjectId/{userId}/{projectId}")
+    Project getAdminByUserIdAndProjectId(
+            @PathVariable("userId") Integer userId,
+            @PathVariable("projectId") Integer projectId){
+        return projectService.getAdminByUserIdAndProjectId(userId, projectId);
+    }
+
+
 
     @GetMapping("getProjectCount")
     public Integer getProjectCount() {
-        return this.projectService.projectCount();
+        return this.projectService.getProjectCount();
     }
     /**
      * 查询所有项目信息
@@ -66,7 +94,7 @@ public class ProjectController {
      * 添加项目
      * @return 数据
      */
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @PostMapping("/")
     public Boolean addProject(@RequestBody Project project) {
         System.out.println("添加项目：" + project);
         return projectService.insert(project);
@@ -76,7 +104,7 @@ public class ProjectController {
      * 修改项目
      * @return 数据
      */
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    @PutMapping("/")
     public Boolean updateProject(@RequestBody Project project) {
         System.out.println("修改项目：" + project);
         return projectService.update(project);
@@ -112,5 +140,10 @@ public class ProjectController {
         Project project = projectService.queryById(id);
         project.setDeleteFlag(1);
         return  projectService.update(project);
+    }
+
+    @PutMapping("updateProjectClickNumber/{projectId}")
+    public boolean updateProjectClickNumber(Integer projectId){
+        return projectService.updateProjectClickNumber(projectId);
     }
 }

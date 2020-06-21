@@ -4,73 +4,257 @@
 
     <resultMap type="com.edu.lingnan.entity.ProjectUser" id="ProjectUserMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
-        <result property="projectsId" column="projects_id" jdbcType="INTEGER"/>
+        <result property="projectId" column="project_id" jdbcType="INTEGER"/>
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="dutyCode" column="duty_code" jdbcType="INTEGER"/>
         <result property="codeDevoteLine" column="code_devote_line" jdbcType="INTEGER"/>
         <result property="codeUpdate" column="code_update" jdbcType="INTEGER"/>
         <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
         <result property="joinTime" column="join_time" jdbcType="TIMESTAMP"/>
+        <collection property="projectUserDuty" column="{id=duty_code}"
+                    select="com.edu.lingnan.dao.ProjectUserDutyDao.getById">
+        </collection>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="ProjectUserMap">
-        select
-          id, projects_id, user_id, duty_code, code_devote_line, code_update, delete_flag, join_time
-        from project_management_project_cloud.project_user
+    <resultMap type="com.edu.lingnan.entity.ProjectUser" id="ProjectUserMapHaveMyUserDetails">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="projectId" column="project_id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="dutyCode" column="duty_code" jdbcType="INTEGER"/>
+        <result property="codeDevoteLine" column="code_devote_line" jdbcType="INTEGER"/>
+        <result property="codeUpdate" column="code_update" jdbcType="INTEGER"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
+        <result property="joinTime" column="join_time" jdbcType="TIMESTAMP"/>
+        <collection property="myUserDetails" column="{id=user_id}"
+                    select="com.edu.lingnan.dao.ProjectUserDao.getSimpleMyUserDetailsByUserId">
+        </collection>
+        <collection property="projectUserDuty" column="{id=duty_code}"
+                    select="com.edu.lingnan.dao.ProjectUserDutyDao.getById">
+        </collection>
+    </resultMap>
+
+
+    <!--查找所有项目用户信息-->
+    <resultMap id="pulist" type="com.edu.lingnan.entity.ProjectUser">
+        <result column="id" property="id"></result>
+        <result column="pid" property="projectId"></result>
+        <result column="uid" property="userId"></result>
+        <result column="codedevoteline" property="codeDevoteLine"></result>
+        <result column="codeupdate" property="codeUpdate"></result>
+        <result column="username" property="sysUser.username"></result>
+        <result column="pname" property="project.name"></result>
+    </resultMap>
+    <select id="getProjectUserList" resultMap="pulist">
+        select pu.id          as id,
+               pu.project_id  as pid,
+               pu.user_id     as uid,
+               pu.code_update as codeupdate,
+               u.username     as username,
+               p.name         as pname
+        from project_management_project_cloud.project_user pu,
+             project_management_user_cloud.sys_user u,
+             project_management_project_cloud.project p
+        where pu.delete_flag = 1
+          and pu.project_id = p.id
+          and pu.user_id = u.id
+    </select>
+
+    <!--查找所有被注销项目用户信息-->
+    <resultMap id="delpulist" type="com.edu.lingnan.entity.ProjectUser">
+        <result column="id" property="id"></result>
+        <result column="pid" property="projectId"></result>
+        <result column="uid" property="userId"></result>
+        <result column="codedevoteline" property="codeDevoteLine"></result>
+        <result column="codeupdate" property="codeUpdate"></result>
+        <result column="username" property="sysUser.username"></result>
+        <result column="pname" property="project.name"></result>
+    </resultMap>
+    <select id="getDelProjectUserList" resultMap="delpulist">
+        select pu.id          as id,
+               pu.project_id  as pid,
+               pu.user_id     as uid,
+               pu.code_update as codeupdate,
+               u.username     as username,
+               p.name         as pname
+        from project_management_project_cloud.project_user pu,
+             project_management_user_cloud.sys_user u,
+             project_management_project_cloud.project p
+        where pu.delete_flag = 0
+          and pu.project_id = p.id
+          and pu.user_id = u.id
+    </select>
+
+    <!--删除一条记录-->
+    <update id="delete">
+        update project_management_project_cloud.project_user
+        set delete_flag = 0
         where id = #{id}
+    </update>
+
+
+    <!--还原一条记录-->
+    <update id="reductionProjectUser">
+        update project_management_project_cloud.project_user
+        set delete_flag = 1
+        where id = #{id}
+    </update>
+
+
+    <select id="getById" resultMap="ProjectUserMap">
+        select *
+        from project_management_project_cloud.project_user
+        where delete_flag = 1
+          and id = #{id}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="ProjectUserMap">
-        select
-          id, projects_id, user_id, duty_code, code_devote_line, code_update, delete_flag, join_time
+    <select id="getDelById" resultMap="ProjectUserMap">
+        select *
         from project_management_project_cloud.project_user
-        limit #{offset}, #{limit}
+        where delete_flag = 0
+          and id = #{id}
     </select>
 
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="ProjectUserMap">
-        select
-          id, projects_id, user_id, duty_code, code_devote_line, code_update, delete_flag, join_time
+    <resultMap id="codeDevoteData" type="com.edu.lingnan.entity.Echarts">
+        <result column="name" property="name"/>
+        <result column="value" property="value"/>
+    </resultMap>
+
+    <select id="getCodeDevote" resultMap="codeDevoteData">
+        SELECT c.username as name, code_devote_line as value
+        from project_management_project_cloud.project_user a,
+             project_management_user_cloud.sys_user c
+        where a.user_id = c.id
+          and a.project_id = #{project_id}
+        group by a.user_id
+        order by code_devote_line desc
+    </select>
+
+    <resultMap id="codeInsertData" type="com.edu.lingnan.entity.Echarts">
+        <result column="name" property="name"/>
+        <result column="value" property="value"/>
+    </resultMap>
+
+    <select id="getCodeInsert" resultType="Integer" resultMap="codeInsertData">
+        SELECT c.username as name, code_update as value
+        from project_management_project_cloud.project_user a,
+             project_management_user_cloud.sys_user c
+        where a.user_id = c.id
+          and a.project_id = #{project_id}
+        group by a.user_id
+        order by code_update desc
+    </select>
+
+    <select id="getCountByProjectId" resultType="int">
+        select count(*)
         from project_management_project_cloud.project_user
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="projectsId != null">
-                and projects_id = #{projectsId}
-            </if>
-            <if test="userId != null">
-                and user_id = #{userId}
-            </if>
-            <if test="dutyCode != null">
-                and duty_code = #{dutyCode}
-            </if>
-            <if test="codeDevoteLine != null">
-                and code_devote_line = #{codeDevoteLine}
-            </if>
-            <if test="codeUpdate != null">
-                and code_update = #{codeUpdate}
-            </if>
-            <if test="deleteFlag != null">
-                and delete_flag = #{deleteFlag}
-            </if>
-            <if test="joinTime != null">
-                and join_time = #{joinTime}
-            </if>
-        </where>
+        where delete_flag = 1
+          and project_id = #{projectId}
+    </select>
+
+    <!--查找所有项目功能点信息-->
+    <resultMap id="ProjectsUserList" type="com.edu.lingnan.entity.ProjectUser">
+        <result column="id" property="id"></result>
+        <result column="pid" property="projectId"></result>
+        <result column="uid" property="userId"></result>
+        <result column="duty_code" property="dutyCode"></result>
+        <result column="code_devote_line" property="codeDevoteLine"></result>
+        <result column="code_update" property="codeUpdate"></result>
+        <result column="user_id" property="myUserDetails.id"></result>
+        <result column="username" property="myUserDetails.username"></result>
+        <result column="email" property="myUserDetails.email"></result>
+        <result column="photo" property="myUserDetails.photo"></result>
+        <collection property="myUserDetails" column="{id=user_id}"
+                    select="com.edu.lingnan.dao.ProjectUserDao.getSimpleMyUserDetailsByUserId">
+        </collection>
+        <collection property="projectUserDuty" column="{id=duty_code}"
+                    select="com.edu.lingnan.dao.ProjectUserDutyDao.getById">
+        </collection>
+    </resultMap>
+
+    <select id="getPageProjectUserByProjectId" resultMap="ProjectsUserList">
+        select pu.id               as id
+             , pu.project_id       as pid
+             , pu.user_id          as uid
+             , pu.duty_code        as duty_code
+             , pu.code_devote_line as code_devote_line
+             , pu.code_update      as code_update
+             , u.id                as user_id
+             , u.username          as username
+             , u.email             as email
+             , u.photo             as photo
+        from project_management_project_cloud.project_user pu,
+             project_management_user_cloud.sys_user u
+        where delete_flag = 1
+          and project_id = #{projectId}
+          and pu.user_id = u.id
+        order by code_devote_line desc
+        limit #{offset},#{pageSize};
+    </select>
+
+    <select id="getAllProjectUserByProjectId" resultMap="ProjectsUserList">
+        select *
+        from project_management_project_cloud.project_user
+        where delete_flag = 1
+          and project_id = #{projectId}
+        order by code_devote_line desc
+    </select>
+
+    <select id="getCountNoInProjectByProjectId" resultType="int">
+        select count(*)
+        from project_management_user_cloud.sys_user
+        WHERE id not in
+              (select user_id
+               from project_management_project_cloud.project_user
+               where delete_flag = 1
+                 and project_id = #{projectId});
+    </select>
+
+    <select id="getProjectUserNoInProjectByProjectId" resultType="com.edu.lingnan.entity.MyUserDetails">
+        select *
+        from project_management_user_cloud.sys_user
+        WHERE id not in
+              (select user_id
+               from project_management_project_cloud.project_user
+               where delete_flag = 1
+                 and project_id = #{projectId})
+        limit #{offset},#{pageSize}
+    </select>
+
+    <select id="getAllProjectByUserId" resultMap="ProjectsUserList">
+        select *
+        from project_management_project_cloud.project_user
+        where delete_flag = 1
+          and user_id = #{userId}
+    </select>
+
+    <select id="getCountByProjectIdAndDuty" resultType="int">
+        select count(*)
+        from project_management_project_cloud.project_user
+        where delete_flag = 1
+          and project_id = #{projectId}
+          and duty_code = #{dutyCode}
     </select>
 
     <!--通过ProjectsId删除一条记录-->
     <update id="deleteProjectUserByProjectsId">
-        update project_management_project_cloud.project_user set delete_flag = 0 where projects_id = #{id}
+        update project_management_project_cloud.project_user
+        set delete_flag = 0
+        where project_id = #{id}
     </update>
 
-    <select id="getByUserIdAndProjectId" resultMap="ProjectUserMap">
-        select id, projects_id, user_id, duty_code, code_devote_line, code_update, delete_flag, join_time
+    <select id="getByUserIdAndProjectId" resultMap="ProjectUserMapHaveMyUserDetails">
+        select *
         from project_management_project_cloud.project_user
-        where delete_flag = 1 and user_id = #{userId} and projects_id = #{projectId}
+        where delete_flag = 1
+          and user_id = #{userId}
+          and project_id = #{projectId}
     </select>
 
+
+    <select id="getSimpleMyUserDetailsByUserId" resultType="com.edu.lingnan.entity.MyUserDetails">
+        select id,username,email,photo
+        from project_management_user_cloud.sys_user
+        where enabled = 1
+          and id = #{id}
+    </select>
 </mapper>

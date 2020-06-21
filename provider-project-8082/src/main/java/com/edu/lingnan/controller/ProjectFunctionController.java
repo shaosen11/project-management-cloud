@@ -43,7 +43,7 @@ public class ProjectFunctionController {
      * @return 实例对象
      */
     @GetMapping("/{projectFunctionId}")
-    ProjectFunction queryById(@PathVariable("projectFunctionId") Integer projectFunctionId){
+    public ProjectFunction queryById(@PathVariable("projectFunctionId") Integer projectFunctionId){
         return this.projectFunctionService.queryById(projectFunctionId);
     }
 

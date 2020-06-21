@@ -15,33 +15,31 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface ProjectCodeLineDao extends BaseDao<ProjectCodeLine>{
+public interface ProjectCodeLineDao extends BaseDao<ProjectCodeLine> {
 
     /**
-     * 通过ID查询单条数据
+     * 查询今天有没有记录
      *
-     * @param id 主键
-     * @return 实例对象
+     * @param projectsId
+     * @return
      */
-    ProjectCodeLine queryById(Integer id);
+    ProjectCodeLine getProjectsCodeLineByProjectIdAndToday(@Param("projectId") Integer projectId);
 
     /**
-     * 查询指定行数据
+     * 查询最近有没有记录
      *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
+     * @param projectsId
+     * @return
      */
-    List<ProjectCodeLine> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
-
+    ProjectCodeLine getProjectsCodeLineByProjectIdAndLastDay(@Param("projectId") Integer projectId);
 
     /**
-     * 通过实体作为筛选条件查询
+     * 查询项目所有代码行记录
      *
-     * @param projectCodeLine 实例对象
-     * @return 对象列表
+     * @param projectId
+     * @return
      */
-    List<ProjectCodeLine> queryAll(ProjectCodeLine projectCodeLine);
+    List<ProjectCodeLine> getAllProjectCodeLineByProjectId(@Param("projectId") Integer projectId);
 
 
 }

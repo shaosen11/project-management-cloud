@@ -35,6 +35,41 @@
         where id = #{id}
     </select>
 
+    <select id="getById" resultMap="ProjectMap">
+        select id,
+        name,
+        charge_user_id,
+        code_line_number,
+        code_update_count,
+        schedule_id,
+        function_points,
+        completed_function_points,
+        last_update_time,
+        type_id,
+        store_count,
+        like_count,
+        click_count,
+        delete_flag,
+        characterization,
+        create_time,
+        user_count,
+        document_count,
+        planned_start_time,
+        planned_end_time,
+        actual_start_time,
+        actual_end_time
+        from project_management_project_cloud.project
+        where id = #{id}
+    </select>
+
+    <!--根据id查找一条没有被注销记录-->
+    <select id="getByIdAndNoDel" resultType="com.edu.lingnan.entity.Project">
+        select *
+        from project_management_project_cloud.project
+        where id = #{id}
+        and delete_flag = 1
+    </select>
+
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="ProjectMap">
         select
@@ -42,6 +77,52 @@
         from project_management_project_cloud.project
         limit #{offset}, #{limit}
     </select>
+
+    <select id="getAdminByUserIdAndProjectId" resultType="com.edu.lingnan.entity.Project">
+        select *
+        from project_management_project_cloud.project
+        where charge_user_id = #{userId}
+        and id = #{projectId}
+    </select>
+
+    <!--查找所有项目-->
+    <select id="getProjectList" resultType="com.edu.lingnan.entity.Project">
+        select *
+        from project_management_project_cloud.project
+        where delete_flag = 1
+    </select>
+
+    <!--通过id查询所有项目-->
+    <select id="getProjectListByUserId" resultType="com.edu.lingnan.entity.Project">
+        select *
+        from project_management_project_cloud.project
+        where id in (
+            select project_id
+            from project_management_project_cloud.project_user
+            where user_id = #{userId})
+          and delete_flag = 1
+    </select>
+
+    <!--查找所有被注销项目-->
+    <select id="getDelProjectList" resultType="com.edu.lingnan.entity.Project">
+        select *
+        from project_management_project_cloud.project
+        where delete_flag = 0
+    </select>
+
+    <!--删除一条记录-->
+    <update id="deleteProject">
+        update project_management_project_cloud.project
+        set delete_flag = 0
+        where id = #{id}
+    </update>
+
+    <!--还原一条记录-->
+    <update id="reductionProject">
+        update project_management_project_cloud.project
+        set delete_flag = 1
+        where id = #{id}
+    </update>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="ProjectMap">
@@ -118,6 +199,13 @@
         </where>
     </select>
 
+    <!--更新信息-->
+    <update id="updateProjectClickNumber">
+        update project_management_project_cloud.project
+        set click_count = click_count+1
+        where id = #{projectId}
+    </update>
+
     <!--查找所有项目-->
     <select id="projectCount" resultType="Integer">
         select count(*)
@@ -131,7 +219,12 @@
         from project_management_project_cloud.project
         where delete_flag = 0
     </select>
-
+    <!--查找所有项目-->
+    <select id="getProjectCount" resultType="Integer">
+        select count(*)
+        from project_management_project_cloud.project
+        where delete_flag = 1
+    </select>
     <!--查找我所有的项目进度数据，饼图-->
     <select id="getMyProjectNumBySchedule" resultType="Integer">
         select count(*)

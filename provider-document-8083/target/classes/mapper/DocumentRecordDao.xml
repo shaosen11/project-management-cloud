@@ -12,51 +12,124 @@
         <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="DocumentRecordMap">
-        select
-          id, project_id, user_id, operate_time, operate_message, ip, delete_flag
+    <select id="getById" resultMap="DocumentRecordMap">
+        select * 
         from project_management_document_cloud.document_record
+        where delete_flag = 1 
+        and id = #{id}
+    </select>
+    <select id="getAllByProjectId" resultMap="DocumentRecordMap">
+        select * 
+        from project_management_document_cloud.document_record 
+        where delete_flag = 1 
+        and project_id = #{projectId} 
+        order by id desc
+    </select>
+
+    <update id="delete">
+        update project_management_document_cloud.document_record 
+        set delete_flag = 0 
+        where id = #{id};
+    </update>
+
+    <!--查找所有被注销记录-->
+    <select id="getAllDeleteDocumentRecord" resultMap="DocumentRecordMap">
+        select *
+        from project_management_document_cloud.document_record
+        where delete_flag = 0
+    </select>
+
+    <!--撤消一条记录-->
+    <update id="undo">
+        update project_management_document_cloud.document_record
+        set delete_flag = 1
         where id = #{id}
-    </select>
+    </update>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="DocumentRecordMap">
-        select
-          id, project_id, user_id, operate_time, operate_message, ip, delete_flag
+    <!-- 查询总记录数 -->
+    <select id="getDocumentRecordCountByProjectId" resultType="int">
+        select count(*)
         from project_management_document_cloud.document_record
-        limit #{offset}, #{limit}
+        where delete_flag = 1
+        and project_id = #{projectId}
     </select>
 
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="DocumentRecordMap">
-        select
-          id, project_id, user_id, operate_time, operate_message, ip, delete_flag
+    <select id="getDocumentRecordCountByProjectIdAndUserId" resultType="int">
+        select count(*)
         from project_management_document_cloud.document_record
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="projectId != null">
-                and project_id = #{projectId}
-            </if>
-            <if test="userId != null">
-                and user_id = #{userId}
-            </if>
-            <if test="operateTime != null">
-                and operate_time = #{operateTime}
-            </if>
-            <if test="operateMessage != null and operateMessage != ''">
-                and operate_message = #{operateMessage}
-            </if>
-            <if test="ip != null and ip != ''">
-                and ip = #{ip}
-            </if>
-            <if test="deleteFlag != null">
-                and delete_flag = #{deleteFlag}
-            </if>
-        </where>
+        where delete_flag = 1
+        and project_id = #{projectId}
+        and user_id = #{userId}
     </select>
 
+    <resultMap id="documentRecordList" type="com.edu.lingnan.entity.DocumentRecord">
+        <result column="id" property="id"></result>
+        <result column="project_id" property="projectId"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="operate_time" property="operateTime"></result>
+        <result column="ip" property="ip"></result>
+        <result column="operate_message" property="operateMessage"></result>
+        <collection property="myUserDetails" column="{id=user_id}"
+                    select="com.edu.lingnan.dao.DocumentRecordDao.getSimpleMyUserDetailsByUserId">
+        </collection>
+        <collection property="projectUser" column="{userId=user_id,projectId=project_id}"
+                    select="com.edu.lingnan.dao.DocumentRecordDao.getProjectUserByUserIdAndProjectId"></collection>
+    </resultMap>
+    <select id="getDocumentRecordPageByProjectId" resultMap="documentRecordList">
+        select *
+        from project_management_document_cloud.document_record
+        where delete_flag = 1
+        and project_id = #{projectId}
+        order by id desc
+        limit #{offset},#{pageSize}
+    </select>
+
+    <select id="getDocumentRecordPageByProjectIdAndUserId" resultMap="documentRecordList">
+        select *
+        from project_management_document_cloud.document_record
+        where delete_flag = 1
+          and project_id = #{projectId}
+          and user_id = #{userId}
+        order by id desc
+        limit #{offset},#{pageSize}
+    </select>
+
+    <select id="getSimpleMyUserDetailsByUserId" resultType="com.edu.lingnan.entity.MyUserDetails">
+        select id,username,email,photo
+        from project_management_user_cloud.sys_user
+        where enabled = 1
+        and id = #{id}
+    </select>
+
+    <!--查找所有项目功能点信息-->
+    <resultMap id="ProjectUserList" type="com.edu.lingnan.entity.ProjectUser">
+        <result column="id" property="id"></result>
+        <result column="project_id" property="projectId"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="duty_code" property="dutyCode"></result>
+        <result column="code_devote_line" property="codeDevoteLine"></result>
+        <result column="code_update" property="codeUpdate"></result>
+        <collection property="myUserDetails" column="{id=user_id}"
+                    select="com.edu.lingnan.dao.DocumentRecordDao.getSimpleMyUserDetailsByUserId">
+        </collection>
+        <collection property="projectUserDuty" column="{id=duty_code}"
+                    select="com.edu.lingnan.dao.DocumentRecordDao.getProjectUserDutyById">
+        </collection>
+    </resultMap>
+
+    <select id="getProjectUserByUserIdAndProjectId" resultMap="ProjectUserList">
+        select *
+        from project_management_project_cloud.project_user
+        where delete_flag = 1
+        and user_id = #{userId}
+        and project_id = #{projectId}
+    </select>
+
+    <select id="getProjectUserDutyById" resultType="com.edu.lingnan.entity.ProjectUserDuty">
+        select *
+        from project_management_project_cloud.project_user_duty
+        where delete_flag = 1
+        and id = #{id};
+    </select>
 
 </mapper>

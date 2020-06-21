@@ -2,6 +2,7 @@ package com.edu.lingnan.entity;
 
 import com.edu.lingnan.annotation.Id;
 import com.edu.lingnan.annotation.Table;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -23,7 +24,8 @@ public class DocumentRecord implements Serializable {
     private Integer projectId;
     
     private Integer userId;
-    
+
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private Date operateTime;
     
     private String operateMessage;
@@ -32,6 +34,9 @@ public class DocumentRecord implements Serializable {
     
     private Integer deleteFlag;
 
+    private MyUserDetails myUserDetails;
+
+    private ProjectUser projectUser;
 
 
 }

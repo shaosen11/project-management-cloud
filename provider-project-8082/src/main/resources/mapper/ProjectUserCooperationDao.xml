@@ -24,54 +24,33 @@
         where id = #{id}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="ProjectUserCooperationMap">
-        select
-          id, projects_id, in_project_user_id, not_in_project_user_id, duty_code, time, delete_flag, invite_flag, join_flag, finish_flag, success_flag
+    <select id="getByProjectIdAndInProjectUserIdAndNotInProjectUserIdAndInviteAndFinish" resultMap="ProjectUserCooperationMap">
+        select id, projects_id, in_project_user_id, not_in_project_user_id, duty_code, time, delete_flag, invite_flag, join_flag, finish_flag, success_flag
         from project_management_project_cloud.project_user_cooperation
-        limit #{offset}, #{limit}
+        where delete_flag = 1
+        and projects_id = #{projectId}
+        and in_project_user_id = #{inProjectUserId}
+        and not_in_project_user_id = #{notInProjectUserId}
+        and invite_flag = #{inviteFlag}
+        and finish_flag = #{finishFlag}
     </select>
 
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="ProjectUserCooperationMap">
-        select
-          id, projects_id, in_project_user_id, not_in_project_user_id, duty_code, time, delete_flag, invite_flag, join_flag, finish_flag, success_flag
+
+    <select id="getById" resultMap="ProjectUserCooperationMap">
+        select id, projects_id, in_project_user_id, not_in_project_user_id, duty_code, time, delete_flag, invite_flag, join_flag, finish_flag, success_flag
         from project_management_project_cloud.project_user_cooperation
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="projectsId != null">
-                and projects_id = #{projectsId}
-            </if>
-            <if test="inProjectUserId != null">
-                and in_project_user_id = #{inProjectUserId}
-            </if>
-            <if test="notInProjectUserId != null">
-                and not_in_project_user_id = #{notInProjectUserId}
-            </if>
-            <if test="dutyCode != null">
-                and duty_code = #{dutyCode}
-            </if>
-            <if test="time != null">
-                and time = #{time}
-            </if>
-            <if test="deleteFlag != null">
-                and delete_flag = #{deleteFlag}
-            </if>
-            <if test="inviteFlag != null">
-                and invite_flag = #{inviteFlag}
-            </if>
-            <if test="joinFlag != null">
-                and join_flag = #{joinFlag}
-            </if>
-            <if test="finishFlag != null">
-                and finish_flag = #{finishFlag}
-            </if>
-            <if test="successFlag != null">
-                and success_flag = #{successFlag}
-            </if>
-        </where>
+        where delete_flag = 1
+          and id = #{id}
+    </select>
+
+    <select id="getByProjectIdAndNotInProjectUserIdAndInviteAndFinish" resultMap="ProjectUserCooperationMap">
+        select id, projects_id, in_project_user_id, not_in_project_user_id, duty_code, time, delete_flag, invite_flag, join_flag, finish_flag, success_flag
+        from project_management_project_cloud.project_user_cooperation
+        where delete_flag = 1
+        and projects_id = #{projectId}
+        and not_in_project_user_id = #{notInProjectUserId}
+        and invite_flag = #{inviteFlag}
+        and finish_flag = #{finishFlag}
     </select>
 
 

@@ -2,8 +2,6 @@ package com.edu.lingnan.utils;
 
 import com.edu.lingnan.entity.MyUserDetails;
 import com.edu.lingnan.entity.UserRecord;
-import com.edu.lingnan.service.UserRecordService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 

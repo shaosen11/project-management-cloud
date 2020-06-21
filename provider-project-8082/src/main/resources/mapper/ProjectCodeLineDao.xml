@@ -4,50 +4,37 @@
 
     <resultMap type="com.edu.lingnan.entity.ProjectCodeLine" id="ProjectCodeLineMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
-        <result property="projectsId" column="projects_id" jdbcType="INTEGER"/>
+        <result property="projectId" column="project_id" jdbcType="INTEGER"/>
         <result property="codeLineNumber" column="code_line_number" jdbcType="INTEGER"/>
         <result property="uploadTime" column="upload_time" jdbcType="OTHER"/>
         <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="ProjectCodeLineMap">
-        select
-          id, projects_id, code_line_number, upload_time, delete_flag
+    <!--查询今天有没有记录-->
+    <select id="getProjectsCodeLineByProjectIdAndToday" resultMap="ProjectCodeLineMap">
+        select *
         from project_management_project_cloud.project_code_line
-        where id = #{id}
+        where delete_flag = 1
+        and project_id = #{projectId}
+        and to_days(upload_time)=to_days(current_date())
+    </select>
+    <!--查询最近的记录-->
+    <select id="getProjectsCodeLineByProjectIdAndLastDay" resultMap="ProjectCodeLineMap">
+        select *
+        from project_management_project_cloud.project_code_line
+        where delete_flag = 1
+        and project_id = #{projectsId}
+        ORDER BY upload_time DESC
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="ProjectCodeLineMap">
-        select
-          id, projects_id, code_line_number, upload_time, delete_flag
-        from project_management_project_cloud.project_code_line
-        limit #{offset}, #{limit}
-    </select>
 
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="ProjectCodeLineMap">
-        select
-          id, projects_id, code_line_number, upload_time, delete_flag
+
+    <select id="getAllProjectCodeLineByProjectId" resultMap="ProjectCodeLineMap">
+        select *
         from project_management_project_cloud.project_code_line
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="projectsId != null">
-                and projects_id = #{projectsId}
-            </if>
-            <if test="codeLineNumber != null">
-                and code_line_number = #{codeLineNumber}
-            </if>
-            <if test="uploadTime != null">
-                and upload_time = #{uploadTime}
-            </if>
-            <if test="deleteFlag != null">
-                and delete_flag = #{deleteFlag}
-            </if>
-        </where>
+        where delete_flag = 1
+        and project_id = #{projectId}
+        ORDER BY upload_time ASC
     </select>
 
 

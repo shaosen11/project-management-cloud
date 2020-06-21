@@ -53,5 +53,5 @@ public class Message implements Serializable {
     */
     private Integer needToDo;
 
-
+    private MessageType messageType;
 }

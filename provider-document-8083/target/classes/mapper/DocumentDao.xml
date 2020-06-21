@@ -16,63 +16,58 @@
         <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="DocumentMap">
-        select
-          id, name, user_id, version, version_message, serial_number, project_id, upload_time, version_flag, code_line_number, delete_flag
+    <select id="getById" resultMap="DocumentMap">
+        select *
         from project_management_document_cloud.document
+        where delete_flag = 1
+        and id = #{id}
+        ORDER BY upload_time desc
+    </select>
+
+    <select id="getVersionByProjectIdAndName" resultType="Integer">
+        select version
+        from project_management_document_cloud.document
+        where delete_flag = 1
+        and project_id = #{projectsId}
+        and name = #{name}
+        order by version desc
+        limit 1
+    </select>
+    <select id="getByProjectIdAndVersionAndName" resultMap="DocumentMap">
+        select *
+        from project_management_document_cloud.document
+        where delete_flag = 1
+          and project_id = #{projectId}
+          and version = #{version}
+          and name = #{name}
+    </select>
+    <select id="getByProjectIdAndVersionFlagAndName" resultMap="DocumentMap">
+        select *
+        from project_management_document_cloud.document
+        where delete_flag = 1
+          and project_id = #{projectId}
+          and version_flag = #{versionflag}
+          and name = #{name}
+    </select>
+
+    <update id="delete">
+        update project_management_document_cloud.document
+        set delete_flag = 0
+        where id = #{id};
+    </update>
+
+    <!--查找所有被注销记录-->
+    <select id="getAllDeleteDocument" resultMap="DocumentMap">
+        select *
+        from project_management_document_cloud.document
+        where delete_flag = 0
+    </select>
+
+    <!--撤消一条记录-->
+    <update id="undo">
+        update project_management_document_cloud.document
+        set delete_flag = 1
         where id = #{id}
-    </select>
-
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="DocumentMap">
-        select
-          id, name, user_id, version, version_message, serial_number, project_id, upload_time, version_flag, code_line_number, delete_flag
-        from project_management_document_cloud.document
-        limit #{offset}, #{limit}
-    </select>
-
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="DocumentMap">
-        select
-          id, name, user_id, version, version_message, serial_number, project_id, upload_time, version_flag, code_line_number, delete_flag
-        from project_management_document_cloud.document
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="name != null and name != ''">
-                and name = #{name}
-            </if>
-            <if test="userId != null">
-                and user_id = #{userId}
-            </if>
-            <if test="version != null">
-                and version = #{version}
-            </if>
-            <if test="versionMessage != null and versionMessage != ''">
-                and version_message = #{versionMessage}
-            </if>
-            <if test="serialNumber != null and serialNumber != ''">
-                and serial_number = #{serialNumber}
-            </if>
-            <if test="projectId != null">
-                and project_id = #{projectId}
-            </if>
-            <if test="uploadTime != null">
-                and upload_time = #{uploadTime}
-            </if>
-            <if test="versionFlag != null">
-                and version_flag = #{versionFlag}
-            </if>
-            <if test="codeLineNumber != null">
-                and code_line_number = #{codeLineNumber}
-            </if>
-            <if test="deleteFlag != null">
-                and delete_flag = #{deleteFlag}
-            </if>
-        </where>
-    </select>
-
+    </update>
 
 </mapper>

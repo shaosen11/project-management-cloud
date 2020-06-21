@@ -112,6 +112,7 @@ public class Project implements Serializable {
     */
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Object actualEndTime;
-
+    private ProjectType projectType;
+    private ProjectSchedule projectSchedule;
 
 }

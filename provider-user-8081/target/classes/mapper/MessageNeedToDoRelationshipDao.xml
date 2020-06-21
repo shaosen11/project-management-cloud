@@ -9,41 +9,18 @@
         <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="MessageNeedToDoRelationshipMap">
-        select
-          id, message_id, projects_user_cooperration_id, delete_flag
+    <select id="getByMessageId" resultMap="MessageNeedToDoRelationshipMap">
+        select id, message_id, projects_user_cooperration_id, delete_flag
         from project_management_user_cloud.message_need_to_do_relationship
-        where id = #{id}
+        where delete_flag = 1
+        and message_id = #{messageId}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="MessageNeedToDoRelationshipMap">
-        select
-          id, message_id, projects_user_cooperration_id, delete_flag
+    <select id="getByProjectsUserCooperationId" resultMap="MessageNeedToDoRelationshipMap">
+        select id, message_id, projects_user_cooperration_id, delete_flag
         from project_management_user_cloud.message_need_to_do_relationship
-        limit #{offset}, #{limit}
-    </select>
-
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="MessageNeedToDoRelationshipMap">
-        select
-          id, message_id, projects_user_cooperration_id, delete_flag
-        from project_management_user_cloud.message_need_to_do_relationship
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="messageId != null">
-                and message_id = #{messageId}
-            </if>
-            <if test="projectsUserCooperrationId != null">
-                and projects_user_cooperration_id = #{projectsUserCooperrationId}
-            </if>
-            <if test="deleteFlag != null">
-                and delete_flag = #{deleteFlag}
-            </if>
-        </where>
+        where delete_flag = 1
+        and projects_user_cooperration_id = #{projectsUserCooperationId}
     </select>
 
 
