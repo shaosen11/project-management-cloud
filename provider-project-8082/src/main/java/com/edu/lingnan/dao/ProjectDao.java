@@ -1,5 +1,6 @@
 package com.edu.lingnan.dao;
 
+import com.edu.lingnan.entity.MyProject;
 import com.edu.lingnan.entity.Project;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -53,7 +54,136 @@ public interface ProjectDao extends  BaseDao<Project>{
      */
     List<Project> getAllDelProject();
 
+    /**
+     * 查询我所有的项目进度数量(饼图1)
+     *
+     * @return
+     */
+    Integer getMyProjectNumBySchedule(@Param("userId") Integer userId, @Param("scheduleId") Integer scheduleId);
 
+    /**
+     * 查询我负责的项目进度数量(饼图1)
+     *
+     * @return
+     */
+    Integer getMyChargeProjectNumBySchedule(@Param("userId") Integer userId, @Param("scheduleId") Integer scheduleId);
 
+    /**
+     * 查询我参加的项目进度数量(饼图1)
+     *
+     * @return
+     */
+    Integer getMyJoinProjectNumBySchedule(@Param("userId") Integer userId, @Param("scheduleId") Integer scheduleId);
 
+    /**
+     * 查询我所有的项目数量
+     * @return Integer
+     */
+    Integer getMyAllProjectNum(@Param("userId")Integer userId);
+
+    /**
+     * 查询我负责的项目数量
+     * @return Integer
+     */
+    Integer getMyChargeProjectNum(@Param("userId")Integer userId);
+
+    /**
+     * 查询我参加的项目数量
+     * @return Integer
+     */
+    Integer getMyJoinProjectNum(@Param("userId")Integer userId);
+
+    /**
+     * 分页--查询我的所有项目(user)
+     * @return
+     */
+    List<MyProject> getMyAllProjectPage(@Param("userId")Integer userId, @Param("offset")Integer offset, @Param("pageSize")Integer pageSize);
+
+    /**
+     * 分页--查询我负责的项目
+     * @return
+     */
+    List<MyProject> getMyChargeProjectPage(@Param("userId")Integer userId, @Param("offset")Integer offset, @Param("pageSize")Integer pageSize);
+
+    /**
+     * 分页--查询我参加的项目
+     * @return
+     */
+    List<MyProject> getMyJoinProjectPage(@Param("userId")Integer userId, @Param("offset")Integer offset, @Param("pageSize")Integer pageSize);
+
+    /**
+     * 查询多条数据
+     *
+     * @param offset 查询起始位置
+     * @param limit 查询条数
+     * @return 对象列表
+     */
+    List<MyProject> queryMyProjectPageByTypeOrSchedule(@Param("offset")int offset, @Param("limit")int limit,@Param("myProject")MyProject myProject,@Param("userId")Integer userId);
+
+    /**
+     * 查询多条数据
+     * @return 对象列表
+     */
+    List<MyProject> queryMyProjectByTypeOrSchedule(@Param("myProject")MyProject myProject,@Param("userId")Integer userId);
+
+    /**
+     * 查询多条数据
+     *
+     * @param offset 查询起始位置
+     * @param limit 查询条数
+     * @return 对象列表
+     */
+    List<MyProject> queryMyProjectPageByTypeOrSchedule2(@Param("offset")int offset, @Param("limit")int limit,@Param("myProject")MyProject myProject,@Param("userId")Integer userId);
+
+    /**
+     * 查询多条数据
+     * @return 对象列表
+     */
+    List<MyProject> queryMyProjectByTypeOrSchedule2(@Param("myProject")MyProject myProject,@Param("userId")Integer userId);
+
+    /**
+     * 查询多条数据
+     *
+     * @param offset 查询起始位置
+     * @param limit 查询条数
+     * @return 对象列表
+     */
+    List<MyProject> queryMyProjectPageByFuzzySearch(@Param("offset")int offset, @Param("limit")int limit,@Param("content")String content,@Param("userId")Integer userId,@Param("chargeUserId")Integer chargeUserId);
+
+    /**
+     * 查询多条数据
+     * @return 对象列表
+     */
+    List<MyProject> queryMyProjectByFuzzySearch(@Param("content")String content,@Param("userId")Integer userId,@Param("chargeUserId")Integer chargeUserId);
+
+    /**
+     * 查询多条数据
+     *
+     * @param offset 查询起始位置
+     * @param limit 查询条数
+     * @return 对象列表
+     */
+    List<MyProject> queryMyProjectPageByFuzzySearch2(@Param("offset")int offset, @Param("limit")int limit,@Param("content")String content,@Param("userId")Integer userId,@Param("chargeUserId")Integer chargeUserId);
+
+    /**
+     * 查询多条数据
+     * @return 对象列表
+     */
+    List<MyProject> queryMyProjectByFuzzySearch2(@Param("content")String content,@Param("userId")Integer userId,@Param("chargeUserId")Integer chargeUserId);
+
+    /**
+     * 查询我收藏的项目的数量
+     * @param userId
+     * @return
+     */
+    Integer getMyProjectStoreNumByUserId(@Param("userId")Integer userId);
+
+    /**
+     * 分页查询我收藏的项目
+     * @param userId
+     * @param offset
+     * @param pageSize
+     * @return
+     */
+    List<MyProject> getMyProjectStorePageByUserId(@Param("userId")Integer userId, @Param("offset")Integer offset, @Param("pageSize")Integer pageSize);
 }

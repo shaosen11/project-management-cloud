@@ -33,4 +33,41 @@ public class UserStoreController {
         return this.userStoreService.queryById(id);
     }
 
+    /**
+     * 添加收藏
+     * @param userStore
+     * @return
+     */
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public Boolean addUserStore(@RequestBody UserStore userStore){
+        return userStoreService.insert(userStore);
+    }
+
+    /**
+     * 查询项目被收藏数量
+     * @param projectId
+     * @return
+     */
+    @RequestMapping(value = "/countStoredNumByProjectId", method = RequestMethod.GET)
+    public Integer countStoredNumByProjectId(@RequestParam("projectId") Integer projectId){
+        System.out.println("查询项目被收藏数量-->projectId="+projectId);
+        Integer num = userStoreService.countStoredNumByProjectId(projectId);
+        System.out.println("查询项目被收藏数量-->num="+num);
+        return num;
+    }
+
+    /**
+     * 删除用户收藏
+     * @param userId
+     * @param projectId
+     * @return
+     */
+    @RequestMapping(value = "/{userId}/{projectId}", method = RequestMethod.DELETE)
+    public Boolean deleteUserStore(@PathVariable("userId") Integer userId, @PathVariable("projectId")Integer projectId){
+        System.out.println("删除用户收藏-->userId="+userId+" projectId="+projectId);
+        Boolean flag = userStoreService.deleteUserStore(userId,projectId);
+        System.out.println("删除用户收藏-->结果="+flag);
+        return flag;
+    }
+
 }

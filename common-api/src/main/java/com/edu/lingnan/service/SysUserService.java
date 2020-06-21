@@ -45,4 +45,6 @@ public interface SysUserService {
     boolean update(SysUser sysUser);
 
     Integer userCount();
+
+    SysUser login(String email, String password);
 }

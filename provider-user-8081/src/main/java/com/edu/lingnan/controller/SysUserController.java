@@ -32,13 +32,7 @@ public class SysUserController {
         return sysUserService.insert(sysUser);
     }
 
-    /**
-     * 查
-     * @param id
-     * @return
-     */
-    @GetMapping("/{id}")
-    public SysUser getSysUser(@PathVariable("id") Integer id) {
+
     @GetMapping("queryById/{id}")
     public SysUser queryById(@PathVariable("id") Integer id) {
         return this.sysUserService.queryById(id);

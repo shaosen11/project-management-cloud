@@ -43,5 +43,17 @@ public interface UserStoreDao extends BaseDao<UserStore>{
      */
     List<UserStore> queryAll(UserStore userStore);
 
+    /**
+     * 查询项目被收藏数
+     * @return Integer
+     */
+    Integer countStoredNumByProjectId(Integer projectId);
+
+    /**
+     * 删除收藏记录
+     * @return
+     */
+    boolean deleteUserStore(@Param("userId")Integer userId, @Param("projectId")Integer projectId);
+
 
 }

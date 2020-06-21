@@ -1,8 +1,10 @@
 package com.edu.lingnan.feign;
 
 import com.edu.lingnan.entity.UserLike;
+import com.edu.lingnan.entity.UserStore;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,45 +18,29 @@ import java.util.List;
 @FeignClient(value = "PRODIVER-USER")
 public interface UserLikeFeignService {
 
-//    /**
-//     * 通过ID查询单条数据
-//     *
-//     * @param id 主键
-//     * @return 实例对象
-//     */
-//    UserLike queryById(Integer id);
-//
-//    /**
-//     * 查询多条数据
-//     *
-//     * @param offset 查询起始位置
-//     * @param limit 查询条数
-//     * @return 对象列表
-//     */
-//    List<UserLike> queryAllByLimit(int offset, int limit);
-//
-//    /**
-//     * 新增数据
-//     *
-//     * @param userLike 实例对象
-//     * @return 实例对象
-//     */
-//    UserLike insert(UserLike userLike);
-//
-//    /**
-//     * 修改数据
-//     *
-//     * @param userLike 实例对象
-//     * @return 实例对象
-//     */
-//    UserLike update(UserLike userLike);
-//
-//    /**
-//     * 通过主键删除数据
-//     *
-//     * @param id 主键
-//     * @return 是否成功
-//     */
-//    boolean deleteById(Integer id);
+    /**
+     * 添加点赞
+     * @param userLike
+     * @return
+     */
+    @RequestMapping(value = "userLike/", method = RequestMethod.POST,consumes = "application/json" )
+    Boolean addUserLike(@RequestBody UserLike userLike);
+
+    /**
+     * 查询项目被点赞数量
+     * @param projectId
+     * @return
+     */
+    @RequestMapping(value = "userLike/countLikedNumByProjectId", method = RequestMethod.GET)
+    Integer countLikedNumByProjectId(@RequestParam("projectId") Integer projectId);
+
+    /**
+     * 删除用户点赞
+     * @param userId
+     * @param projectId
+     * @return
+     */
+    @RequestMapping(value = "userLike/{userId}/{projectId}", method = RequestMethod.DELETE)
+    Boolean deleteUserLike(@PathVariable("userId") Integer userId, @PathVariable("projectId")Integer projectId);
 
 }

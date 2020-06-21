@@ -43,5 +43,17 @@ public interface UserLikeDao extends BaseDao<UserLike>{
      */
     List<UserLike> queryAll(UserLike userLike);
 
+    /**
+     * 查询项目被点赞数
+     * @return Integer
+     */
+    Integer countLikedNumByProjectId(Integer projectId);
+
+    /**
+     * 删除点赞记录
+     * @return
+     */
+    boolean deleteUserLike(@Param("userId")Integer userId, @Param("projectId")Integer projectId);
+
 
 }

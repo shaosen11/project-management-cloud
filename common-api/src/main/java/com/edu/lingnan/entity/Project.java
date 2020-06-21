@@ -2,6 +2,7 @@ package com.edu.lingnan.entity;
 
 import com.edu.lingnan.annotation.Id;
 import com.edu.lingnan.annotation.Table;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -52,6 +53,7 @@ public class Project implements Serializable {
     /**
     * 最近更新时间
     */
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date lastUpdateTime;
     /**
     * 项目类型
@@ -84,6 +86,7 @@ public class Project implements Serializable {
     /**
     * 项目人数
     */
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Integer userCount;
     /**
     * 文件数量
@@ -92,18 +95,22 @@ public class Project implements Serializable {
     /**
     * 计划开始时间
     */
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Object plannedStartTime;
     /**
     * 计划结束时间
     */
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Object plannedEndTime;
     /**
     * 实际开始时间
     */
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Object actualStartTime;
     /**
     * 实际结束时间
     */
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Object actualEndTime;
 
 

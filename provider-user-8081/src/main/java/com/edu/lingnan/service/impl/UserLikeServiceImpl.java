@@ -50,9 +50,8 @@ public class UserLikeServiceImpl implements UserLikeService {
      * @return 实例对象
      */
     @Override
-    public UserLike insert(UserLike userLike) {
-        this.userLikeDao.insert(userLike);
-        return userLike;
+    public Boolean insert(UserLike userLike) {
+        return this.userLikeDao.insert(userLike)>0;
     }
 
     /**
@@ -66,5 +65,16 @@ public class UserLikeServiceImpl implements UserLikeService {
         this.userLikeDao.update(userLike);
         return this.queryById(userLike.getId());
     }
+
+    @Override
+    public Integer countLikedNumByProjectId(Integer projectId) {
+        return userLikeDao.countLikedNumByProjectId(projectId);
+    }
+
+    @Override
+    public boolean deleteUserLike(Integer userId, Integer projectId) {
+        return userLikeDao.deleteUserLike(userId,projectId);
+    }
+
 
 }

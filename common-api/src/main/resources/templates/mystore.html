@@ -55,266 +55,26 @@
 <!--公共JS-->
 <th:block th:replace="commom/bar :: nav_js" />
 
-<script type="text/javascript">
-    var pieCharts = echarts.init(document.getElementById("piechart"));
-    pieCharts.showLoading();
-    var names = [];
-    $.ajax({
-        type: "post",
-        async: true,
-        url: "/getMyProjectData/[[${#authentication.principal.id}]]",
-        data: [],
-        dataType: "json",
-        success: function (result) {
-            pieCharts.hideLoading();
-            if(result){
-                for(var i=0;i<result.length;i++){
-                    names.push(result[i].name);
-                }
-            }
-            pieCharts.setOption({
-                title: {
-                    text: '负责项目',
-                    subtext: '进度比',
-                    x: 'center'
-                },
-                tooltip: {
-                    trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
-                },
-                legend: {
-                    orient: 'vertical',
-                    x: 'left',
-                    data: names
-                },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        mark: {show: true},
-                        dataView: {show: true, readOnly: false},
-                        magicType: {
-                            show: true,
-                            type: ['pie', 'funnel'],
-                            option: {
-                                funnel: {
-                                    x: '25%',
-                                    width: '50%',
-                                    funnelAlign: 'left',
-                                    max: 1548
-                                }
-                            }
-                        },
-                        restore: {show: true},
-                        saveAsImage: {show: true}
-                    }
-                },
-                calculable: true,
-                series: [
-                    {
-                        name: '数量',
-                        type: 'pie',
-                        radius: '55%',
-                        center: ['50%', '60%'],
-                        data: result
-                    }
-                ]
-            });
-        },
-        error: function (errorMsg) {
-            alert("图表数据请求失败！")
-            pieCharts.hideLoading();
-        }
-    })
-
-    var pieCharts2 = echarts.init(document.getElementById("piechart2"));
-    pieCharts2.showLoading();
-    var names2 = [];
-    $.ajax({
-        type: "post",
-        async: true,
-        url: "/getMyProjectData2/[[${#authentication.principal.id}]]",
-        data: [],
-        dataType: "json",
-        success: function (result) {
-            pieCharts2.hideLoading();
-            if(result){
-                for(var i=0;i<result.length;i++){
-                    names2.push(result[i].name);
-                }
-            }
-            pieCharts2.setOption({
-                title: {
-                    text: '负责项目',
-                    subtext: '进度比',
-                    x: 'center'
-                },
-                tooltip: {
-                    trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
-                },
-                legend: {
-                    orient: 'vertical',
-                    x: 'left',
-                    data: names2
-                },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        mark: {show: true},
-                        dataView: {show: true, readOnly: false},
-                        magicType: {
-                            show: true,
-                            type: ['pie', 'funnel'],
-                            option: {
-                                funnel: {
-                                    x: '25%',
-                                    width: '50%',
-                                    funnelAlign: 'left',
-                                    max: 1548
-                                }
-                            }
-                        },
-                        restore: {show: true},
-                        saveAsImage: {show: true}
-                    }
-                },
-                calculable: true,
-                series: [
-                    {
-                        name: '数量',
-                        type: 'pie',
-                        radius: '55%',
-                        center: ['50%', '60%'],
-                        data: result
-                    }
-                ]
-            });
-        },
-        error: function (errorMsg) {
-            alert("图表数据请求失败！")
-            pieCharts2.hideLoading();
-        }
-    })
-
-    var pieCharts3 = echarts.init(document.getElementById("piechart3"));
-    pieCharts3.showLoading();
-    var names3 = [];
-    $.ajax({
-        type: "post",
-        async: true,
-        url: "/getMyProjectData3/[[${#authentication.principal.id}]]",
-        data: [],
-        dataType: "json",
-        success: function (result) {
-            pieCharts3.hideLoading();
-            if(result){
-                for(var i=0;i<result.length;i++){
-                    names3.push(result[i].name);
-                }
-            }
-            pieCharts3.setOption({
-                title: {
-                    text: '负责项目',
-                    subtext: '进度比',
-                    x: 'center'
-                },
-                tooltip: {
-                    trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
-                },
-                legend: {
-                    orient: 'vertical',
-                    x: 'left',
-                    data: names3
-                },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        mark: {show: true},
-                        dataView: {show: true, readOnly: false},
-                        magicType: {
-                            show: true,
-                            type: ['pie', 'funnel'],
-                            option: {
-                                funnel: {
-                                    x: '25%',
-                                    width: '50%',
-                                    funnelAlign: 'left',
-                                    max: 1548
-                                }
-                            }
-                        },
-                        restore: {show: true},
-                        saveAsImage: {show: true}
-                    }
-                },
-                calculable: true,
-                series: [
-                    {
-                        name: '数量',
-                        type: 'pie',
-                        radius: '55%',
-                        center: ['50%', '60%'],
-                        data: result
-                    }
-                ]
-
-            });
-        },
-        error: function (errorMsg) {
-            alert("图表数据请求失败！")
-            pieCharts3.hideLoading();
-        }
-    })
-
-    //选项卡Echart
-    var charts = new Array();
-    charts.push(pieCharts);
-    charts.push(pieCharts2);
-    charts.push(pieCharts3);
-    $(function(){
-        $(window).resize(function() {
-            for(var i = 0; i < charts.length; i++) {
-                charts[i].resize();
-            }
-        });
-
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-            for(var i = 0; i < charts.length; i++) {
-                charts[i].resize();
-            }
-        });
-    })
-
-    function refrech() {
-        var url = "/my_project_refrech/[[${#authentication.principal.id}]]/1";
-        $('#div1').load(url);
-    }
-
-</script>
-
 <!--加载我的收藏-->
 <script type="text/javascript">
-    var userId = [[${#authentication.principal.id}]];
     var divName = $('#myStoreProject');
     //加载我的收藏项目
     $(function () {
         $(divName).html("");
-        addMyStoreProjectPage(userId, divName, myStoreProjectPage);
-    })
+        addMyStoreProjectPage(divName, myStoreProjectPage);
+    });
 
     //我的所有项目
-    function addMyStoreProjectPage(userId,div,ul) {
+    function addMyStoreProjectPage(div,ul) {
         pageStart();//开始分页
         function pageStart() {//分页函数
             $.ajax({ //去后台查询第一页数据
                 type: "Get",
-                url: "/my_projects_store",
+                url: "/project/myProject/getMyProjectStore",
                 dataType: "json",
                 data: {
                     page: '1',
-                    userId: userId
-                }, //参数：当前页为1
+                },
                 success: function (data) {
                     myprojectAppendHtml(data.list,div,1);//处理第一页的数据
                     var options = {//根据后台返回的分页相关信息，设置插件参数
@@ -338,12 +98,11 @@
                         },
                         onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
                             $.ajax({//根据page去后台加载数据
-                                url: "/my_projects_store",
+                                url: "/project/myProject/getMyProjectStore",
                                 type: "get",
                                 dataType: "json",
                                 data: {
                                     page: page,
-                                    userId: userId
                                 },
                                 success: function (data) {
                                     myprojectAppendHtml(data.list,div,page);//处理数据
@@ -358,7 +117,6 @@
     }
 
     function myprojectAppendHtml(list,div,page) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
-        var userId = [[${#authentication.principal.id}]];
         var tableShow = '';
         for (var i = 0; i < list.length; i++) {
             if(list[i].storeFlag==1){
@@ -392,7 +150,7 @@
                 '<i class="fab fa-codiepie"></i>&nbsp;项目进度：' + list[i].schedule +
                 '</span>&nbsp;&nbsp;&nbsp;&nbsp;\n' +
                 '<span style="color: #4e555b">\n' +
-                '<i class="far fa-arrow-alt-circle-up"></i>上传次数：' + list[i].codeUpdateCount +
+                '<i class="far fa-arrow-alt-circle-up"></i>最近更新时间：' + list[i].lastUpdateTime +
                 '</span>&nbsp;&nbsp;&nbsp;&nbsp;\n' +
                 '<span style="color: #4e555b">\n' +
                 '<i class="far fa-circle"></i>功能点：' + list[i].functionPoints +
@@ -402,10 +160,10 @@
                 '</span>\n' +
                 '</div>\n' +
                 '<div class="col-lg-2">\n'+
-                '<a onclick="' + storefunction + '(' + userId + ',' + list[i].projectId + ',' + page + ')" style="color: ' + storecolor + '">\n'+
+                '<a onclick="' + storefunction + '('+ list[i].projectId + ',' + page + ')" style="color: ' + storecolor + '">\n'+
                 '<i class="fas fa-star"></i><span>' + list[i].storeCount + '</span>\n' +
                 '</a>\n' +
-                '<a onclick="' + likefunction + '(' + userId + ',' + list[i].projectId + ',' + page + ')" style="color:' + likecolor + '">\n' +
+                '<a onclick="' + likefunction + '(' + list[i].projectId + ',' + page + ')" style="color:' + likecolor + '">\n' +
                 '<i class="fas fa-heart"></i><span>' + list[i].likeCount + '</span>\n' +
                 '</a>\n' +
                 '</div>\n' +
@@ -415,15 +173,15 @@
         div.html(tableShow)
     }
 
-    function cancelstore(userId,projectId,page) {
+    function cancelstore(projectId,page) {
         $.ajax(
             {
                 type: "Get",
-                url: "/my_project_store_del",
+                url: "/project/myProject/myProjectDelStore",
                 data: {
-                    userId: userId,
                     projectId: projectId,
-                    page: page
+                    page: page,
+                    status: '1'
                 },
                 dataType: "json",
                 success: function (data) {
@@ -449,12 +207,11 @@
                         },
                         onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
                             $.ajax({//根据page去后台加载数据
-                                url: "/my_projects_store",
+                                url: "/project/myProject/getMyProjectStore",
                                 type: "get",
                                 dataType: "json",
                                 data: {
                                     page: page,
-                                    userId: userId
                                 },
                                 success: function (data) {
                                     myprojectAppendHtml(data.list,div,page);//处理数据
@@ -468,15 +225,15 @@
         );
     }
 
-    function cancellike(userId,projectId,page) {
+    function cancellike(projectId,page) {
         $.ajax(
             {
                 type: "Get",
-                url: "/my_project_store_del_like",
+                url: "/project/myProject/myProjectDelLike",
                 data: {
-                    userId: userId,
                     projectId: projectId,
-                    page: page
+                    page: page,
+                    status: '1'
                 },
                 dataType: "json",
                 success: function (data) {
@@ -486,15 +243,15 @@
         );
     }
 
-    function addlike(userId,projectId,page) {
+    function addlike(projectId,page) {
         $.ajax(
             {
                 type: "Get",
-                url: "/my_project_store_like",
+                url: "/project/myProject/myProjectAddLike",
                 data: {
-                    userId: userId,
                     projectId: projectId,
-                    page: page
+                    page: page,
+                    status: '1'
                 },
                 dataType: "json",
                 success: function (data) {

@@ -34,7 +34,7 @@ public interface UserLikeService {
      * @param userLike 实例对象
      * @return 实例对象
      */
-    UserLike insert(UserLike userLike);
+    Boolean insert(UserLike userLike);
 
     /**
      * 修改数据
@@ -43,6 +43,18 @@ public interface UserLikeService {
      * @return 实例对象
      */
     UserLike update(UserLike userLike);
+
+    /**
+     * 查询项目被点赞数
+     * @return
+     */
+    Integer countLikedNumByProjectId(Integer projectId);
+
+    /**
+     * 删除点赞记录
+     * @return boolean
+     */
+    boolean deleteUserLike(Integer userId,Integer projectId);
 
 
 }

@@ -34,7 +34,7 @@ public interface UserStoreService {
      * @param userStore 实例对象
      * @return 实例对象
      */
-    UserStore insert(UserStore userStore);
+    Boolean insert(UserStore userStore);
 
     /**
      * 修改数据
@@ -43,6 +43,18 @@ public interface UserStoreService {
      * @return 实例对象
      */
     UserStore update(UserStore userStore);
+
+    /**
+     * 查询项目被收藏数
+     * @return
+     */
+    Integer countStoredNumByProjectId(Integer projectId);
+
+    /**
+     * 删除收藏记录
+     * @return boolean
+     */
+    boolean deleteUserStore(Integer userId,Integer projectId);
 
 
 }

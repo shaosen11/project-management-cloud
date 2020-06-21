@@ -22,7 +22,7 @@ public class UserLike implements Serializable {
     
     private Integer userId;
     
-    private Integer projectsId;
+    private Integer projectId;
     
     private Date likeTime;
     

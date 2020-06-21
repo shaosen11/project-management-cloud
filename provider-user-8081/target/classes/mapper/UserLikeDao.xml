@@ -50,6 +50,16 @@
         </where>
     </select>
 
+    <!--通过项目id查询被点赞数量-->
+    <select id="countLikedNumByProjectId" resultType="Integer">
+        select count(*) from project_management_user_cloud.user_like
+        where project_id = #{projectId} and delete_flag = 1
+    </select>
+
+    <!--删除一条记录-->
+    <update id="deleteUserLike">
+        update project_management_user_cloud.user_like set delete_flag = 0 where user_id = #{userId} and project_id = #{projectId} and delete_flag = 1
+    </update>
 
 
 </mapper>

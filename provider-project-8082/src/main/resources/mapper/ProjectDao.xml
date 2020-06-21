@@ -132,5 +132,367 @@
         where delete_flag = 0
     </select>
 
+    <!--查找我所有的项目进度数据，饼图-->
+    <select id="getMyProjectNumBySchedule" resultType="Integer">
+        select count(*)
+        from project_management_project_cloud.project p, project_management_project_cloud.project_user pu
+        where p.id = pu.project_id and p.delete_flag = 1 and pu.delete_flag = 1 and pu.user_id = #{userId} and p.schedule_id = #{scheduleId}
+    </select>
 
+    <!--查找我负责的项目进度数据，饼图-->
+    <select id="getMyChargeProjectNumBySchedule" resultType="Integer">
+        select count(*)
+        from project_management_project_cloud.project p, project_management_project_cloud.project_user pu
+        where p.id = pu.project_id and pu.user_id = #{userId} and p.schedule_id = #{scheduleId} and p.charge_user_id = #{userId} and p.delete_flag = 1 and pu.delete_flag = 1
+    </select>
+
+    <!--查找我参加的项目进度数据，饼图-->
+    <select id="getMyJoinProjectNumBySchedule" resultType="Integer">
+        select count(*)
+        from project_management_project_cloud.project p, project_management_project_cloud.project_user pu
+        where p.id = pu.project_id and pu.user_id = #{userId} and p.schedule_id = #{scheduleId} and p.charge_user_id != #{userId} and p.delete_flag = 1 and pu.delete_flag = 1
+    </select>
+
+    <!--查询我所有的项目数量-->
+    <select id="getMyAllProjectNum" resultType="Integer">
+        select count(*)
+        from project_management_project_cloud.project_user pu
+        right join project_management_project_cloud.project p on pu.project_id = p.id
+        right join project_management_user_cloud.sys_user su on p.charge_user_id = su.id
+        where pu.delete_flag = 1 and p.delete_flag = 1 and pu.user_id = #{userId}
+    </select>
+
+    <!--查找我负责的项目数量-->
+    <select id="getMyChargeProjectNum" resultType="Integer">
+        select count(*)
+        from project_management_project_cloud.project_user pu
+        right join project_management_project_cloud.project p on pu.project_id = p.id
+        right join project_management_user_cloud.sys_user su on p.charge_user_id = su.id
+        where pu.delete_flag = 1 and p.delete_flag = 1 and pu.user_id = #{userId} and p.charge_user_id = #{userId}
+    </select>
+
+    <!--查找我参与的项目数量-->
+    <select id="getMyJoinProjectNum" resultType="Integer">
+        select count(*)
+        from project_management_project_cloud.project_user pu
+        right join project_management_project_cloud.project p on pu.project_id = p.id
+        right join project_management_user_cloud.sys_user su on p.charge_user_id = su.id
+        where pu.delete_flag = 1 and p.delete_flag = 1 and pu.user_id = #{userId} and p.charge_user_id != #{userId}
+    </select>
+
+    <!--查找我的所有项目-->
+    <resultMap id="myProjectMap" type="com.edu.lingnan.entity.MyProject">
+        <result column="projects_id" property="projectId"></result>
+        <result column="projects_name" property="projectName"></result>
+        <result column="charge_user_id" property="chargeUserId"></result>
+        <result column="charge_user" property="chargeUser"></result>
+        <result column="schedule_id" property="scheduleId"></result>
+        <result column="schedule" property="schedule"></result>
+        <result column="type_id" property="typeId"></result>
+        <result column="type" property="type"></result>
+        <result column="function_points" property="functionPoints"></result>
+        <result column="completed_function_points" property="completedFunctionPoints"></result>
+        <result column="last_update_time" property="lastUpdateTime"></result>
+        <result column="join_time" property="joinTime"></result>
+        <result column="store_count" property="storeCount"></result>
+        <result column="like_count" property="likeCount"></result>
+        <result column="store_flag" property="storeFlag"></result>
+        <result column="like_flag" property="likeFlag"></result>
+    </resultMap>
+    <!-- 查询分页数据之我的所有项目 -->
+    <select id="getMyAllProjectPage" resultMap="myProjectMap">
+	    select p.id as projects_id, p.name as projects_name, su.id as charge_user_id, su.username as charge_user,
+               p.schedule_id as schedule_id, ps.schedule as schedule, p.type_id as type_id ,pt.type as type, p.function_points as function_points, p.completed_function_points as completed_function_points,
+               p.last_update_time as last_update_time, pu.join_time as join_time, p.store_count as store_count, p.like_count as like_count,
+               (select count(*) from project_management_user_cloud.user_store us where us.user_id = #{userId} and us.projects_id = p.id and us.delete_flag = 1) as store_flag,
+               (select count(*) from project_management_user_cloud.user_like ul where ul.user_id = #{userId} and ul.project_id = p.id and ul.delete_flag = 1) as like_flag
+        from project_management_project_cloud.project_user pu
+        right join project_management_project_cloud.project p on pu.project_id = p.id
+        right join project_management_user_cloud.sys_user su on p.charge_user_id = su.id
+        left join project_management_project_cloud.project_type pt on pt.id = p.type_id
+        left join project_management_project_cloud.project_schedule ps on ps.id =  p.schedule_id
+        where pu.delete_flag = 1 and p.delete_flag = 1 and pu.user_id = #{userId}
+	    order by projects_id
+	    desc limit #{offset},#{pageSize}
+    </select>
+
+    <!-- 查询分页数据之我负责的项目 -->
+    <select id="getMyChargeProjectPage" resultMap="myProjectMap">
+	    select p.id as projects_id, p.name as projects_name, su.id as charge_user_id, su.username as charge_user,
+               p.schedule_id as schedule_id, ps.schedule as schedule, p.type_id as type_id ,pt.type as type, p.function_points as function_points, p.completed_function_points as completed_function_points,
+               p.last_update_time as last_update_time, pu.join_time as join_time, p.store_count as store_count, p.like_count as like_count,
+               (select count(*) from project_management_user_cloud.user_store us where us.user_id = #{userId} and us.projects_id = p.id and us.delete_flag = 1) as store_flag,
+               (select count(*) from project_management_user_cloud.user_like ul where ul.user_id = #{userId} and ul.project_id = p.id and ul.delete_flag = 1) as like_flag
+        from project_management_project_cloud.project_user pu
+        right join project_management_project_cloud.project p on pu.project_id = p.id
+        right join project_management_user_cloud.sys_user su on p.charge_user_id = su.id
+        left join project_management_project_cloud.project_type pt on pt.id = p.type_id
+        left join project_management_project_cloud.project_schedule ps on ps.id =  p.schedule_id
+        where pu.delete_flag = 1 and p.delete_flag = 1 and pu.user_id = #{userId} and p.charge_user_id = #{userId}
+	    order by projects_id
+	    desc limit #{offset},#{pageSize}
+    </select>
+
+    <!-- 查询分页数据之我参加的项目 -->
+    <select id="getMyJoinProjectPage" resultMap="myProjectMap">
+	    select p.id as projects_id, p.name as projects_name, su.id as charge_user_id, su.username as charge_user,
+               p.schedule_id as schedule_id, ps.schedule as schedule, p.type_id as type_id ,pt.type as type, p.function_points as function_points, p.completed_function_points as completed_function_points,
+               p.last_update_time as last_update_time, pu.join_time as join_time, p.store_count as store_count, p.like_count as like_count,
+               (select count(*) from project_management_user_cloud.user_store us where us.user_id = #{userId} and us.projects_id = p.id and us.delete_flag = 1) as store_flag,
+               (select count(*) from project_management_user_cloud.user_like ul where ul.user_id = #{userId} and ul.project_id = p.id and ul.delete_flag = 1) as like_flag
+        from project_management_project_cloud.project_user pu
+        right join project_management_project_cloud.project p on pu.project_id = p.id
+        right join project_management_user_cloud.sys_user su on p.charge_user_id = su.id
+        left join project_management_project_cloud.project_type pt on pt.id = p.type_id
+        left join project_management_project_cloud.project_schedule ps on ps.id =  p.schedule_id
+        where pu.delete_flag = 1 and p.delete_flag = 1 and pu.user_id = #{userId} and p.charge_user_id != #{userId}
+	    order by projects_id
+	    desc limit #{offset},#{pageSize}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryMyProjectPageByTypeOrSchedule" resultMap="myProjectMap">
+        select p.id as projects_id, p.name as projects_name, su.id as charge_user_id, su.username as charge_user,
+               p.schedule_id as schedule_id, ps.schedule as schedule, p.type_id as type_id ,pt.type as type, p.function_points as function_points, p.completed_function_points as completed_function_points,
+               p.last_update_time as last_update_time, pu.join_time as join_time, p.store_count as store_count, p.like_count as like_count,
+               (select count(*) from project_management_user_cloud.user_store us where us.user_id = #{userId} and us.projects_id = p.id and us.delete_flag = 1) as store_flag,
+               (select count(*) from project_management_user_cloud.user_like ul where ul.user_id = #{userId} and ul.project_id = p.id and ul.delete_flag = 1) as like_flag
+        from project_management_project_cloud.project_user pu
+        right join project_management_project_cloud.project p on pu.project_id = p.id
+        right join project_management_user_cloud.sys_user su on p.charge_user_id = su.id
+        left join project_management_project_cloud.project_type pt on pt.id = p.type_id
+        left join project_management_project_cloud.project_schedule ps on ps.id =  p.schedule_id
+        <where>
+            <if test="myProject.chargeUserId != null">
+                and charge_user_id= #{myProject.chargeUserId}
+            </if>
+            <if test="myProject.scheduleId != null">
+                and schedule_id = #{myProject.scheduleId}
+            </if>
+            <if test="myProject.typeId != null">
+                and type_id = #{myProject.typeId}
+            </if>
+            <if test="1 == 1">
+                and pu.delete_flag = 1 and p.delete_flag = 1 and pu.user_id = #{userId}
+            </if>
+        </where>
+        order by projects_id
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryMyProjectByTypeOrSchedule" resultMap="myProjectMap">
+        select p.id as projects_id, p.name as projects_name, su.id as charge_user_id, su.username as charge_user,
+        p.schedule_id as schedule_id, ps.schedule as schedule, p.type_id as type_id ,pt.type as type, p.function_points as function_points, p.completed_function_points as completed_function_points,
+        p.last_update_time as last_update_time, pu.join_time as join_time, p.store_count as store_count, p.like_count as like_count,
+        (select count(*) from project_management_user_cloud.user_store us where us.user_id = #{userId} and us.projects_id = p.id and us.delete_flag = 1) as store_flag,
+        (select count(*) from project_management_user_cloud.user_like ul where ul.user_id = #{userId} and ul.project_id = p.id and ul.delete_flag = 1) as like_flag
+        from project_management_project_cloud.project_user pu
+        right join project_management_project_cloud.project p on pu.project_id = p.id
+        right join project_management_user_cloud.sys_user su on p.charge_user_id = su.id
+        left join project_management_project_cloud.project_type pt on pt.id = p.type_id
+        left join project_management_project_cloud.project_schedule ps on ps.id =  p.schedule_id
+        <where>
+            <if test="myProject.chargeUserId != null">
+                and charge_user_id= #{myProject.chargeUserId}
+            </if>
+            <if test="myProject.scheduleId != null">
+                and schedule_id = #{myProject.scheduleId}
+            </if>
+            <if test="myProject.typeId != null">
+                and type_id = #{myProject.typeId}
+            </if>
+            <if test="1 == 1">
+                and pu.delete_flag = 1 and p.delete_flag = 1 and pu.user_id = #{userId}
+            </if>
+        </where>
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryMyProjectPageByTypeOrSchedule2" resultMap="myProjectMap">
+        select p.id as projects_id, p.name as projects_name, su.id as charge_user_id, su.username as charge_user,
+        p.schedule_id as schedule_id, ps.schedule as schedule, p.type_id as type_id ,pt.type as type, p.function_points as function_points, p.completed_function_points as completed_function_points,
+        p.last_update_time as last_update_time, pu.join_time as join_time, p.store_count as store_count, p.like_count as like_count,
+        (select count(*) from project_management_user_cloud.user_store us where us.user_id = #{userId} and us.projects_id = p.id and us.delete_flag = 1) as store_flag,
+        (select count(*) from project_management_user_cloud.user_like ul where ul.user_id = #{userId} and ul.project_id = p.id and ul.delete_flag = 1) as like_flag
+        from project_management_project_cloud.project_user pu
+        right join project_management_project_cloud.project p on pu.project_id = p.id
+        right join project_management_user_cloud.sys_user su on p.charge_user_id = su.id
+        left join project_management_project_cloud.project_type pt on pt.id = p.type_id
+        left join project_management_project_cloud.project_schedule ps on ps.id =  p.schedule_id
+        <where>
+            <if test="myProject.chargeUserId != null">
+                and charge_user_id != #{myProject.chargeUserId}
+            </if>
+            <if test="myProject.scheduleId != null">
+                and schedule_id = #{myProject.scheduleId}
+            </if>
+            <if test="myProject.typeId != null">
+                and type_id = #{myProject.typeId}
+            </if>
+            <if test="1 == 1">
+                and pu.delete_flag = 1 and p.delete_flag = 1 and pu.user_id = #{userId}
+            </if>
+        </where>
+        order by projects_id
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryMyProjectByTypeOrSchedule2" resultMap="myProjectMap">
+        select p.id as projects_id, p.name as projects_name, su.id as charge_user_id, su.username as charge_user,
+        p.schedule_id as schedule_id, ps.schedule as schedule, p.type_id as type_id ,pt.type as type, p.function_points as function_points, p.completed_function_points as completed_function_points,
+        p.last_update_time as last_update_time, pu.join_time as join_time, p.store_count as store_count, p.like_count as like_count,
+        (select count(*) from project_management_user_cloud.user_store us where us.user_id = #{userId} and us.projects_id = p.id and us.delete_flag = 1) as store_flag,
+        (select count(*) from project_management_user_cloud.user_like ul where ul.user_id = #{userId} and ul.project_id = p.id and ul.delete_flag = 1) as like_flag
+        from project_management_project_cloud.project_user pu
+        right join project_management_project_cloud.project p on pu.project_id = p.id
+        right join project_management_user_cloud.sys_user su on p.charge_user_id = su.id
+        left join project_management_project_cloud.project_type pt on pt.id = p.type_id
+        left join project_management_project_cloud.project_schedule ps on ps.id =  p.schedule_id
+        <where>
+            <if test="myProject.chargeUserId != null">
+                and charge_user_id != #{myProject.chargeUserId}
+            </if>
+            <if test="myProject.scheduleId != null">
+                and schedule_id = #{myProject.scheduleId}
+            </if>
+            <if test="myProject.typeId != null">
+                and type_id = #{myProject.typeId}
+            </if>
+            <if test="1 == 1">
+                and pu.delete_flag = 1 and p.delete_flag = 1 and pu.user_id = #{userId}
+            </if>
+        </where>
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryMyProjectPageByFuzzySearch" resultMap="myProjectMap">
+        select p.id as projects_id, p.name as projects_name, su.id as charge_user_id, su.username as charge_user,
+        p.schedule_id as schedule_id, ps.schedule as schedule, p.type_id as type_id ,pt.type as type, p.function_points as function_points, p.completed_function_points as completed_function_points,
+        p.last_update_time as last_update_time, pu.join_time as join_time, p.store_count as store_count, p.like_count as like_count,
+        (select count(*) from project_management_user_cloud.user_store us where us.user_id = #{userId} and us.projects_id = p.id and us.delete_flag = 1) as store_flag,
+        (select count(*) from project_management_user_cloud.user_like ul where ul.user_id = #{userId} and ul.project_id = p.id and ul.delete_flag = 1) as like_flag
+        from project_management_project_cloud.project_user pu
+        right join project_management_project_cloud.project p on pu.project_id = p.id
+        right join project_management_user_cloud.sys_user su on p.charge_user_id = su.id
+        left join project_management_project_cloud.project_type pt on pt.id = p.type_id
+        left join project_management_project_cloud.project_schedule ps on ps.id =  p.schedule_id
+        <where>
+            <if test="1 == 1">
+                and pu.delete_flag = 1 and p.delete_flag = 1 and pu.user_id = #{userId}
+            </if>
+            <if test="content != null">
+                and ( p.name LIKE CONCAT('%',#{content},'%') or su.username LIKE CONCAT('%',#{content},'%') or ps.schedule LIKE CONCAT('%',#{content},'%') or pt.type LIKE CONCAT('%',#{content},'%') or p.last_update_time LIKE CONCAT('%',#{content},'%') )
+            </if>
+            <if test="chargeUserId != 0">
+                and charge_user_id = #{chargeUserId}
+            </if>
+
+        </where>
+        order by projects_id
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryMyProjectByFuzzySearch" resultMap="myProjectMap">
+        select p.id as projects_id, p.name as projects_name, su.id as charge_user_id, su.username as charge_user,
+        p.schedule_id as schedule_id, ps.schedule as schedule, p.type_id as type_id ,pt.type as type, p.function_points as function_points, p.completed_function_points as completed_function_points,
+        p.last_update_time as last_update_time, pu.join_time as join_time, p.store_count as store_count, p.like_count as like_count,
+        (select count(*) from project_management_user_cloud.user_store us where us.user_id = #{userId} and us.projects_id = p.id and us.delete_flag = 1) as store_flag,
+        (select count(*) from project_management_user_cloud.user_like ul where ul.user_id = #{userId} and ul.project_id = p.id and ul.delete_flag = 1) as like_flag
+        from project_management_project_cloud.project_user pu
+        right join project_management_project_cloud.project p on pu.project_id = p.id
+        right join project_management_user_cloud.sys_user su on p.charge_user_id = su.id
+        left join project_management_project_cloud.project_type pt on pt.id = p.type_id
+        left join project_management_project_cloud.project_schedule ps on ps.id =  p.schedule_id
+        <where>
+            <if test="1 == 1">
+                and pu.delete_flag = 1 and p.delete_flag = 1 and pu.user_id = #{userId}
+            </if>
+            <if test="content != null">
+                and ( p.name LIKE CONCAT('%',#{content},'%') or su.username LIKE CONCAT('%',#{content},'%') or ps.schedule LIKE CONCAT('%',#{content},'%') or pt.type LIKE CONCAT('%',#{content},'%') or p.last_update_time LIKE CONCAT('%',#{content},'%') )
+            </if>
+            <if test="chargeUserId != 0">
+                and charge_user_id = #{chargeUserId}
+            </if>
+        </where>
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryMyProjectPageByFuzzySearch2" resultMap="myProjectMap">
+        select p.id as projects_id, p.name as projects_name, su.id as charge_user_id, su.username as charge_user,
+        p.schedule_id as schedule_id, ps.schedule as schedule, p.type_id as type_id ,pt.type as type, p.function_points as function_points, p.completed_function_points as completed_function_points,
+        p.last_update_time as last_update_time, pu.join_time as join_time, p.store_count as store_count, p.like_count as like_count,
+        (select count(*) from project_management_user_cloud.user_store us where us.user_id = #{userId} and us.projects_id = p.id and us.delete_flag = 1) as store_flag,
+        (select count(*) from project_management_user_cloud.user_like ul where ul.user_id = #{userId} and ul.project_id = p.id and ul.delete_flag = 1) as like_flag
+        from project_management_project_cloud.project_user pu
+        right join project_management_project_cloud.project p on pu.project_id = p.id
+        right join project_management_user_cloud.sys_user su on p.charge_user_id = su.id
+        left join project_management_project_cloud.project_type pt on pt.id = p.type_id
+        left join project_management_project_cloud.project_schedule ps on ps.id =  p.schedule_id
+        <where>
+            <if test="1 == 1">
+                and pu.delete_flag = 1 and p.delete_flag = 1 and pu.user_id = #{userId}
+            </if>
+            <if test="content != null">
+                and ( p.name LIKE CONCAT('%',#{content},'%') or su.username LIKE CONCAT('%',#{content},'%') or ps.schedule LIKE CONCAT('%',#{content},'%') or pt.type LIKE CONCAT('%',#{content},'%') or p.last_update_time LIKE CONCAT('%',#{content},'%') )
+            </if>
+            <if test="chargeUserId != 0">
+                and charge_user_id != #{chargeUserId}
+            </if>
+
+        </where>
+        order by projects_id
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryMyProjectByFuzzySearch2" resultMap="myProjectMap">
+        select p.id as projects_id, p.name as projects_name, su.id as charge_user_id, su.username as charge_user,
+        p.schedule_id as schedule_id, ps.schedule as schedule, p.type_id as type_id ,pt.type as type, p.function_points as function_points, p.completed_function_points as completed_function_points,
+        p.last_update_time as last_update_time, pu.join_time as join_time, p.store_count as store_count, p.like_count as like_count,
+        (select count(*) from project_management_user_cloud.user_store us where us.user_id = #{userId} and us.projects_id = p.id and us.delete_flag = 1) as store_flag,
+        (select count(*) from project_management_user_cloud.user_like ul where ul.user_id = #{userId} and ul.project_id = p.id and ul.delete_flag = 1) as like_flag
+        from project_management_project_cloud.project_user pu
+        right join project_management_project_cloud.project p on pu.project_id = p.id
+        right join project_management_user_cloud.sys_user su on p.charge_user_id = su.id
+        left join project_management_project_cloud.project_type pt on pt.id = p.type_id
+        left join project_management_project_cloud.project_schedule ps on ps.id =  p.schedule_id
+        <where>
+            <if test="1 == 1">
+                and pu.delete_flag = 1 and p.delete_flag = 1 and pu.user_id = #{userId}
+            </if>
+            <if test="content != null">
+                and ( p.name LIKE CONCAT('%',#{content},'%') or su.username LIKE CONCAT('%',#{content},'%') or ps.schedule LIKE CONCAT('%',#{content},'%') or pt.type LIKE CONCAT('%',#{content},'%') or p.last_update_time LIKE CONCAT('%',#{content},'%') )
+            </if>
+            <if test="chargeUserId != 0">
+                and charge_user_id != #{chargeUserId}
+            </if>
+        </where>
+    </select>
+
+    <!--查询我收藏的项目的数量-->
+    <select id="getMyProjectStoreNumByUserId" resultType="Integer">
+        select count(*)
+        from  project_management_user_cloud.user_store
+        where delete_flag = 1 and user_id = #{userId}
+    </select>
+
+    <!--分页查找我的项目收藏-->
+    <select id="getMyProjectStorePageByUserId" resultMap="myProjectMap">
+        select p.id as projects_id, p.name as projects_name, su.id as charge_user_id, su.username as charge_user,
+        p.schedule_id as schedule_id, ps.schedule as schedule, p.type_id as type_id ,pt.type as type, p.function_points as function_points, p.completed_function_points as completed_function_points,
+        p.last_update_time as last_update_time, p.store_count as store_count, p.like_count as like_count,
+        (select count(*) from project_management_user_cloud.user_store us where us.user_id = #{userId} and us.projects_id = p.id and us.delete_flag = 1) as store_flag,
+        (select count(*) from project_management_user_cloud.user_like ul where ul.user_id = #{userId} and ul.project_id = p.id and ul.delete_flag = 1) as like_flag
+        from project_management_project_cloud.project p
+        right join project_management_user_cloud.user_store us on p.id = us.projects_id
+        right join project_management_user_cloud.sys_user su on p.charge_user_id = su.id
+        left join project_management_project_cloud.project_type pt on pt.id = p.type_id
+        left join project_management_project_cloud.project_schedule ps on ps.id =  p.schedule_id
+        where p.delete_flag = 1  and us.user_id = #{userId} and us.delete_flag = 1
+        order by projects_id
+	    desc limit #{offset},#{pageSize}
+    </select>
 </mapper>

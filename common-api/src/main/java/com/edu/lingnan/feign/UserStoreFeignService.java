@@ -3,6 +3,7 @@ package com.edu.lingnan.feign;
 import com.edu.lingnan.entity.UserStore;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,45 +17,29 @@ import java.util.List;
 @FeignClient(value = "PRODIVER-USER")
 public interface UserStoreFeignService {
 
-//    /**
-//     * 通过ID查询单条数据
-//     *
-//     * @param id 主键
-//     * @return 实例对象
-//     */
-//    UserStore queryById(Integer id);
-//
-//    /**
-//     * 查询多条数据
-//     *
-//     * @param offset 查询起始位置
-//     * @param limit 查询条数
-//     * @return 对象列表
-//     */
-//    List<UserStore> queryAllByLimit(int offset, int limit);
-//
-//    /**
-//     * 新增数据
-//     *
-//     * @param userStore 实例对象
-//     * @return 实例对象
-//     */
-//    UserStore insert(UserStore userStore);
-//
-//    /**
-//     * 修改数据
-//     *
-//     * @param userStore 实例对象
-//     * @return 实例对象
-//     */
-//    UserStore update(UserStore userStore);
-//
-//    /**
-//     * 通过主键删除数据
-//     *
-//     * @param id 主键
-//     * @return 是否成功
-//     */
-//    boolean deleteById(Integer id);
+    /**
+     * 添加收藏
+     * @param userStore
+     * @return
+     */
+    @RequestMapping(value = "userStore/", method = RequestMethod.POST,consumes = "application/json" )
+    Boolean addUserStore(@RequestBody UserStore userStore);
+
+    /**
+     * 查询项目被收藏数量
+     * @param projectId
+     * @return
+     */
+    @RequestMapping(value = "userStore/countStoredNumByProjectId", method = RequestMethod.GET)
+    Integer countStoredNumByProjectId(@RequestParam("projectId") Integer projectId);
+
+    /**
+     * 删除用户收藏
+     * @param userId
+     * @param projectId
+     * @return
+     */
+    @RequestMapping(value = "userStore/{userId}/{projectId}", method = RequestMethod.DELETE)
+    Boolean deleteUserStore(@PathVariable("userId") Integer userId, @PathVariable("projectId")Integer projectId);
 
 }

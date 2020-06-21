@@ -44,21 +44,24 @@
                                             <div class="input-group col-md-2" >
                                                 <h3 class="text-center" style="margin: auto">类型</h3>&nbsp;
                                                 <select id="typeName" class="form-control" onchange="searchByTypeOrSchedule(1)">
-                                                    <option value="null"> </option>
-                                                    <option value="Web应用开发">Web应用开发</option>
-                                                    <option value="大数据">大数据</option>
-                                                    <option value="物联网">物联网</option>
-                                                    <option value="人工智能">人工智能</option>
-                                                    <option value="微信小程序">微信小程序</option>
+                                                    <option value="0"> </option>
+                                                    <option value="1">Web应用开发</option>
+                                                    <option value="2">大数据</option>
+                                                    <option value="6">物联网</option>
+                                                    <option value="3">人工智能</option>
+                                                    <option value="4">微信小程序</option>
+                                                    <option value="5">管理系统</option>
                                                 </select>
                                             </div>
                                             <div class="input-group col-md-2" >
                                                 <h3 class="text-center" style="margin: auto">进度</h3>&nbsp;
                                                 <select id="scheduleName" class="form-control" onchange="searchByTypeOrSchedule(1)">
-                                                    <option value="null"> </option>
-                                                    <option value="未开始">未开始</option>
-                                                    <option value="进行中">进行中</option>
-                                                    <option value="已完成">已完成</option>
+                                                    <option value="0"> </option>
+                                                    <option value="1">待办</option>
+                                                    <option value="2">进行中</option>
+                                                    <option value="3">已完成</option>
+                                                    <option value="4">已验收</option>
+                                                    <option value="5">已取消</option>
                                                 </select>
                                             </div>
                                             <div class="input-group col-md-3">
@@ -91,21 +94,24 @@
                                             <div class="input-group col-md-2" >
                                                 <h3 class="text-center" style="margin: auto">类型</h3>&nbsp;
                                                 <select id="typeNameCharge" class="form-control" onchange="searchByTypeOrSchedule(2)">
-                                                    <option value="null"> </option>
-                                                    <option value="Web应用开发">Web应用开发</option>
-                                                    <option value="大数据">大数据</option>
-                                                    <option value="物联网">物联网</option>
-                                                    <option value="人工智能">人工智能</option>
-                                                    <option value="微信小程序">微信小程序</option>
+                                                    <option value="0"> </option>
+                                                    <option value="1">Web应用开发</option>
+                                                    <option value="2">大数据</option>
+                                                    <option value="6">物联网</option>
+                                                    <option value="3">人工智能</option>
+                                                    <option value="4">微信小程序</option>
+                                                    <option value="5">管理系统</option>
                                                 </select>
                                             </div>
                                             <div class="input-group col-md-2" >
                                                 <h3 class="text-center" style="margin: auto">进度</h3>&nbsp;
                                                 <select id="scheduleNameCharge" class="form-control" onchange="searchByTypeOrSchedule(2)">
-                                                    <option value="null"> </option>
-                                                    <option value="未开始">未开始</option>
-                                                    <option value="进行中">进行中</option>
-                                                    <option value="已完成">已完成</option>
+                                                    <option value="0"> </option>
+                                                    <option value="1">待办</option>
+                                                    <option value="2">进行中</option>
+                                                    <option value="3">已完成</option>
+                                                    <option value="4">已验收</option>
+                                                    <option value="5">已取消</option>
                                                 </select>
                                             </div>
                                             <div class="input-group col-md-3">
@@ -137,21 +143,24 @@
                                             <div class="input-group col-md-2" >
                                                 <h3 class="text-center" style="margin: auto">类型</h3>&nbsp;
                                                 <select id="typeNameJoin" class="form-control" onchange="searchByTypeOrSchedule(3)">
-                                                    <option value="null"> </option>
-                                                    <option value="Web应用开发">Web应用开发</option>
-                                                    <option value="大数据">大数据</option>
-                                                    <option value="物联网">物联网</option>
-                                                    <option value="人工智能">人工智能</option>
-                                                    <option value="微信小程序">微信小程序</option>
+                                                    <option value="0"> </option>
+                                                    <option value="1">Web应用开发</option>
+                                                    <option value="2">大数据</option>
+                                                    <option value="6">物联网</option>
+                                                    <option value="3">人工智能</option>
+                                                    <option value="4">微信小程序</option>
+                                                    <option value="5">管理系统</option>
                                                 </select>
                                             </div>
                                             <div class="input-group col-md-2" >
                                                 <h3 class="text-center" style="margin: auto">进度</h3>&nbsp;
                                                 <select id="scheduleNameJoin" class="form-control" onchange="searchByTypeOrSchedule(3)">
-                                                    <option value="null"> </option>
-                                                    <option value="未开始">未开始</option>
-                                                    <option value="进行中">进行中</option>
-                                                    <option value="已完成">已完成</option>
+                                                    <option value="0"> </option>
+                                                    <option value="1">待办</option>
+                                                    <option value="2">进行中</option>
+                                                    <option value="3">已完成</option>
+                                                    <option value="4">已验收</option>
+                                                    <option value="5">已取消</option>
                                                 </select>
                                             </div>
                                             <div class="input-group col-md-3">
@@ -200,7 +209,7 @@
     $.ajax({
             type: "post",
             async: true,
-            url: "/getMyProjectData/[[${#authentication.principal.id}]]",
+            url: "/project/myProject/getMyAllProjectData",
             data: [],
             dataType: "json",
             success: function (result) {
@@ -259,10 +268,10 @@
                 });
             },
             error: function (errorMsg) {
-                alert("图表数据请求失败！")
+                alert("图表数据请求失败！");
                 pieCharts.hideLoading();
             }
-        })
+        });
 
     var pieCharts2 = echarts.init(document.getElementById("piechart2"));
     pieCharts2.showLoading();
@@ -270,7 +279,7 @@
     $.ajax({
             type: "post",
             async: true,
-            url: "/getMyProjectData2/[[${#authentication.principal.id}]]",
+            url: "/project/myProject/getMyChargeProjectData",
             data: [],
             dataType: "json",
             success: function (result) {
@@ -329,10 +338,10 @@
                  });
             },
             error: function (errorMsg) {
-                alert("图表数据请求失败！")
+                alert("图表数据请求失败！");
                 pieCharts2.hideLoading();
             }
-        })
+        });
 
     var pieCharts3 = echarts.init(document.getElementById("piechart3"));
     pieCharts3.showLoading();
@@ -340,7 +349,7 @@
     $.ajax({
             type: "post",
             async: true,
-            url: "/getMyProjectData3/[[${#authentication.principal.id}]]",
+            url: "/project/myProject/getMyJoinProjectData",
             data: [],
             dataType: "json",
             success: function (result) {
@@ -400,10 +409,10 @@
                  });
             },
             error: function (errorMsg) {
-                alert("图表数据请求失败！")
+                alert("图表数据请求失败！");
                 pieCharts3.hideLoading();
             }
-        })
+        });
 
     //选项卡Echart
     var charts = new Array();
@@ -422,49 +431,48 @@
                 charts[i].resize();
             }
         });
-    })
+    });
 
     function refrech() {
-        var url = "/my_project_refrech/[[${#authentication.principal.id}]]/1";
+        var url = "/my_project_refrech/1";
         $('#div1').load(url);
     }
 
 </script>
 <script type="text/javascript">
-    var userId = [[${#authentication.principal.id}]];
 
     //加载我的项目
     $(function () {
         var divName = $('#myProjectAll');
         $(divName).html("");
-        addMyProjectPage(userId, divName, myProjectAllPage,1);
-    })
+        addMyProjectPage(divName, myProjectAllPage,1);
+    });
 
     //加载我负责的项目
     function myProjectPage(){
         var divName = $('#myProjectCharge');
         $(divName).html("");
-        addMyProjectChargePage(userId, divName, myProjectChargePage,2);
+        addMyProjectPage(divName, myProjectChargePage,2);
     }
 
     //加载我参加的项目
     function myJoinProjectPage(){
         var divName = $('#myProjectJoin');
         $(divName).html("");
-        addMyProjectJoinPage(userId, divName, myProjectJoinPage,3);
+        addMyProjectPage(divName, myProjectJoinPage,3);
     }
 
     //我的所有项目
-    function addMyProjectPage(userId,div,ul,status) {
+    function addMyProjectPage(div,ul,status) {
         pageStart();//开始分页
         function pageStart() {//分页函数
             $.ajax({ //去后台查询第一页数据
                 type: "Get",
-                url: "/my_project_all",
+                url: "/project/myProject/getMyProjectPageByStatus",
                 dataType: "json",
                 data: {
                     page: '1',
-                    userId: userId
+                    status: status
                 }, //参数：当前页为1
                 success: function (data) {
                     myprojectAppendHtml(data.list,div,status,1);//处理第一页的数据
@@ -489,15 +497,18 @@
                         },
                         onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
                             $.ajax({//根据page去后台加载数据
-                                url: "/my_project_all",
+                                url: "/project/myProject/getMyProjectPageByStatus",
                                 type: "get",
                                 dataType: "json",
                                 data: {
                                     page: page,
-                                    userId: userId
+                                    status: status
                                 },
                                 success: function (data) {
                                     myprojectAppendHtml(data.list,div,status,page);//处理数据
+                                },
+                                error:function (){
+                                    myprojectAppendHtml2(div);
                                 }
                             });
                         }
@@ -508,117 +519,9 @@
         }
     }
 
-    //我负责的项目
-    function addMyProjectChargePage(userId,div,ul,status) {
-        pageStart();//开始分页
-        function pageStart() {//分页函数
-            $.ajax({ //去后台查询第一页数据
-                type: "Get",
-                url: "/my_project_charge",
-                dataType: "json",
-                data: {
-                    page: '1',
-                    userId: userId
-                }, //参数：当前页为1
-                success: function (data) {
-                    myprojectAppendHtml(data.list,div,status,1);//处理第一页的数据
-                    var options = {//根据后台返回的分页相关信息，设置插件参数
-                        bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
-                        currentPage: data.page, //当前页数
-                        totalPages: data.totalPage, //总页数
-                        numberOfPages: data.pageSize,//每页记录数
-                        itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
-                            switch (type) {
-                                case "first":
-                                    return "首";
-                                case "prev":
-                                    return "<";
-                                case "next":
-                                    return ">";
-                                case "last":
-                                    return "末";
-                                case "page":
-                                    return page;
-                            }
-                        },
-                        onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
-                            $.ajax({//根据page去后台加载数据
-                                url: "/my_project_charge",
-                                type: "get",
-                                dataType: "json",
-                                data: {
-                                    page: page,
-                                    userId: userId
-                                },
-                                success: function (data) {
-                                    myprojectAppendHtml(data.list,div,status,page);//处理数据
-                                }
-                            });
-                        }
-                    };
-                    $(ul).bootstrapPaginator(options);//设置分页
-                }
-            });
-        }
-    }
-
-    //我参加的项目
-    function addMyProjectJoinPage(userId,div,ul,status) {
-        pageStart();//开始分页
-        function pageStart() {//分页函数
-            $.ajax({ //去后台查询第一页数据
-                type: "Get",
-                url: "/my_project_join",
-                dataType: "json",
-                data: {
-                    page: '1',
-                    userId: userId
-                }, //参数：当前页为1
-                success: function (data) {
-                    myprojectAppendHtml(data.list,div,status,1);//处理第一页的数据
-                    var options = {//根据后台返回的分页相关信息，设置插件参数
-                        bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
-                        currentPage: data.page, //当前页数
-                        totalPages: data.totalPage, //总页数
-                        numberOfPages: data.pageSize,//每页记录数
-                        itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
-                            switch (type) {
-                                case "first":
-                                    return "首";
-                                case "prev":
-                                    return "<";
-                                case "next":
-                                    return ">";
-                                case "last":
-                                    return "末";
-                                case "page":
-                                    return page;
-                            }
-                        },
-                        onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
-                            $.ajax({//根据page去后台加载数据
-                                url: "/my_project_join",
-                                type: "get",
-                                dataType: "json",
-                                data: {
-                                    page: page,
-                                    userId: userId
-                                },
-                                success: function (data) {
-                                    myprojectAppendHtml(data.list,div,status,page);//处理数据
-                                }
-                            });
-                        }
-                    };
-                    $(ul).bootstrapPaginator(options);//设置分页
-                }
-            });
-        }
-    }
 
     //页面渲染
     function myprojectAppendHtml(list,div,status,page) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
-        var userId = [[${#authentication.principal.id}]];
         var tableShow = '';
         for (var i = 0; i < list.length; i++) {
             if(list[i].storeFlag==1){
@@ -651,17 +554,17 @@
                 '<i class="fab fa-codiepie"></i>&nbsp;项目进度：' + list[i].schedule +
                 '</span>&nbsp;&nbsp;&nbsp;&nbsp;\n' +
                 '<span style="color: #4e555b">\n' +
-                '<i class="far fa-arrow-alt-circle-up"></i>上传次数：' + list[i].codeUpdateCount +
+                '<i class="fas fa-crown"></i>类型：' + list[i].type +
                 '</span>&nbsp;&nbsp;&nbsp;&nbsp;\n' +
                 '<span style="color: #4e555b">\n' +
-                '<i class="far fa-arrow-alt-circle-up"></i>我的上传次数：' + list[i].myUpdateCount +
+                '<i class="far fa-arrow-alt-circle-up"></i>最近更新时间：' + list[i].lastUpdateTime +
                 '</span>\n' +
                 '</div>\n' +
                 '<div class="col-lg-2">\n' +
-                '<a onclick="' + storefunction + '(' + userId + ',' + list[i].projectId + ',' + status + ',' + page + ')" style="color: ' + storecolor + '">\n'+
+                '<a onclick="' + storefunction + '(' + list[i].projectId + ',' + status + ',' + page + ')" style="color: ' + storecolor + '">\n'+
                 '<i class="fas fa-star"></i><span>' + list[i].storeCount + '</span>\n' +
                 '</a>\n' +
-                '<a onclick="' + likefunction + '(' + userId + ',' + list[i].projectId + ',' + status + ',' + page + ')" style="color:' + likecolor + '">\n' +
+                '<a onclick="' + likefunction + '('  + list[i].projectId + ',' + status + ',' + page + ')" style="color:' + likecolor + '">\n' +
                  '<i class="fas fa-heart"></i><span>' + list[i].likeCount + '</span>\n' +
                 '</a>\n' +
                 '</div>\n' +
@@ -683,7 +586,7 @@
         div.html(tableShow);
     }
 
-    function cancelstore(userId,projectId,status,page) {
+    function cancelstore(projectId,status,page) {
         if(status == 1){
             var searchValues = $("#searchByName").val();
         }
@@ -696,9 +599,8 @@
         $.ajax(
             {
                 type: "Get",
-                url: "/my_project_del_refrech",
+                url: "/project/myProject/myProjectDelStore",
                 data: {
-                    userId: userId,
                     projectId: projectId,
                     page: page,
                     status: status
@@ -715,7 +617,7 @@
         );
     }
 
-    function addstore(userId,projectId,status,page) {
+    function addstore(projectId,status,page) {
         if(status == 1){
             var searchValues = $("#searchByName").val();
         }
@@ -728,9 +630,8 @@
         $.ajax(
             {
                 type: "Get",
-                url: "/my_project_refrech",
+                url: "/project/myProject/myProjectAddStore",
                 data: {
-                    userId: userId,
                     projectId: projectId,
                     page: page,
                     status: status
@@ -747,7 +648,7 @@
         );
     }
 
-    function cancellike(userId,projectId,status,page) {
+    function cancellike(projectId,status,page) {
         if(status == 1){
             var searchValues = $("#searchByName").val();
         }
@@ -760,9 +661,8 @@
         $.ajax(
             {
                 type: "Get",
-                url: "/my_project_del_refrech_like",
+                url: "/project/myProject/myProjectDelLike",
                 data: {
-                    userId: userId,
                     projectId: projectId,
                     page: page,
                     status: status
@@ -779,7 +679,7 @@
         );
     }
 
-    function addlike(userId,projectId,status,page) {
+    function addlike(projectId,status,page) {
         if(status == 1){
             var searchValues = $("#searchByName").val();
         }
@@ -792,9 +692,8 @@
         $.ajax(
             {
                 type: "Get",
-                url: "/my_project_refrech_like",
+                url: "/project/myProject/myProjectAddLike",
                 data: {
-                    userId: userId,
                     projectId: projectId,
                     page: page,
                     status: status
@@ -814,22 +713,22 @@
     function searchByTypeOrSchedule(status) {
         if(status==1){//全部项目
             var divName = $('#myProjectAll');
-            var type = $("#typeName").val();
-            var schedule = $("#scheduleName").val();
-            var url = "/get_project_by_type";
-            searchAllByTypeOrSchedule(divName,type,schedule,url,status,myProjectAllPage);
+            var typeId = $("#typeName").val();
+            var scheduleId = $("#scheduleName").val();
+            var url = "/project/myProject/getMyProjectByTypeOrSchedule";
+            searchAllByTypeOrSchedule(divName,typeId,scheduleId,url,status,myProjectAllPage);
         }else if(status==2){//负责项目
             var divName = $('#myProjectCharge');
-            var type = $("#typeNameCharge").val();
-            var schedule = $("#scheduleNameCharge").val();
-            var url = "/get_project_charge_by_type";
-            searchAllByTypeOrSchedule(divName,type,schedule,url,status,myProjectChargePage);
+            var typeId = $("#typeNameCharge").val();
+            var scheduleId = $("#scheduleNameCharge").val();
+            var url = "/project/myProject/getMyProjectByTypeOrSchedule";
+            searchAllByTypeOrSchedule(divName,typeId,scheduleId,url,status,myProjectChargePage);
         }else if(status==3){//参与项目
             var divName = $('#myProjectJoin');
-            var type = $("#typeNameJoin").val();
-            var schedule = $("#scheduleNameJoin").val();
-            var url = "/get_project_join_by_type";
-            searchAllByTypeOrSchedule(divName,type,schedule,url,status,myProjectJoinPage);
+            var typeId = $("#typeNameJoin").val();
+            var scheduleId = $("#scheduleNameJoin").val();
+            var url = "/project/myProject/getMyProjectByTypeOrSchedule";
+            searchAllByTypeOrSchedule(divName,typeId,scheduleId,url,status,myProjectJoinPage);
         }
     }
 
@@ -837,30 +736,31 @@
         if(status==1){//全部项目
             var divName = $('#myProjectAll');
             var searchValues = $("#searchByName").val();
-            var url = "/get_project_by_name_or_user";
+            var url = "/project/myProject/getMyProjectByFuzzySearch";
             searchAllByName(divName,searchValues,url,status,myProjectAllPage);
         }else if(status==2){//负责项目
             var divName = $('#myProjectCharge');
             var searchValues = $("#searchByNameCharge").val();
-            var url = "/get_project_charge_by_name_or_user";
+            var url = "/project/myProject/getMyProjectByFuzzySearch";
             searchAllByName(divName,searchValues,url,status,myProjectChargePage);
         }else if(status==3){//参与项目
             var divName = $('#myProjectJoin');
             var searchValues = $("#searchByNameJoin").val();
-            var url = "/get_project_join_by_name_or_user";
+            var url = "/project/myProject/getMyProjectByFuzzySearch";
             searchAllByName(divName,searchValues,url,status,myProjectJoinPage);
         }
     }
 
     //按类型、进度搜索
-    function searchAllByTypeOrSchedule(divName,type,schedule,url,status,ul){
+    function searchAllByTypeOrSchedule(divName,typeId,scheduleId,url,status,ul){
         $.ajax({
             type: "Get",
             url: url,
             data: {
                 page: '1',
-                type:type,
-                schedule:schedule
+                typeId:typeId,
+                scheduleId:scheduleId,
+                status: status
             },
             success: function (data) {
                 myprojectAppendHtml(data.list,divName,status,1);//处理第一页的数据
@@ -890,8 +790,9 @@
                             dataType: "json",
                             data: {
                                 page: page,
-                                type:type,
-                                schedule:schedule
+                                typeId:typeId,
+                                scheduleId:scheduleId,
+                                status: status
                             },
                             success: function (data) {
                                 myprojectAppendHtml(data.list,divName,status,page);//处理数据
@@ -935,7 +836,8 @@
             url: url,
             data: {
                 page: '1',
-                nameOrUser:searchValues
+                content: searchValues,
+                status: status
             },
             success: function (data) {
                 myprojectAppendHtml(data.list,divName,status,1);//处理第一页的数据
@@ -965,7 +867,8 @@
                             dataType: "json",
                             data: {
                                 page: page,
-                                nameOrUser:searchValues
+                                content: searchValues,
+                                status: status
                             },
                             success: function (data) {
                                 myprojectAppendHtml(data.list,divName,status,page);//处理数据

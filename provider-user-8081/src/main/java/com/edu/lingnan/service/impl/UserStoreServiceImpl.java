@@ -50,9 +50,8 @@ public class UserStoreServiceImpl implements UserStoreService {
      * @return 实例对象
      */
     @Override
-    public UserStore insert(UserStore userStore) {
-        this.userStoreDao.insert(userStore);
-        return userStore;
+    public Boolean insert(UserStore userStore) {
+        return this.userStoreDao.insert(userStore)>0;
     }
 
     /**
@@ -67,4 +66,13 @@ public class UserStoreServiceImpl implements UserStoreService {
         return this.queryById(userStore.getId());
     }
 
+    @Override
+    public Integer countStoredNumByProjectId(Integer projectId) {
+        return userStoreDao.countStoredNumByProjectId(projectId);
+    }
+
+    @Override
+    public boolean deleteUserStore(Integer userId, Integer projectId) {
+        return userStoreDao.deleteUserStore(userId,projectId);
+    }
 }

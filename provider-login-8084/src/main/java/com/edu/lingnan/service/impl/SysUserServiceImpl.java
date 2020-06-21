@@ -67,6 +67,11 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
+    public Integer userCount() {
+        return null;
+    }
+
+    @Override
     public SysUser login(String email, String password) {
         return sysUserDao.login(email, password);
     }
