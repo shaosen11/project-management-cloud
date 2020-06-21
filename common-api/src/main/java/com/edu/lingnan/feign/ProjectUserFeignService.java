@@ -71,7 +71,7 @@ public interface ProjectUserFeignService {
     @GetMapping("projectUser/getCountNoInProjectByProjectId/{projectId}")
     Integer getCountNoInProjectByProjectId(@RequestParam("projectId") Integer projectId);
 
-    @GetMapping("projectUser/getProjectUserNoInProjectByProjectId")
+    @GetMapping("projectUser/getProjectUserNoInProjectByProjectId/{projectId}/{offset}/{pageSize}")
     List<MyUserDetails> getProjectUserNoInProjectByProjectId(
             @RequestParam("projectId") Integer projectId,
             @RequestParam("offset") Integer offset,

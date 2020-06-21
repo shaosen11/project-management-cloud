@@ -106,7 +106,7 @@ public class ProjectUserController {
         return projectUserService.getCountNoInProjectByProjectId(projectId);
     }
 
-    @GetMapping("getProjectUserNoInProjectByProjectId")
+    @GetMapping("getProjectUserNoInProjectByProjectId/{projectId}/{offset}/{pageSize}")
     List<MyUserDetails> getProjectUserNoInProjectByProjectId(
             @PathVariable("projectId") Integer projectId,
             @PathVariable("offset") Integer offset,

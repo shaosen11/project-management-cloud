@@ -121,8 +121,8 @@
     </select>
 
     <resultMap id="MyUserDetailsAndProjectList" type="com.edu.lingnan.entity.MyUserDetails">
-        <collection property="myprojectsList" column="{id=id}"
-                    select="com.edu.lingnan.dao.SysUserDao.getMyProjects">
+        <collection property="myprojectsList" column="{userId=id}"
+                    select="com.edu.lingnan.dao.SysUserDao.getMyProjectsByUserId">
         </collection>
         <collection property="userCodeUpdateRecordList" column="{userId=id}"
                     select="com.edu.lingnan.dao.UserCodeUpdateRecordDao.getAllByUserId">

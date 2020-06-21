@@ -40,12 +40,12 @@
                         </li>
                     </ul>
                 </div>
-                <div class="row" th:if="${documents1!=null} and ${documents2!=null}">
+                <div class="row" th:if="${document1!=null} and ${document2!=null}">
                     <div class="col-md-9">
                         <div class="card">
 
                             <div class="card-header">
-                                <h4 class="card-title" th:text="${documents1.name}">文件名</h4>
+                                <h4 class="card-title" th:text="${document1.name}">文件名</h4>
                             </div>
                             <div class="card-body row">
                                 <div class="col-md-6">
@@ -85,7 +85,7 @@
                         <div class="card" th:if="${projectAdmin!=null}">
                             <div class="card-body row">
                                 <div class="col-md-6">
-                                    <form th:action="@{/document(projectsId=${param.projectId},documentName=${documents1.name},userId=${param.userId},operate=1)}"
+                                    <form th:action="@{/document(projectsId=${param.projectId},documentName=${document1.name},userId=${param.userId},operate=1)}"
                                           method="post">
                                         <input type="hidden" name="_method" value="put"/>
                                         <button class="btn btn-primary btn-round col-md-12">
@@ -96,7 +96,7 @@
                                     </form>
                                 </div>
                                 <div class="col-md-6">
-                                    <form th:action="@{/document(projectsId=${param.projectId},documentName=${documents1.name},userId=${param.userId},operate=2)}"
+                                    <form th:action="@{/document(projectsId=${param.projectId},documentName=${document1.name},userId=${param.userId},operate=2)}"
                                           method="post">
                                         <input type="hidden" name="_method" value="put"/>
                                         <button class="btn btn-danger btn-round col-md-12">
@@ -116,18 +116,18 @@
                             </div>
                             <div class="card-body">
                                 <textarea class="col-md-12" rows="15"
-                                          th:text="${documents1.versionMessage}"></textarea>
+                                          th:text="${document1.versionMessage}"></textarea>
                             </div>
                         </div>
                     </div>
 
                 </div>
 
-                <div class="row" th:if="${documents1!=null} and ${documents2==null}">
+                <div class="row" th:if="${document1!=null} and ${document2==null}">
                     <div class="col-md-9">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title" th:text="${documents1.name}"></h4>
+                                <h4 class="card-title" th:text="${document1.name}"></h4>
                             </div>
                             <div class="card-body">
                                 <pre>
@@ -172,7 +172,7 @@
                             </div>
                             <div class="card-body">
                                 <textarea class="col-md-12" rows="15"
-                                          th:text="${documents1.versionMessage}"></textarea>
+                                          th:text="${document1.versionMessage}"></textarea>
                             </div>
                         </div>
                     </div>
@@ -194,7 +194,7 @@
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form th:action="@{/documents/updatedocuments}" method="post">
+            <form th:action="@{/document/updatedocument}" method="post">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabe">修改版本信息和包</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
