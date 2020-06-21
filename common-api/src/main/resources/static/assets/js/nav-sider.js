@@ -10,7 +10,7 @@ $(function () {
 //用户项目列表
 function user_projects(userId) {
     $.ajax({
-        url: "/getProjectsByUserId",
+        url: "/getProjectByUserId",
         type: "get",
         data: {
             userId: userId

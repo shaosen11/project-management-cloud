@@ -23,6 +23,9 @@ public class SysUserController {
     @Autowired
     private MyUserDetailsFeignService myUserDetailsFeignService;
 
+    @Autowired
+    private SysUserFeignService sysUserFeignService;
+
     @GetMapping("/projectManagementAdmin")
     @ResponseBody
     public String projectManagementAdmin(HttpServletRequest request){
@@ -34,5 +37,11 @@ public class SysUserController {
             }
         }
         return null;
+    }
+
+    @ResponseBody
+    @GetMapping("/user_information")
+    public MyUserDetails userInformetion(Integer userId){
+        return sysUserFeignService.getMyUserDetailsByUserId(userId);
     }
 }

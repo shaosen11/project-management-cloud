@@ -16,6 +16,24 @@
         </collection>
     </resultMap>
 
+    <resultMap type="com.edu.lingnan.entity.ProjectUser" id="ProjectUserMapHaveMyUserDetails">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="projectId" column="project_id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="dutyCode" column="duty_code" jdbcType="INTEGER"/>
+        <result property="codeDevoteLine" column="code_devote_line" jdbcType="INTEGER"/>
+        <result property="codeUpdate" column="code_update" jdbcType="INTEGER"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
+        <result property="joinTime" column="join_time" jdbcType="TIMESTAMP"/>
+        <collection property="myUserDetails" column="{id=user_id}"
+                    select="com.edu.lingnan.dao.ProjectUserDao.getSimpleMyUserDetailsByUserId">
+        </collection>
+        <collection property="projectUserDuty" column="{id=duty_code}"
+                    select="com.edu.lingnan.dao.ProjectUserDutyDao.getById">
+        </collection>
+    </resultMap>
+
+
     <!--查找所有项目用户信息-->
     <resultMap id="pulist" type="com.edu.lingnan.entity.ProjectUser">
         <result column="id" property="id"></result>
@@ -82,14 +100,14 @@
     </update>
 
 
-    <select id="getById" resultType="com.edu.lingnan.entity.ProjectUser">
+    <select id="getById" resultMap="ProjectUserMap">
         select *
         from project_management_project_cloud.project_user
         where delete_flag = 1
           and id = #{id}
     </select>
 
-    <select id="getDelById" resultType="com.edu.lingnan.entity.ProjectUser">
+    <select id="getDelById" resultMap="ProjectUserMap">
         select *
         from project_management_project_cloud.project_user
         where delete_flag = 0
@@ -191,7 +209,7 @@
                  and project_id = #{projectId});
     </select>
 
-    <select id="getProjectUserNoInProjectByProjectId" resultType="com.edu.lingnan.entity.SysUser">
+    <select id="getProjectUserNoInProjectByProjectId" resultType="com.edu.lingnan.entity.MyUserDetails">
         select *
         from project_management_user_cloud.sys_user
         WHERE id not in
@@ -224,15 +242,8 @@
         where project_id = #{id}
     </update>
 
-    <select id="getByUserIdAndProjectId" resultMap="ProjectUserMap">
-        select id,
-               project_id,
-               user_id,
-               duty_code,
-               code_devote_line,
-               code_update,
-               delete_flag,
-               join_time
+    <select id="getByUserIdAndProjectId" resultMap="ProjectUserMapHaveMyUserDetails">
+        select *
         from project_management_project_cloud.project_user
         where delete_flag = 1
           and user_id = #{userId}
