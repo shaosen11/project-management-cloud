@@ -289,5 +289,13 @@ public class ProjectFunctionController {
         }
     }
 
+    @RequestMapping(value = "/getFunctionByProjectIdAndRealizeUserId",method = RequestMethod.GET)
+    public List<ProjectFunction> getFunctionByProjectIdAndRealizeUserId(@RequestParam("projectsId")Integer projectsId, @RequestParam("realizeUserId")Integer realizeUserId, @RequestParam("functionStatus")Integer functionStatus) {
+        return projectFunctionService.getFunctionByProjectIdAndRealizeUserId(projectsId, realizeUserId, functionStatus);
+    }
 
+    @RequestMapping(value = "/editProjectFunction",method = RequestMethod.POST)
+    public ProjectFunction editProjectFunction(@RequestBody ProjectFunction projectFunction) {
+        return projectFunctionService.update(projectFunction);
+    }
 }

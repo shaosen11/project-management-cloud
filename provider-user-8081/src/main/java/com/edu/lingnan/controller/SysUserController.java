@@ -49,6 +49,9 @@ public class SysUserController {
      */
     @GetMapping("/{id}")
     public SysUser getSysUser(@PathVariable("id") Integer id) {
+        return this.sysUserService.queryById(id);
+    }
+
     @GetMapping("queryById/{id}")
     public SysUser queryById(@PathVariable("id") Integer id) {
         return this.sysUserService.queryById(id);

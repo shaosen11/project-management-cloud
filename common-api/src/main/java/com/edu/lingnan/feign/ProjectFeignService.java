@@ -42,9 +42,7 @@ public interface ProjectFeignService {
     List<Project> getDelProjectList();
 
     @GetMapping("project/getAdminByUserIdAndProjectId/{userId}/{projectId}")
-    Project getAdminByUserIdAndProjectId(
-            @RequestParam("userId") Integer userId,
-            @RequestParam("projectId") Integer projectId);
+    Project getAdminByUserIdAndProjectId(@RequestParam("userId") Integer userId, @RequestParam("projectId") Integer projectId);
 
     @PostMapping("project/")
     boolean insert(Project project);

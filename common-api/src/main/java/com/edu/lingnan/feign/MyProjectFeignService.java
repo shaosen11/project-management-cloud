@@ -20,14 +20,14 @@ public interface MyProjectFeignService {
      * @return Echarts
      */
     @PostMapping("myProject/getMyAllProjectData")
-    List<Echarts> getMyAllProjectData();
+    List<Echarts> getMyAllProjectData(@RequestParam("userId") Integer userId);
 
     /**
      * 我的负责项目--饼图2
      * @return Echarts
      */
     @PostMapping("myProject/getMyChargeProjectData")
-    List<Echarts> getMyChargeProjectData();
+    List<Echarts> getMyChargeProjectData(@RequestParam("userId") Integer userId);
 
 
     /**
@@ -35,7 +35,7 @@ public interface MyProjectFeignService {
      * @return Echarts
      */
     @PostMapping("myProject/getMyJoinProjectData")
-    List<Echarts> getMyJoinProjectData();
+    List<Echarts> getMyJoinProjectData(@RequestParam("userId") Integer userId);
 
     /**
      * 我的项目

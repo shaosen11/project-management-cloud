@@ -209,7 +209,7 @@
     $.ajax({
             type: "post",
             async: true,
-            url: "/project/myProject/getMyAllProjectData",
+            url: "/getMyAllProjectData",
             data: [],
             dataType: "json",
             success: function (result) {
@@ -279,7 +279,7 @@
     $.ajax({
             type: "post",
             async: true,
-            url: "/project/myProject/getMyChargeProjectData",
+            url: "/getMyChargeProjectData",
             data: [],
             dataType: "json",
             success: function (result) {
@@ -349,7 +349,7 @@
     $.ajax({
             type: "post",
             async: true,
-            url: "/project/myProject/getMyJoinProjectData",
+            url: "/getMyJoinProjectData",
             data: [],
             dataType: "json",
             success: function (result) {
@@ -468,7 +468,7 @@
         function pageStart() {//分页函数
             $.ajax({ //去后台查询第一页数据
                 type: "Get",
-                url: "/project/myProject/getMyProjectPageByStatus",
+                url: "/getMyProjectPageByStatus",
                 dataType: "json",
                 data: {
                     page: '1',
@@ -497,7 +497,7 @@
                         },
                         onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
                             $.ajax({//根据page去后台加载数据
-                                url: "/project/myProject/getMyProjectPageByStatus",
+                                url: "/getMyProjectPageByStatus",
                                 type: "get",
                                 dataType: "json",
                                 data: {
@@ -599,7 +599,7 @@
         $.ajax(
             {
                 type: "Get",
-                url: "/project/myProject/myProjectDelStore",
+                url: "/myProjectDelStore",
                 data: {
                     projectId: projectId,
                     page: page,
@@ -630,7 +630,7 @@
         $.ajax(
             {
                 type: "Get",
-                url: "/project/myProject/myProjectAddStore",
+                url: "/myProjectAddStore",
                 data: {
                     projectId: projectId,
                     page: page,
@@ -661,7 +661,7 @@
         $.ajax(
             {
                 type: "Get",
-                url: "/project/myProject/myProjectDelLike",
+                url: "/myProjectDelLike",
                 data: {
                     projectId: projectId,
                     page: page,
@@ -692,7 +692,7 @@
         $.ajax(
             {
                 type: "Get",
-                url: "/project/myProject/myProjectAddLike",
+                url: "/myProjectAddLike",
                 data: {
                     projectId: projectId,
                     page: page,
@@ -715,19 +715,19 @@
             var divName = $('#myProjectAll');
             var typeId = $("#typeName").val();
             var scheduleId = $("#scheduleName").val();
-            var url = "/project/myProject/getMyProjectByTypeOrSchedule";
+            var url = "/getMyProjectByTypeOrSchedule";
             searchAllByTypeOrSchedule(divName,typeId,scheduleId,url,status,myProjectAllPage);
         }else if(status==2){//负责项目
             var divName = $('#myProjectCharge');
             var typeId = $("#typeNameCharge").val();
             var scheduleId = $("#scheduleNameCharge").val();
-            var url = "/project/myProject/getMyProjectByTypeOrSchedule";
+            var url = "/getMyProjectByTypeOrSchedule";
             searchAllByTypeOrSchedule(divName,typeId,scheduleId,url,status,myProjectChargePage);
         }else if(status==3){//参与项目
             var divName = $('#myProjectJoin');
             var typeId = $("#typeNameJoin").val();
             var scheduleId = $("#scheduleNameJoin").val();
-            var url = "/project/myProject/getMyProjectByTypeOrSchedule";
+            var url = "/getMyProjectByTypeOrSchedule";
             searchAllByTypeOrSchedule(divName,typeId,scheduleId,url,status,myProjectJoinPage);
         }
     }
@@ -736,17 +736,17 @@
         if(status==1){//全部项目
             var divName = $('#myProjectAll');
             var searchValues = $("#searchByName").val();
-            var url = "/project/myProject/getMyProjectByFuzzySearch";
+            var url = "/getMyProjectByFuzzySearch";
             searchAllByName(divName,searchValues,url,status,myProjectAllPage);
         }else if(status==2){//负责项目
             var divName = $('#myProjectCharge');
             var searchValues = $("#searchByNameCharge").val();
-            var url = "/project/myProject/getMyProjectByFuzzySearch";
+            var url = "/getMyProjectByFuzzySearch";
             searchAllByName(divName,searchValues,url,status,myProjectChargePage);
         }else if(status==3){//参与项目
             var divName = $('#myProjectJoin');
             var searchValues = $("#searchByNameJoin").val();
-            var url = "/project/myProject/getMyProjectByFuzzySearch";
+            var url = "/getMyProjectByFuzzySearch";
             searchAllByName(divName,searchValues,url,status,myProjectJoinPage);
         }
     }

@@ -78,7 +78,7 @@
         $(divName2).html("");
         $.ajax({
             type: "get",
-            url: "/project/projectFunction/getProjectsPlanTime",
+            url: "/getProjectsPlanTime",
             dataType: "json",
             data: {
                 projectId: projectId,
@@ -95,7 +95,7 @@
         $(divName).html("");
         $.ajax({
             type: "get",
-            url: "/project/projectFunction/getProjectFunctionPlan",
+            url: "/getProjectFunctionPlan",
             dataType: "json",
             data: {
                 page: '1',
@@ -125,7 +125,7 @@
                     onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
                         $.ajax({//根据page去后台加载数据
                             type: "get",
-                            url: "/project/projectFunction/getProjectFunctionPlan",
+                            url: "/getProjectFunctionPlan",
                             dataType: "json",
                             data: {
                                 page: page,

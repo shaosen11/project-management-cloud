@@ -21,10 +21,14 @@ public class ProjectServiceImpl implements ProjectService {
     @Resource
     private ProjectDao projectDao;
 
-
     @Override
     public Project queryById(Integer id) {
         return projectDao.getById(id);
+    }
+
+    @Override
+    public List<Project> queryAllByLimit(int offset, int limit) {
+        return projectDao.queryAllByLimit(offset,limit);
     }
 
     @Override
@@ -73,18 +77,23 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public boolean insert(Project project) {
+    public Boolean insert(Project project) {
         return projectDao.insert(project) > 0;
     }
 
     @Override
-    public boolean update(Project project) {
+    public Boolean update(Project project) {
         return projectDao.update(project);
     }
 
     @Override
     public Integer getProjectCount(){
         return projectDao.getProjectCount();
+    }
+
+    @Override
+    public Integer projectCount() {
+        return projectDao.projectCount();
     }
 
     @Override

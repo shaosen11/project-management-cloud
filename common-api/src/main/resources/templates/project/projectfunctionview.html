@@ -444,28 +444,28 @@
     //全部功能点
     function allFunctionPage() {
         functionStatusFlag = 0;
-        var allFunctionUrl = "/project/projectFunction/allFunctionPage";
+        var allFunctionUrl = "/allFunctionPage";
         appendFuntion1(projectId, allFunctionUrl);
     }
 
     //分配给我的功能点
     function assignFunctionPage() {
         functionStatusFlag = 1;
-        var assignFunctionUrl = "/project/projectFunction/assignFunctionPage";
+        var assignFunctionUrl = "/assignFunctionPage";
         appendFuntion2(projectId,assignFunctionUrl);
     }
 
     //我发布的功能点
     function publishFunctionPage() {
         functionStatusFlag = 2;
-        var publishFunctionUrl = "/project/projectFunction/publishFunctionPage";
+        var publishFunctionUrl = "/publishFunctionPage";
         appendFuntion2(projectId,publishFunctionUrl);
     }
 
     //我参与的的功能点
     function joinFunctionPage() {
         functionStatusFlag = 3;
-        var joinFunctionUrl = "/project/projectFunction/joinFunctionPage";
+        var joinFunctionUrl = "/joinFunctionPage";
         appendFuntion2(projectId,joinFunctionUrl);
     }
 
@@ -555,7 +555,7 @@
     function getChart() {
         $.ajax({
             type: "get",
-            url: "/project/projectFunction/getProjectFunctionDataCicleChart",
+            url: "/getProjectFunctionDataCicleChart",
             dataType: "json",
             data: {
                 projectId: projectId,
@@ -589,15 +589,15 @@
         var functionStatus = 0;
         $(divName).html("");
         if (functionStatusFlag == 0) {
-            var url = "/project/projectFunction/allFunctionPage";
+            var url = "/allFunctionPage";
             functionPageStart(url, projectId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
         } else {
             if (functionStatusFlag == 1) {
-                var url = "/project/projectFunction/assignFunctionPage";
+                var url = "/assignFunctionPage";
             } else if (functionStatusFlag == 2) {
-                var url = "/project/projectFunction/publishFunctionPage";
+                var url = "/publishFunctionPage";
             } else if (functionStatusFlag == 3) {
-                var url = "/project/projectFunction/joinFunctionPage";
+                var url = "/joinFunctionPage";
             }
 			functionPageStart(url, projectId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
         }
@@ -676,7 +676,7 @@
     function functionNum() {
         $.ajax({
             type: "post",
-            url: "/project/projectFunction/getProjectFunctionTotal",
+            url: "/getProjectFunctionTotal",
             dataType: "json",
             data: {
                 projectId: projectId,
@@ -735,7 +735,6 @@
             url: "/project_function",
             data: {
                 projectId: arguments[1],
-                userId: arguments[2]
             },
             success: function (result) {
                 projectFunctionAppendHtml(result.data);
@@ -845,7 +844,7 @@
 <!--功能点详情-->
 <script type="text/javascript">
     function projectFunctionDetail(projectFunctionId) {
-        location.href = "/project/projectFunction/projectFunctionDetailView/" + projectFunctionId;
+        location.href = "/projectFunctionDetailView/" + projectFunctionId;
     }
 </script>
 

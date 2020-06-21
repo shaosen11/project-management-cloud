@@ -236,4 +236,17 @@
         limit #{offset},#{pageSize}
     </select>
 
+    <!-- 查询所有指派给我的功能点 -->
+    <select id="getAllFunctionByProjectIdAndRealizeUserId" resultMap="ProjectFunctionMap">
+        select pf.id as id, pf.projects_id as projects_id, p.name as projects_name, pf.function_id as function_id, pf.function_name as function_name,
+               pf.function_status as function_status, pf.publish_user_id as publish_user_id, su1.username as publish_user_name,
+               pf.realize_user_id as realize_user_id, su2.username as realize_user_name, pf.planned_start_time as planned_start_time,
+               pf.planned_end_time as planned_end_time, pf.actual_start_time as actual_start_time, pf.actual_end_time as actual_end_time, pf.delete_flag as delete_flag, pf.del_reason as del_reason, pf.description as description
+        FROM project_management_project_cloud.project_function pf
+        left join project_management_user_cloud.sys_user su1 on pf.publish_user_id = su1.id
+        left join project_management_user_cloud.sys_user su2 on pf.realize_user_id = su2.id
+        right join project_management_project_cloud.project p on pf.projects_id = p.id
+        where pf.projects_id = #{projectsId} and pf.delete_flag = 1 and pf.realize_user_id = #{realizeUserId} and pf.function_status = #{functionStatus}
+    </select>
+
 </mapper>

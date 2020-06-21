@@ -120,4 +120,8 @@ public class ProjectFunctionServiceImpl implements ProjectFunctionService {
         return this.projectFunctionDao.getProjectPlanFunctionsPage(projectsId,offset,pageSize);
     }
 
+    @Override
+    public List<ProjectFunction> getFunctionByProjectIdAndRealizeUserId(Integer projectsId, Integer realizeUserId, Integer functionStatus) {
+        return projectFunctionDao.getAllFunctionByProjectIdAndRealizeUserId(projectsId, realizeUserId, functionStatus);
+    }
 }

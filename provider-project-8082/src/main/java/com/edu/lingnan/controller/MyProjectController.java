@@ -56,13 +56,14 @@ public class MyProjectController {
      * @return Echarts
      */
     @PostMapping("/getMyAllProjectData")
-    public List<Echarts> getMyAllProjectData() {
+    public List<Echarts> getMyAllProjectData(@RequestParam("userId") Integer userId) {
+        System.out.println("我的全部项目--饼图1-->user="+userId);
         List<Echarts> list1 = new ArrayList<>();
-        Integer num0 = projectService.getMyProjectNumBySchedule(16,0);
-        Integer num1 = projectService.getMyProjectNumBySchedule(16,1);
-        Integer num2 = projectService.getMyProjectNumBySchedule(16,2);
-        Integer num3 = projectService.getMyProjectNumBySchedule(16,3);
-        Integer num4 = projectService.getMyProjectNumBySchedule(16,4);
+        Integer num0 = projectService.getMyProjectNumBySchedule(userId,0);
+        Integer num1 = projectService.getMyProjectNumBySchedule(userId,1);
+        Integer num2 = projectService.getMyProjectNumBySchedule(userId,2);
+        Integer num3 = projectService.getMyProjectNumBySchedule(userId,3);
+        Integer num4 = projectService.getMyProjectNumBySchedule(userId,4);
         System.out.println("list1:: num0="+num0+" num1="+num1+" num2="+num2+" num3="+num3+" num4="+num4);
         list1.add(new Echarts("待办",num0));
         list1.add(new Echarts("进行中",num1));
@@ -78,13 +79,13 @@ public class MyProjectController {
      * @return Echarts
      */
     @PostMapping("/getMyChargeProjectData")
-    public List<Echarts> getMyChargeProjectData() {
+    public List<Echarts> getMyChargeProjectData(@RequestParam("userId") Integer userId) {
         List<Echarts> list2 = new ArrayList<>();
-        Integer num0 = projectService.getMyChargeProjectNumBySchedule(16,0);
-        Integer num1 = projectService.getMyChargeProjectNumBySchedule(16,1);
-        Integer num2 = projectService.getMyChargeProjectNumBySchedule(16,2);
-        Integer num3 = projectService.getMyChargeProjectNumBySchedule(16,3);
-        Integer num4 = projectService.getMyChargeProjectNumBySchedule(16,4);
+        Integer num0 = projectService.getMyChargeProjectNumBySchedule(userId,0);
+        Integer num1 = projectService.getMyChargeProjectNumBySchedule(userId,1);
+        Integer num2 = projectService.getMyChargeProjectNumBySchedule(userId,2);
+        Integer num3 = projectService.getMyChargeProjectNumBySchedule(userId,3);
+        Integer num4 = projectService.getMyChargeProjectNumBySchedule(userId,4);
         System.out.println("list2:: num0="+num0+" num1="+num1+" num2="+num2+" num3="+num3+" num4="+num4);
         list2.add(new Echarts("待办",num0));
         list2.add(new Echarts("进行中",num1));
@@ -101,13 +102,13 @@ public class MyProjectController {
      * @return Echarts
      */
     @PostMapping("/getMyJoinProjectData")
-    public List<Echarts> getMyJoinProjectData() {
+    public List<Echarts> getMyJoinProjectData(@RequestParam("userId") Integer userId) {
         List<Echarts> list3 = new ArrayList<>();
-        Integer num0 = projectService.getMyJoinProjectNumBySchedule(16,0);
-        Integer num1 = projectService.getMyJoinProjectNumBySchedule(16,1);
-        Integer num2 = projectService.getMyJoinProjectNumBySchedule(16,2);
-        Integer num3 = projectService.getMyJoinProjectNumBySchedule(16,3);
-        Integer num4 = projectService.getMyJoinProjectNumBySchedule(16,4);
+        Integer num0 = projectService.getMyJoinProjectNumBySchedule(userId,0);
+        Integer num1 = projectService.getMyJoinProjectNumBySchedule(userId,1);
+        Integer num2 = projectService.getMyJoinProjectNumBySchedule(userId,2);
+        Integer num3 = projectService.getMyJoinProjectNumBySchedule(userId,3);
+        Integer num4 = projectService.getMyJoinProjectNumBySchedule(userId,4);
         System.out.println("list3:: num0="+num0+" num1="+num1+" num2="+num2+" num3="+num3+" num4="+num4);
         list3.add(new Echarts("待办",num0));
         list3.add(new Echarts("进行中",num1));

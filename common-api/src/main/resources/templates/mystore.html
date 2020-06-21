@@ -70,7 +70,7 @@
         function pageStart() {//分页函数
             $.ajax({ //去后台查询第一页数据
                 type: "Get",
-                url: "/project/myProject/getMyProjectStore",
+                url: "/getMyProjectStore",
                 dataType: "json",
                 data: {
                     page: '1',
@@ -98,7 +98,7 @@
                         },
                         onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
                             $.ajax({//根据page去后台加载数据
-                                url: "/project/myProject/getMyProjectStore",
+                                url: "/getMyProjectStore",
                                 type: "get",
                                 dataType: "json",
                                 data: {
@@ -177,7 +177,7 @@
         $.ajax(
             {
                 type: "Get",
-                url: "/project/myProject/myProjectDelStore",
+                url: "/myProjectDelStore",
                 data: {
                     projectId: projectId,
                     page: page,
@@ -207,7 +207,7 @@
                         },
                         onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
                             $.ajax({//根据page去后台加载数据
-                                url: "/project/myProject/getMyProjectStore",
+                                url: "/getMyProjectStore",
                                 type: "get",
                                 dataType: "json",
                                 data: {
@@ -229,7 +229,7 @@
         $.ajax(
             {
                 type: "Get",
-                url: "/project/myProject/myProjectDelLike",
+                url: "/myProjectDelLike",
                 data: {
                     projectId: projectId,
                     page: page,
@@ -247,7 +247,7 @@
         $.ajax(
             {
                 type: "Get",
-                url: "/project/myProject/myProjectAddLike",
+                url: "/myProjectAddLike",
                 data: {
                     projectId: projectId,
                     page: page,

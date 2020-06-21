@@ -87,5 +87,9 @@ public interface ProjectFunctionFeignService {
     @RequestMapping(value = "projectFunction/getProjectFunctionPlan", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> getProjectFunctionPlan(@RequestParam("page") Integer page, @RequestParam("projectId") Integer projectId);
 
+    @RequestMapping(value = "projectFunction/getFunctionByProjectIdAndRealizeUserId",method = RequestMethod.GET)
+    List<ProjectFunction> getFunctionByProjectIdAndRealizeUserId(@RequestParam("projectsId")Integer projectsId, @RequestParam("realizeUserId")Integer realizeUserId, @RequestParam("functionStatus")Integer functionStatus);
 
+    @RequestMapping(value = "projectFunction/editProjectFunction",method = RequestMethod.POST)
+    ProjectFunction editProjectFunction(@RequestBody ProjectFunction projectFunction);
 }

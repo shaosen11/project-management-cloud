@@ -219,15 +219,14 @@ public class ProjectController {
         return projectFeignService.getById(projectId);
     }
 
-//    @GetMapping("/todayProjectsAndWeekProjects")
-//    @ResponseBody
-//    public Object getTodayProjectsAndWeekProjects() {
-//        List todayProjectsList = projectFeignService.getTodayProject();
-//        List weekProjectsList = projectFeignService.getWeekProject();
-//        Map<String, List> projectMap = new HashMap<>();
-//        projectMap.put("todayProjectsList", todayProjectsList);
-//        projectMap.put("weekProjectsList", weekProjectsList);
-//        return projectMap;
-//    }
+    /**
+     * 查询所有项目信息
+     * @return 数据
+     */
+    @GetMapping("/queryAll")
+    @ResponseBody
+    public List<Project> queryAll() {
+        return this.projectFeignService.queryAll();
+    }
 }
 
