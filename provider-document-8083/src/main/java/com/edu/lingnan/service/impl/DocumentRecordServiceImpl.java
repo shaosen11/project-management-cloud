@@ -20,50 +20,53 @@ public class DocumentRecordServiceImpl implements DocumentRecordService {
     @Resource
     private DocumentRecordDao documentRecordDao;
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
     @Override
-    public DocumentRecord queryById(Integer id) {
-        return this.documentRecordDao.queryById(id);
+    public List<DocumentRecord> getAllByProjectId(Integer projectId) {
+        return documentRecordDao.getAllByProjectId(projectId);
     }
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
     @Override
-    public List<DocumentRecord> queryAllByLimit(int offset, int limit) {
-        return this.documentRecordDao.queryAllByLimit(offset, limit);
+    public boolean delete(Integer id) {
+        return documentRecordDao.delete(id);
     }
 
-    /**
-     * 新增数据
-     *
-     * @param documentRecord 实例对象
-     * @return 实例对象
-     */
     @Override
-    public DocumentRecord insert(DocumentRecord documentRecord) {
-        this.documentRecordDao.insert(documentRecord);
-        return documentRecord;
+    public boolean update(DocumentRecord documentRecord) {
+        return documentRecordDao.update(documentRecord);
     }
 
-    /**
-     * 修改数据
-     *
-     * @param documentRecord 实例对象
-     * @return 实例对象
-     */
     @Override
-    public DocumentRecord update(DocumentRecord documentRecord) {
-        this.documentRecordDao.update(documentRecord);
-        return this.queryById(documentRecord.getId());
+    public boolean insert(DocumentRecord documentRecord) {
+        return documentRecordDao.insert(documentRecord) > 0;
+    }
+
+    @Override
+    public List<DocumentRecord> getAllDeleteDocumentRecord() {
+        return documentRecordDao.getAllDeleteDocumentRecord();
+    }
+
+    @Override
+    public boolean undo(Integer id) {
+        return documentRecordDao.undo(id);
+    }
+
+    @Override
+    public Integer getDocumentRecordCountByProjectId(Integer projectId) {
+        return documentRecordDao.getDocumentRecordCountByProjectId(projectId);
+    }
+
+    @Override
+    public Integer getDocumentRecordCountByProjectIdAndUserId(Integer projectId, Integer userId) {
+        return documentRecordDao.getDocumentRecordCountByProjectIdAndUserId(projectId, userId);
+    }
+
+    @Override
+    public List<DocumentRecord> getDocumentRecordPageByProjectId(Integer projectId, Integer offset, Integer pageSize) {
+        return documentRecordDao.getDocumentRecordPageByProjectId(projectId, offset, pageSize);
+    }
+
+    @Override
+    public List<DocumentRecord> getDocumentRecordPageByProjectIdAndUserId(Integer projectId, Integer userId, Integer offset, Integer pageSize) {
+        return documentRecordDao.getDocumentRecordPageByProjectIdAndUserId(projectId, userId, offset, pageSize);
     }
 }

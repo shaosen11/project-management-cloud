@@ -18,30 +18,27 @@ import java.util.List;
 public interface ProjectMessageNeedToDoRelationshipDao extends BaseDao<ProjectMessageNeedToDoRelationship>{
 
     /**
-     * 通过ID查询单条数据
+     * 通过消息id查询需要处理的事情
      *
-     * @param id 主键
-     * @return 实例对象
+     * @param projectMessageId
+     * @return
      */
-    ProjectMessageNeedToDoRelationship queryById(Integer id);
+    ProjectMessageNeedToDoRelationship getByProjectMessageId(Integer projectMessageId);
 
     /**
-     * 查询指定行数据
+     * 通过documentId查询需要处理的事情
      *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
+     * @param documentId
+     * @return
      */
-    List<ProjectMessageNeedToDoRelationship> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
-
+    ProjectMessageNeedToDoRelationship getByDocumentId(Integer documentId);
 
     /**
-     * 通过实体作为筛选条件查询
+     * 插入一条关系
      *
-     * @param projectMessageNeedToDoRelationship 实例对象
-     * @return 对象列表
+     * @param projectsMessageNeedToDoRelationship
      */
-    List<ProjectMessageNeedToDoRelationship> queryAll(ProjectMessageNeedToDoRelationship projectMessageNeedToDoRelationship);
-
+    @Override
+    int insert(ProjectMessageNeedToDoRelationship projectsMessageNeedToDoRelationship);
 
 }

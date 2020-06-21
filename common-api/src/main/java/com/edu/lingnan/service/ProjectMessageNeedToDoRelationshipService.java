@@ -12,37 +12,26 @@ import java.util.List;
 public interface ProjectMessageNeedToDoRelationshipService {
 
     /**
-     * 通过ID查询单条数据
+     * 通过消息id查询需要处理的事情
      *
-     * @param id 主键
-     * @return 实例对象
+     * @param projectMessageId
+     * @return
      */
-    ProjectMessageNeedToDoRelationship queryById(Integer id);
+    ProjectMessageNeedToDoRelationship getByProjectMessageId(Integer projectMessageId);
 
     /**
-     * 查询多条数据
+     * 通过documentId查询需要处理的事情
      *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
+     * @param documentId
+     * @return
      */
-    List<ProjectMessageNeedToDoRelationship> queryAllByLimit(int offset, int limit);
+    ProjectMessageNeedToDoRelationship getByDocumentId(Integer documentId);
 
     /**
-     * 新增数据
+     * 插入一条关系
      *
-     * @param projectMessageNeedToDoRelationship 实例对象
-     * @return 实例对象
+     * @param projectsMessageNeedToDoRelationship
      */
-    ProjectMessageNeedToDoRelationship insert(ProjectMessageNeedToDoRelationship projectMessageNeedToDoRelationship);
-
-    /**
-     * 修改数据
-     *
-     * @param projectMessageNeedToDoRelationship 实例对象
-     * @return 实例对象
-     */
-    ProjectMessageNeedToDoRelationship update(ProjectMessageNeedToDoRelationship projectMessageNeedToDoRelationship);
-
+    void insert(ProjectMessageNeedToDoRelationship projectsMessageNeedToDoRelationship);
 
 }

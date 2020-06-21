@@ -70,14 +70,14 @@
         <result column="projectName" property="projectName"></result>
         <result column="chargeUserId" property="chargeUserId"></result>
         <result column="chargeUser" property="chargeUser"></result>
-        <result column="schedule" property="schedule"></result>
+        <result column="scheduleId" property="scheduleId"></result>
         <result column="codeUpdateCount" property="codeUpdateCount"></result>
         <result column="myUpdateCount" property="myUpdateCount"></result>
         <result column="storeCount" property="storeCount"></result>
         <result column="likeCount" property="likeCount"></result>
         <result column="storeFlag" property="storeFlag"></result>
         <result column="likeFlag" property="likeFlag"></result>
-        <collection property="projectSchedule" column="{id=schedule_id}"
+        <collection property="projectSchedule" column="{id=scheduleId}"
                     select="com.edu.lingnan.dao.SysUserDao.getProjectScheduleById">
         </collection>
         <collection property="projectType" column="{id=type_id}"
@@ -89,7 +89,7 @@
                p.name                     as projectName,
                su.id                      as chargeUserId,
                su.username                as chargeUser,
-               p.schedule_id              as schedule_id,
+               p.schedule_id              as scheduleId,
                p.type_id                  as type_id,
                p.code_update_count        as codeUpdateCount,
                pu.code_update             as myUpdateCount,

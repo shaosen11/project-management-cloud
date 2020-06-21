@@ -20,9 +20,6 @@ public class ProjectCodeLineController {
     @Autowired
     private ProjectCodeLineFeignService projectCodeLineFeignService;
 
-    @Autowired
-    private ProjectFeignService projectFeignService;
-
     /**
      * 项目总代码行折线图
      * @param projectId
@@ -34,25 +31,5 @@ public class ProjectCodeLineController {
         List<ProjectCodeLine> projectCodeLines = projectCodeLineFeignService.getAllProjectCodeLineByProjectId(projectId);
         return projectCodeLines;
     }
-
-    public boolean insert(Integer projectsId) {
-        System.out.println("projectsId" + projectsId + "----------------------------------------");
-        ProjectCodeLine projectCodeLine = projectCodeLineFeignService.getProjectCodeLineByProjectIdAndToday(projectsId);
-        System.out.println("projectCodeLine:::" + projectCodeLine + "-------------------------------------------");
-        //判断今天有没有记录
-        if (projectCodeLine != null) {
-            //有记录，修改记录
-            projectCodeLine.setCodeLineNumber(projectFeignService.getById(projectsId).getCodeLineNumber());
-            return projectCodeLineFeignService.update(projectCodeLine);
-        } else {
-            //新建对象
-            ProjectCodeLine projectCodeLine1 = new ProjectCodeLine();
-            projectCodeLine1.setProjectId(projectsId);
-            projectCodeLine1.setCodeLineNumber(projectFeignService.getById(projectsId).getCodeLineNumber());
-            return projectCodeLineFeignService.insert(projectCodeLine1);
-        }
-    }
-
-
 }
 

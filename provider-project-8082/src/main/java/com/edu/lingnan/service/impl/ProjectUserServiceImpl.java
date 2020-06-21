@@ -1,6 +1,7 @@
 package com.edu.lingnan.service.impl;
 
 import com.edu.lingnan.entity.Echarts;
+import com.edu.lingnan.entity.MyUserDetails;
 import com.edu.lingnan.entity.ProjectUser;
 import com.edu.lingnan.dao.ProjectUserDao;
 import com.edu.lingnan.entity.SysUser;
@@ -102,7 +103,7 @@ public class ProjectUserServiceImpl implements ProjectUserService {
     }
 
     @Override
-    public List<SysUser> getProjectUserNoInProjectByProjectId(Integer projectId, Integer offset, Integer pageSize) {
+    public List<MyUserDetails> getProjectUserNoInProjectByProjectId(Integer projectId, Integer offset, Integer pageSize) {
         return projectUserDao.getProjectUserNoInProjectByProjectId(projectId, offset, pageSize);
     }
 

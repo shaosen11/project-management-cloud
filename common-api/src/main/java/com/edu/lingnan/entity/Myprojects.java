@@ -9,7 +9,7 @@ public class Myprojects {
     private String projectName;
     private Integer chargeUserId;
     private String chargeUser;
-    private String schedule;
+    private Integer scheduleId;
     private Integer functionPoints;
     private Integer completedFunctionPoints;
     private Integer codeUpdateCount;

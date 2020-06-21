@@ -2,6 +2,7 @@ package com.edu.lingnan.service;
 
 
 import com.edu.lingnan.entity.Echarts;
+import com.edu.lingnan.entity.MyUserDetails;
 import com.edu.lingnan.entity.ProjectUser;
 import com.edu.lingnan.entity.SysUser;
 
@@ -138,7 +139,7 @@ public interface ProjectUserService {
      * @param projectId
      * @return
      */
-    List<SysUser> getProjectUserNoInProjectByProjectId(Integer projectId, Integer offset, Integer pageSize);
+    List<MyUserDetails> getProjectUserNoInProjectByProjectId(Integer projectId, Integer offset, Integer pageSize);
 
     /**
      * 通过userId查询

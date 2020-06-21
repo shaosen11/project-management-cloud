@@ -3,10 +3,7 @@ package com.edu.lingnan.feign;
 import com.edu.lingnan.entity.Document;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,46 +17,38 @@ import java.util.List;
 @FeignClient(value = "PROVIDER-DOCUMENT")
 public interface DocumentFeignService {
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
-    @GetMapping("document/get/{id}")
-    Document queryById(@PathVariable("id") Integer id);
+    @GetMapping("document/{id}")
+    Document getById(Integer id);
 
-//    /**
-//     * 查询多条数据
-//     *
-//     * @param offset 查询起始位置
-//     * @param limit 查询条数
-//     * @return 对象列表
-//     */
-//    List<Document> queryAllByLimit(int offset, int limit);
-//
-//    /**
-//     * 新增数据
-//     *
-//     * @param document 实例对象
-//     * @return 实例对象
-//     */
-//    Document insert(Document document);
-//
-//    /**
-//     * 修改数据
-//     *
-//     * @param document 实例对象
-//     * @return 实例对象
-//     */
-//    Document update(Document document);
-//
-//    /**
-//     * 通过主键删除数据
-//     *
-//     * @param id 主键
-//     * @return 是否成功
-//     */
-//    boolean deleteById(Integer id);
+    @GetMapping("document/getByProjectIdAndVersionAndName/{projectId}/{version}/{name}")
+    Document getByProjectIdAndVersionAndName(
+            @PathVariable("projectId") Integer projectId,
+            @PathVariable("version") Integer version,
+            @PathVariable("name") String name);
 
+    @GetMapping("document/getByProjectIdAndVersionFlagAndName/{projectId}/{versionflag}/{name}")
+    Document getByProjectIdAndVersionFlagAndName(
+            @PathVariable("projectId") Integer projectId,
+            @PathVariable("versionflag") Integer versionflag,
+            @PathVariable("name") String name);
+
+    @GetMapping("document/getVersionByProjectIdAndName/{projectId}/{name}")
+    Integer getVersionByProjectIdAndName(
+            @PathVariable("projectId") Integer projectId,
+            @PathVariable("name") String name);
+
+    @GetMapping("document/{id}")
+    boolean delete(@PathVariable("id") Integer id);
+
+    @PutMapping("document/")
+    boolean update(Document document);
+
+    @PostMapping("document/")
+    boolean insert(Document document);
+
+    @GetMapping("document/getAllDeleteDocument")
+    List<Document> getAllDeleteDocument();
+
+    @PutMapping("document/undo/{id}")
+    boolean undo(@PathVariable("id") Integer id);
 }

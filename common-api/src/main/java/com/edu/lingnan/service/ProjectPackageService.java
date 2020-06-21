@@ -1,6 +1,8 @@
 package com.edu.lingnan.service;
 
 import com.edu.lingnan.entity.ProjectPackage;
+import com.edu.lingnan.entity.ProjectPackageList;
+
 import java.util.List;
 
 /**
@@ -11,38 +13,25 @@ import java.util.List;
  */
 public interface ProjectPackageService {
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
-    ProjectPackage queryById(Integer id);
+    ProjectPackage getById(Integer id);
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
-    List<ProjectPackage> queryAllByLimit(int offset, int limit);
+    List<ProjectPackage> getAllPackagesByProject(Integer projectId);
 
-    /**
-     * 新增数据
-     *
-     * @param projectPackage 实例对象
-     * @return 实例对象
-     */
-    ProjectPackage insert(ProjectPackage projectPackage);
+    List<ProjectPackage> getAllDocumentsByProjectsAndPackage(Integer projectId, Integer packageId);
 
-    /**
-     * 修改数据
-     *
-     * @param projectPackage 实例对象
-     * @return 实例对象
-     */
-    ProjectPackage update(ProjectPackage projectPackage);
+    ProjectPackage getPackageIdByProjectId(Integer projectId);
 
+    ProjectPackage getPackageByProjectIdAndPackageName(Integer projectId, String PackageName);
 
+    ProjectPackage getDocumentNameByProjectIdAndPackageNameAndDocumentName(Integer projectId, String packageName, String documentName);
+
+    boolean delete(Integer id);
+
+    boolean update(ProjectPackage bean);
+
+    boolean insert(ProjectPackage bean);
+
+    ProjectPackage getDocumentNameByProjectIdAndDocumentName(Integer projectId, String documentName);
+
+    List<ProjectPackageList> getAllPackagesListByProjectId(Integer projectId);
 }

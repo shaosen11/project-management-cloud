@@ -7,7 +7,9 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -60,4 +62,5 @@ public interface SysUserFeignService {
      */
     @GetMapping("/sysUser/getMyProjectsByUserId/{userId}")
     List<Myprojects> getMyProjectsByUserId(@RequestParam("userId") Integer userId);
+
 }

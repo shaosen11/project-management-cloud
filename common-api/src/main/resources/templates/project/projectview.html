@@ -520,12 +520,12 @@
             for (var i = 0; i < list.length; i++) {
                 tableShow += '<div class="d-flex">\n' +
                     '                <div class="avatar avatar-online">\n';
-                if (list[i].projectsUser.dutyCode == 1) {
-                    tableShow += '                    <span class="avatar-title rounded-circle border border-white bg-secondary"> ' + list[i].projectsUser.projectsUserDuty.dutyName[0].toUpperCase() + ' </span>\n'
-                } else if (list[i].projectsUser.dutyCode == 2) {
-                    tableShow += '                    <span class="avatar-title rounded-circle border border-white bg-primary"> ' + list[i].projectsUser.projectsUserDuty.dutyName[0].toUpperCase() + ' </span>\n'
-                } else if (list[i].projectsUser.dutyCode == 3) {
-                    tableShow += '                    <span class="avatar-title rounded-circle border border-white bg-info"> ' + list[i].projectsUser.projectsUserDuty.dutyName[0].toUpperCase() + ' </span>\n'
+                if (list[i].projectUser.dutyCode == 1) {
+                    tableShow += '                    <span class="avatar-title rounded-circle border border-white bg-secondary"> ' + list[i].projectUser.projectUserDuty.dutyName[0].toUpperCase() + ' </span>\n'
+                } else if (list[i].projectUser.dutyCode == 2) {
+                    tableShow += '                    <span class="avatar-title rounded-circle border border-white bg-primary"> ' + list[i].projectUser.projectUserDuty.dutyName[0].toUpperCase() + ' </span>\n'
+                } else if (list[i].projectUser.dutyCode == 3) {
+                    tableShow += '                    <span class="avatar-title rounded-circle border border-white bg-info"> ' + list[i].projectUser.projectUserDuty.dutyName[0].toUpperCase() + ' </span>\n'
                 }
                 tableShow +=
                     '                </div>\n' +
@@ -534,7 +534,7 @@
                     '                    <span class="text-muted">' + list[i].operateMessage + '</span>\n' +
                     '                </div>\n' +
                     '                <div class="float-right pt-1">\n' +
-                    '                    <small class="text-muted">' + list[i].operateTimeString + '</small>\n' +
+                    '                    <small class="text-muted">' + list[i].operateTime + '</small>\n' +
                     '                </div>\n' +
                     '            </div>\n' +
                     '            <div class="separator-dashed"></div>'

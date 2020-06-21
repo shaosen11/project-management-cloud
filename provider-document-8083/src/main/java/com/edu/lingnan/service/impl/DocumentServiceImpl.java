@@ -19,51 +19,48 @@ public class DocumentServiceImpl implements DocumentService {
     @Resource
     private DocumentDao documentDao;
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
     @Override
-    public Document queryById(Integer id) {
-        return this.documentDao.queryById(id);
+    public Document getById(Integer id) {
+        return documentDao.getById(id);
     }
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
     @Override
-    public List<Document> queryAllByLimit(int offset, int limit) {
-        return this.documentDao.queryAllByLimit(offset, limit);
+    public Document getByProjectIdAndVersionAndName(Integer projectId, Integer version, String name) {
+        return documentDao.getByProjectIdAndVersionAndName(projectId, version, name);
     }
 
-    /**
-     * 新增数据
-     *
-     * @param document 实例对象
-     * @return 实例对象
-     */
     @Override
-    public Document insert(Document document) {
-        this.documentDao.insert(document);
-        return document;
+    public Document getByProjectIdAndVersionFlagAndName(Integer projectId, Integer versionflag, String name) {
+        return documentDao.getByProjectIdAndVersionFlagAndName(projectId, versionflag, name);
     }
 
-    /**
-     * 修改数据
-     *
-     * @param document 实例对象
-     * @return 实例对象
-     */
     @Override
-    public Document update(Document document) {
-        this.documentDao.update(document);
-        return this.queryById(document.getId());
+    public Integer getVersionByProjectIdAndName(Integer projectId, String name) {
+        return documentDao.getVersionByProjectIdAndName(projectId, name);
     }
 
+    @Override
+    public boolean insert(Document bean) {
+        return documentDao.insert(bean) > 0;
+    }
+
+    @Override
+    public boolean update(Document bean) {
+        return documentDao.update(bean);
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+        return documentDao.delete(id);
+    }
+
+    @Override
+    public List<Document> getAllDeleteDocument() {
+        return documentDao.getAllDeleteDocument();
+    }
+
+    @Override
+    public boolean undo(Integer id) {
+        return documentDao.undo(id);
+    }
 }

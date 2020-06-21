@@ -2,6 +2,7 @@ package com.edu.lingnan.service.impl;
 
 import com.edu.lingnan.entity.ProjectPackage;
 import com.edu.lingnan.dao.ProjectPackageDao;
+import com.edu.lingnan.entity.ProjectPackageList;
 import com.edu.lingnan.feign.ProjectPackageFeignService;
 import com.edu.lingnan.service.ProjectPackageService;
 import org.springframework.stereotype.Service;
@@ -20,51 +21,58 @@ public class ProjectPackageServiceImpl implements ProjectPackageService {
     @Resource
     private ProjectPackageDao projectPackageDao;
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
     @Override
-    public ProjectPackage queryById(Integer id) {
-        return this.projectPackageDao.queryById(id);
+    public ProjectPackage getById(Integer id) {
+        return projectPackageDao.getById(id);
     }
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
     @Override
-    public List<ProjectPackage> queryAllByLimit(int offset, int limit) {
-        return this.projectPackageDao.queryAllByLimit(offset, limit);
+    public List<ProjectPackage> getAllPackagesByProject(Integer projectId) {
+        return projectPackageDao.getAllPackagesByProject(projectId);
     }
 
-    /**
-     * 新增数据
-     *
-     * @param projectPackage 实例对象
-     * @return 实例对象
-     */
     @Override
-    public ProjectPackage insert(ProjectPackage projectPackage) {
-        this.projectPackageDao.insert(projectPackage);
-        return projectPackage;
+    public List<ProjectPackage> getAllDocumentsByProjectsAndPackage(Integer projectId, Integer packageId) {
+        return projectPackageDao.getAllDocumentsByProjectsAndPackage(projectId, packageId);
     }
 
-    /**
-     * 修改数据
-     *
-     * @param projectPackage 实例对象
-     * @return 实例对象
-     */
     @Override
-    public ProjectPackage update(ProjectPackage projectPackage) {
-        this.projectPackageDao.update(projectPackage);
-        return this.queryById(projectPackage.getId());
+    public ProjectPackage getPackageIdByProjectId(Integer projectId) {
+        return projectPackageDao.getPackageIdByProjectId(projectId);
     }
 
+    @Override
+    public ProjectPackage getPackageByProjectIdAndPackageName(Integer projectId, String PackageName) {
+        return projectPackageDao.getPackageByProjectIdAndPackageName(projectId, PackageName);
+    }
+
+    @Override
+    public ProjectPackage getDocumentNameByProjectIdAndPackageNameAndDocumentName(Integer projectId, String paacageName, String documentName) {
+        return projectPackageDao.getDocumentNameByProjectIdAndPackageNameAndDocumentName(projectId, paacageName, documentName);
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+        return projectPackageDao.delete(id);
+    }
+
+    @Override
+    public boolean update(ProjectPackage bean) {
+        return projectPackageDao.update(bean);
+    }
+
+    @Override
+    public boolean insert(ProjectPackage bean) {
+        return projectPackageDao.insert(bean) > 0;
+    }
+
+    @Override
+    public ProjectPackage getDocumentNameByProjectIdAndDocumentName(Integer projectId, String documentName) {
+        return projectPackageDao.getDocumentNameByProjectIdAndDocumentName(projectId, documentName);
+    }
+
+    @Override
+    public List<ProjectPackageList> getAllPackagesListByProjectId(Integer projectId) {
+        return projectPackageDao.getAllPackagesListByProjectId(projectId);
+    }
 }

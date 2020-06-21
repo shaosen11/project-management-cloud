@@ -1,6 +1,7 @@
 package com.edu.lingnan.feign;
 
 import com.edu.lingnan.entity.Echarts;
+import com.edu.lingnan.entity.MyUserDetails;
 import com.edu.lingnan.entity.ProjectUser;
 import com.edu.lingnan.entity.SysUser;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -71,7 +72,7 @@ public interface ProjectUserFeignService {
     Integer getCountNoInProjectByProjectId(@RequestParam("projectId") Integer projectId);
 
     @GetMapping("projectUser/getProjectUserNoInProjectByProjectId")
-    List<SysUser> getProjectUserNoInProjectByProjectId(
+    List<MyUserDetails> getProjectUserNoInProjectByProjectId(
             @RequestParam("projectId") Integer projectId,
             @RequestParam("offset") Integer offset,
             @RequestParam("pageSize") Integer pageSize);

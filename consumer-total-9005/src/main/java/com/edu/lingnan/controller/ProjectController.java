@@ -180,7 +180,6 @@ public class ProjectController {
         //2.从SecurityContextImpl中获取Authentication对象
         Authentication authentication = securityContextImpl.getAuthentication();
         MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
-        System.out.println(userDetails);
         //我所有项目
         List<Myprojects> myprojectsList = sysUserFeignService.getMyProjectsByUserId(userDetails.getId());
         System.out.println("userid:" + userDetails.getId() + " 我的项目：" + myprojectsList);

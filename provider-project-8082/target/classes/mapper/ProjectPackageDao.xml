@@ -13,54 +13,81 @@
         <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="ProjectPackageMap">
-        select
-          id, project_id, package_id, document_name, package_name, create_time, user_id, delete_flag
+    <select id="getById" resultMap="ProjectPackageMap">
+        select * 
         from project_management_project_cloud.project_package
-        where id = #{id}
+        where delete_flag = 1 and id = #{id}
+    </select>
+    <select id="getAllPackagesByProject" resultMap="ProjectPackageMap">
+        select *
+        from project_management_project_cloud.project_package
+        where delete_flag = 1
+        and project_id = #{projectId}
+        group by package_id
+    </select>
+    <select id="getAllDocumentsByProjectsAndPackage" resultMap="ProjectPackageMap">
+        select *
+        from project_management_project_cloud.project_package
+        where delete_flag = 1
+        and project_id = #{projectId}
+        and package_id = #{packageId}
+    </select>
+    <select id="getPackageIdByProjectId" resultMap="ProjectPackageMap">
+        select *
+        from project_management_project_cloud.project_package
+        where delete_flag = 1
+        and project_id = #{projectId}
+        group by package_id
+        order by package_id desc
+        limit 1
+    </select>
+    <select id="getPackageByProjectIdAndPackageName" resultMap="ProjectPackageMap">
+        select *
+        from project_management_project_cloud.project_package
+        where delete_flag = 1
+        and project_id = #{projectId}
+        and package_name = #{packageName}
+        group by package_id
+    </select>
+    <select id="getDocumentNameByProjectIdAndPackageNameAndDocumentName" resultMap="ProjectPackageMap">
+        select *
+        from project_management_project_cloud.project_package
+        where delete_flag = 1
+        and project_id = #{projectId}
+        and package_name = #{packageName}
+        and document_name = #{documentName}
+    </select>
+    <select id="getDocumentNameByProjectIdAndDocumentName" resultMap="ProjectPackageMap">
+        select *
+        from project_management_project_cloud.project_package
+        where delete_flag = 1
+        and project_id = #{projectId}
+        and document_name = #{documentName}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="ProjectPackageMap">
-        select
-          id, project_id, package_id, document_name, package_name, create_time, user_id, delete_flag
-        from project_management_project_cloud.project_package
-        limit #{offset}, #{limit}
-    </select>
+    <update id="delete">
+        update project_management_project_cloud.project_package
+        set delete_flag = 0
+        where id = #{id};
+    </update>
 
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="ProjectPackageMap">
-        select
-          id, project_id, package_id, document_name, package_name, create_time, user_id, delete_flag
-        from project_management_project_cloud.project_package
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="projectId != null">
-                and project_id = #{projectId}
-            </if>
-            <if test="packageId != null">
-                and package_id = #{packageId}
-            </if>
-            <if test="documentName != null and documentName != ''">
-                and document_name = #{documentName}
-            </if>
-            <if test="packageName != null and packageName != ''">
-                and package_name = #{packageName}
-            </if>
-            <if test="createTime != null">
-                and create_time = #{createTime}
-            </if>
-            <if test="userId != null">
-                and user_id = #{userId}
-            </if>
-            <if test="deleteFlag != null">
-                and delete_flag = #{deleteFlag}
-            </if>
-        </where>
-    </select>
 
+    <resultMap id="detailProjectPackageList" type="com.edu.lingnan.entity.ProjectPackageList">
+        <result column="project_id" property="projectId"/>
+        <result column="package_id" property="packageId"/>
+        <result column="package_name" property="packageName"/>
+        <collection property="projectPackageList" javaType="ArrayList"
+                    column="{projectId=project_id,packageId=package_id}"
+                    select="com.edu.lingnan.dao.ProjectPackageDao.getAllDocumentsByProjectsAndPackage">
+        </collection>
+    </resultMap>
+
+    <select id="getAllPackagesListByProjectId" resultMap="detailProjectPackageList">
+        select *
+        from project_management_project_cloud.project_package
+        where delete_flag = 1
+        and project_id = #{projectId}
+        group by package_id
+    </select>
 
 </mapper>

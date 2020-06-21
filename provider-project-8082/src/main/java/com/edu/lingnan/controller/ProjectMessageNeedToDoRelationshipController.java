@@ -22,15 +22,19 @@ public class ProjectMessageNeedToDoRelationshipController {
     @Resource
     private ProjectMessageNeedToDoRelationshipService projectMessageNeedToDoRelationshipService;
 
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("selectOne")
-    public ProjectMessageNeedToDoRelationship selectOne(Integer id) {
-        return this.projectMessageNeedToDoRelationshipService.queryById(id);
+    @GetMapping("getByProjectMessageId/{projectMessageId}")
+    public ProjectMessageNeedToDoRelationship getByProjectMessageId(@PathVariable("projectMessageId") Integer projectMessageId) {
+        return projectMessageNeedToDoRelationshipService.getByProjectMessageId(projectMessageId);
+    }
+
+    @GetMapping("getByDocumentId/{documentId}")
+    public ProjectMessageNeedToDoRelationship getByDocumentId(@PathVariable("documentId") Integer documentId) {
+        return projectMessageNeedToDoRelationshipService.getByDocumentId(documentId);
+    }
+
+    @PostMapping("/")
+    public void insert(ProjectMessageNeedToDoRelationship projectsMessageNeedToDoRelationship) {
+        projectMessageNeedToDoRelationshipService.insert(projectsMessageNeedToDoRelationship);
     }
 
 }

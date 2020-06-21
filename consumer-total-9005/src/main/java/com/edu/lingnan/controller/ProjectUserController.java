@@ -6,6 +6,8 @@ import com.edu.lingnan.feign.ProjectFunctionFeignService;
 import com.edu.lingnan.feign.ProjectUserFeignService;
 import com.edu.lingnan.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author shaosen
@@ -31,9 +35,9 @@ public class ProjectUserController {
     @Autowired
     private ProjectFunctionFeignService projectFunctionFeignService;
 
-    @GetMapping("/getProjectsByUserId")
+    @GetMapping("/getProjectByUserId")
     @ResponseBody
-    public List getProjectsByUserId(Integer userId) {
+    public List getProjectByUserId(Integer userId) {
         return projectFeignService.getProjectListByUserId(userId);
     }
 
@@ -83,8 +87,8 @@ public class ProjectUserController {
     @ResponseBody
     public ProjectUser projectUser(Integer projectId, HttpServletRequest request) {
         MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
-        ProjectUser projectsUser = projectUserFeignService.getByUserIdAndProjectId(myUserDetails.getId(), projectId);
-        return projectsUser;
+        ProjectUser projectUser = projectUserFeignService.getByUserIdAndProjectId(myUserDetails.getId(), projectId);
+        return projectUser;
     }
 
     /**
@@ -96,15 +100,15 @@ public class ProjectUserController {
      */
     @GetMapping("/projectUserDuty")
     @ResponseBody
-    public Integer projectsUserDuty(Integer projectId, Integer projectFunctionId, HttpServletRequest request) {
+    public Integer projectUserDuty(Integer projectId, Integer projectFunctionId, HttpServletRequest request) {
         MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
-        ProjectUser projectsUser = projectUserFeignService.getByUserIdAndProjectId(myUserDetails.getId(), projectId);
+        ProjectUser projectUser = projectUserFeignService.getByUserIdAndProjectId(myUserDetails.getId(), projectId);
         Integer duty = 0;
-        if (projectsUser.getProjectUserDuty().getId() != 3) {//管理员
+        if (projectUser.getProjectUserDuty().getId() != 3) {//管理员
             duty = 1;
         } else if(projectFunctionId != null){
-            ProjectFunction projectsFunction = projectFunctionFeignService.queryById(projectFunctionId);
-            if (projectsFunction.getRealizeUserId() == myUserDetails.getId() || projectsFunction.getPublishUserId() == myUserDetails.getId()) {
+            ProjectFunction projectFunction = projectFunctionFeignService.queryById(projectFunctionId);
+            if (projectFunction.getRealizeUserId() == myUserDetails.getId() || projectFunction.getPublishUserId() == myUserDetails.getId()) {
                 duty = 2;
              }
         }
@@ -115,5 +119,68 @@ public class ProjectUserController {
     @ResponseBody
     public List projectUsers(Integer projectId) {
         return projectUserFeignService.getAllProjectUserByProjectId(projectId);
+    }
+
+    /**
+     * 加载项目人员和人才市场
+     *
+     * @param page
+     * @param projectId
+     * @param market
+     * @return
+     */
+    @GetMapping("/projectUserPage")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> pages(Integer page, Integer projectId, Integer market) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        int pageSize = 5;
+        try {
+            Integer count = null;
+            if (market == null) {
+                count = projectUserFeignService.getCountByProjectId(projectId);
+            } else {
+                count = projectUserFeignService.getCountNoInProjectByProjectId(projectId);
+            }
+            Integer totalPage = count / pageSize;
+            if (count % pageSize != 0) {
+                totalPage++;
+            }
+            if (page > totalPage) {
+                return null;
+            }
+            int offset = (page - 1) * pageSize;
+            List<ProjectUser> projectUserList = null;
+            List<MyUserDetails> myUserDetailsList = null;
+            if (market == null) {
+                projectUserList = projectUserFeignService.getPageProjectUserByProjectId(projectId, offset, pageSize);
+                map.put("list", projectUserList);
+            } else {
+                myUserDetailsList = projectUserFeignService.getProjectUserNoInProjectByProjectId(projectId, offset, pageSize);
+                map.put("list", myUserDetailsList);
+            }
+            // 封装数据，并返回
+            map.put("page", page);
+            map.put("pageSize", pageSize);
+            map.put("totalPage", totalPage);
+
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+
+        } catch (Exception e) {
+            System.out.println("获取分页数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/projectUserDevotion/{projectId}/{userId}")
+    @ResponseBody
+    public ProjectUser projectUserDevotion(
+            @PathVariable("projectId") Integer projectId,
+            @PathVariable("userId") Integer userId) {
+        Project project = projectFeignService.getById(projectId);
+        ProjectUser projectUser = projectUserFeignService.getByUserIdAndProjectId(userId, projectId);
+        projectUser.setCodeDevoteLineRatio((double) projectUser.getCodeDevoteLine() / (double) project.getCodeLineNumber() * 100);
+        projectUser.setCodeUpdateRatio((double) projectUser.getCodeUpdate() / (double) project.getCodeUpdateCount() * 100);
+        return projectUser;
     }
 }

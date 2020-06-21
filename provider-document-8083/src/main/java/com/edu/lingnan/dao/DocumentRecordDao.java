@@ -1,6 +1,9 @@
 package com.edu.lingnan.dao;
 
 import com.edu.lingnan.entity.DocumentRecord;
+import com.edu.lingnan.entity.MyUserDetails;
+import com.edu.lingnan.entity.ProjectUser;
+import com.edu.lingnan.entity.ProjectUserDuty;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -15,33 +18,40 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface DocumentRecordDao extends BaseDao<DocumentRecord>{
+public interface DocumentRecordDao extends BaseDao<DocumentRecord> {
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
-    DocumentRecord queryById(Integer id);
+    DocumentRecord getById(@Param("id") Integer id);
 
-    /**
-     * 查询指定行数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
-    List<DocumentRecord> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    List<DocumentRecord> getAllByProjectId(@Param("projectId") Integer projectId);
 
+    boolean delete(@Param("id") Integer id);
 
-    /**
-     * 通过实体作为筛选条件查询
-     *
-     * @param documentRecord 实例对象
-     * @return 对象列表
-     */
-    List<DocumentRecord> queryAll(DocumentRecord documentRecord);
+    List<DocumentRecord> getAllDeleteDocumentRecord();
 
+    boolean undo(@Param("id") Integer id);
 
+    Integer getDocumentRecordCountByProjectId(@Param("projectId") Integer projectId);
+
+    Integer getDocumentRecordCountByProjectIdAndUserId(
+            @Param("projectId") Integer projectId,
+            @Param("userId") Integer userId);
+
+    List<DocumentRecord> getDocumentRecordPageByProjectId(
+            @Param("projectId") Integer projectId,
+            @Param("offset") Integer offset,
+            @Param("pageSize") Integer pageSize);
+
+    List<DocumentRecord> getDocumentRecordPageByProjectIdAndUserId(
+            @Param("projectId") Integer projectId,
+            @Param("userId") Integer userId,
+            @Param("offset") Integer offset,
+            @Param("pageSize") Integer pageSize);
+
+    MyUserDetails getSimpleMyUserDetailsByUserId(@Param("id") Integer id);
+
+    ProjectUser getProjectUserByUserIdAndProjectId(
+            @Param("userId") Integer userId,
+            @Param("projectId") Integer projectId);
+
+    ProjectUserDuty getProjectUserDutyById(@Param("id") Integer id);
 }

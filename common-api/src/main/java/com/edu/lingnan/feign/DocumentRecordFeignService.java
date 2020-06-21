@@ -3,6 +3,7 @@ package com.edu.lingnan.feign;
 import com.edu.lingnan.entity.DocumentRecord;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,45 +17,42 @@ import java.util.List;
 @FeignClient(value = "PROVIDER-DOCUMENT")
 public interface DocumentRecordFeignService {
 
-//    /**
-//     * 通过ID查询单条数据
-//     *
-//     * @param id 主键
-//     * @return 实例对象
-//     */
-//    DocumentRecord queryById(Integer id);
-//
-//    /**
-//     * 查询多条数据
-//     *
-//     * @param offset 查询起始位置
-//     * @param limit 查询条数
-//     * @return 对象列表
-//     */
-//    List<DocumentRecord> queryAllByLimit(int offset, int limit);
-//
-//    /**
-//     * 新增数据
-//     *
-//     * @param documentRecord 实例对象
-//     * @return 实例对象
-//     */
-//    DocumentRecord insert(DocumentRecord documentRecord);
-//
-//    /**
-//     * 修改数据
-//     *
-//     * @param documentRecord 实例对象
-//     * @return 实例对象
-//     */
-//    DocumentRecord update(DocumentRecord documentRecord);
-//
-//    /**
-//     * 通过主键删除数据
-//     *
-//     * @param id 主键
-//     * @return 是否成功
-//     */
-//    boolean deleteById(Integer id);
+    @GetMapping("documentRecord/getAllByProjectId/{projectId}")
+    List<DocumentRecord> getAllByProjectId(@RequestParam("projectId") Integer projectId) ;
 
+    @DeleteMapping("documentRecord/{id}")
+    boolean delete(@RequestParam("id") Integer id);
+
+    @PutMapping("documentRecord/")
+    boolean update(DocumentRecord documentRecord);
+
+    @PostMapping("documentRecord/")
+    boolean insert(DocumentRecord documentRecord);
+
+    @GetMapping("documentRecord/getAllDeleteDocumentRecord")
+    List<DocumentRecord> getAllDeleteDocumentRecord();
+
+    @PutMapping("documentRecord/undo/{id}")
+    boolean undo(@RequestParam("id") Integer id);
+
+    @GetMapping("documentRecord/getDocumentRecordCountByProjectId/{projectId}")
+    Integer getDocumentRecordCountByProjectId(@RequestParam("projectId") Integer projectId);
+
+    @GetMapping("documentRecord/getDocumentRecordCountByProjectIdAndUserId/{projectId}/{userId}")
+    Integer getDocumentRecordCountByProjectIdAndUserId(
+            @RequestParam("projectId") Integer projectId,
+            @RequestParam("userId") Integer userId);
+
+    @GetMapping("documentRecord/getDocumentRecordPageByProjectId/{projectId}/{offset}/{pageSize}")
+    List<DocumentRecord> getDocumentRecordPageByProjectId(
+            @RequestParam("projectId") Integer projectId,
+            @RequestParam("offset") Integer offset,
+            @RequestParam("pageSize") Integer pageSize);
+
+    @GetMapping("documentRecord/getDocumentRecordPageByProjectIdAndUserId/{projectId}/{userId}/{offset}/{pageSize}")
+    List<DocumentRecord> getDocumentRecordPageByProjectIdAndUserId(
+            @RequestParam("projectId") Integer projectId,
+            @RequestParam("userId") Integer userId,
+            @RequestParam("offset") Integer offset,
+            @RequestParam("pageSize") Integer pageSize);
 }

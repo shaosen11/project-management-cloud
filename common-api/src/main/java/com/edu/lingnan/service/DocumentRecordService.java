@@ -11,38 +11,25 @@ import java.util.List;
  */
 public interface DocumentRecordService {
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
-    DocumentRecord queryById(Integer id);
+    List<DocumentRecord> getAllByProjectId(Integer projectId);
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
-    List<DocumentRecord> queryAllByLimit(int offset, int limit);
+    boolean delete(Integer id);
 
-    /**
-     * 新增数据
-     *
-     * @param documentRecord 实例对象
-     * @return 实例对象
-     */
-    DocumentRecord insert(DocumentRecord documentRecord);
+    boolean update(DocumentRecord bean);
 
-    /**
-     * 修改数据
-     *
-     * @param documentRecord 实例对象
-     * @return 实例对象
-     */
-    DocumentRecord update(DocumentRecord documentRecord);
+    boolean insert(DocumentRecord bean);
+
+    List<DocumentRecord> getAllDeleteDocumentRecord();
+
+    boolean undo(Integer id);
+
+    Integer getDocumentRecordCountByProjectId(Integer projectId);
+
+    Integer getDocumentRecordCountByProjectIdAndUserId(Integer projectId, Integer userId);
+
+    List<DocumentRecord> getDocumentRecordPageByProjectId(Integer projectId, Integer offset, Integer pageSize);
+
+    List<DocumentRecord> getDocumentRecordPageByProjectIdAndUserId(Integer projectId, Integer userId, Integer offset, Integer pageSize);
 
 
 }

@@ -18,60 +18,69 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface ProjectUserDao extends BaseDao<ProjectUser>{
+public interface ProjectUserDao extends BaseDao<ProjectUser> {
 
     /**
      * 查询所有项目用户信息
+     *
      * @return
      */
     List<ProjectUser> getProjectUserList();
 
     /**
      * 删除项目用户信息
+     *
      * @return
      */
     boolean delete(Integer id);
 
     /**
      * 删除项目用户信息通过项目id
+     *
      * @return
      */
     Integer deleteProjectUserByProjectsId(Integer projectsId);
 
     /**
      * 还原项目用户信息
+     *
      * @return
      */
     boolean reductionProjectUser(Integer id);
 
     /**
      * 查询所有已注销项目用户信息
+     *
      * @return
      */
     List<ProjectUser> getDelProjectUserList();
 
     /**
      * 通过用户Id和项目Id查询用户
+     *
      * @param userId
      * @param projectId
      * @return
      */
-    ProjectUser getByUserIdAndProjectId(@Param("userId") Integer userId,@Param("projectId") Integer projectId);
+    ProjectUser getByUserIdAndProjectId(@Param("userId") Integer userId, @Param("projectId") Integer projectId);
 
     /**
      * 通过Id查询
+     *
      * @return
      */
     ProjectUser getById(Integer id);
 
     /**
      * 通过Id查询已注销的记录
+     *
      * @return
      */
     ProjectUser getDelById(Integer id);
 
     /**
      * 获取代码贡献量
+     *
      * @param projectId
      * @return
      */
@@ -79,6 +88,7 @@ public interface ProjectUserDao extends BaseDao<ProjectUser>{
 
     /**
      * 获取代码上传次数
+     *
      * @param projectId
      * @return
      */
@@ -86,6 +96,7 @@ public interface ProjectUserDao extends BaseDao<ProjectUser>{
 
     /**
      * 查询项目总共人数
+     *
      * @param projectId
      * @return
      */
@@ -93,10 +104,14 @@ public interface ProjectUserDao extends BaseDao<ProjectUser>{
 
     /**
      * 通过项目id查找所有项目成员
+     *
      * @param projectId
      * @return
      */
-    List<ProjectUser> getPageProjectUserByProjectId(Integer projectId, Integer offset, Integer pageSize);
+    List<ProjectUser> getPageProjectUserByProjectId(
+            @Param("projectId") Integer projectId,
+            @Param("offset") Integer offset,
+            @Param("pageSize") Integer pageSize);
 
     /**
      * 通过项目id查找所有项目成员
@@ -109,6 +124,7 @@ public interface ProjectUserDao extends BaseDao<ProjectUser>{
 
     /**
      * 查询项目总共人数
+     *
      * @param projectId
      * @return
      */
@@ -116,24 +132,30 @@ public interface ProjectUserDao extends BaseDao<ProjectUser>{
 
     /**
      * 通过项目id查找不在项目的成员
+     *
      * @param projectId
      * @return
      */
-    List<SysUser> getProjectUserNoInProjectByProjectId(Integer projectId, Integer offset, Integer pageSize);
+    List<MyUserDetails> getProjectUserNoInProjectByProjectId(
+            @Param("projectId") Integer projectId,
+            @Param("offset") Integer offset,
+            @Param("pageSize") Integer pageSize);
 
     /**
      * 通过userId查询
+     *
      * @return
      */
     List<ProjectUser> getAllProjectByUserId(Integer userId);
 
     /**
      * 获取项目各类人数
+     *
      * @param projectId
      * @param dutyCode
      * @return
      */
-    Integer getCountByProjectIdAndDuty(@Param("projectId") Integer projectId,@Param("dutyCode") Integer dutyCode);
+    Integer getCountByProjectIdAndDuty(@Param("projectId") Integer projectId, @Param("dutyCode") Integer dutyCode);
 
     MyUserDetails getSimpleMyUserDetailsByUserId(@Param("id") Integer id);
 

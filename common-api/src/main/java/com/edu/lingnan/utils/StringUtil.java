@@ -1,4 +1,4 @@
-package com.edu.lingnan.util;
+package com.edu.lingnan.utils;
 
 import org.springframework.util.StringUtils;
 

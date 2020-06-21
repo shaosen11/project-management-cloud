@@ -1,6 +1,7 @@
 package com.edu.lingnan.controller;
 
 import com.edu.lingnan.entity.Echarts;
+import com.edu.lingnan.entity.MyUserDetails;
 import com.edu.lingnan.entity.ProjectUser;
 import com.edu.lingnan.entity.SysUser;
 import com.edu.lingnan.feign.ProjectUserFeignService;
@@ -106,7 +107,7 @@ public class ProjectUserController {
     }
 
     @GetMapping("getProjectUserNoInProjectByProjectId")
-    List<SysUser> getProjectUserNoInProjectByProjectId(
+    List<MyUserDetails> getProjectUserNoInProjectByProjectId(
             @PathVariable("projectId") Integer projectId,
             @PathVariable("offset") Integer offset,
             @PathVariable("pageSize") Integer pageSize) {
@@ -132,8 +133,9 @@ public class ProjectUserController {
      * @return 实例对象
      */
     @GetMapping("/getByUserIdAndProjectId/{userId}/{projectId}")
-    public ProjectUser getByUserIdAndProjectId(@PathVariable("userId") Integer userId, @PathVariable("projectId") Integer projectId) {
-        System.out.println("getByUserIdAndProjectId-->userId=" + userId + "  projectId=" + projectId);
+    public ProjectUser getByUserIdAndProjectId(
+            @PathVariable("userId") Integer userId,
+            @PathVariable("projectId") Integer projectId) {
         ProjectUser projectUser = projectUserService.getByUserIdAndProjectId(userId, projectId);
         System.out.println(projectUser);
         return projectUser;

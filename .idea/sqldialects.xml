@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/provider-document-8083/src/main/resources/mapper/DocumentRecordDao.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/provider-project-8082/src/main/resources/mapper/ProjectCodeLineDao.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/provider-project-8082/src/main/resources/mapper/ProjectDao.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/provider-project-8082/src/main/resources/mapper/ProjectMessageDao.xml" dialect="MySQL" />
@@ -9,5 +10,6 @@
     <file url="file://$PROJECT_DIR$/provider-user-8081/src/main/resources/mapper/MessageDao.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/provider-user-8081/src/main/resources/mapper/SysUserDao.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/provider-user-8081/src/main/resources/mapper/UserCodeUpdateRecordDao.xml" dialect="MySQL" />
+    <file url="PROJECT" dialect="MySQL" />
   </component>
 </project>

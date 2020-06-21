@@ -340,7 +340,7 @@
                     '                                        <img src="/files/photo/' + list[i].myUserDetails.photo + '" alt="..." class="avatar-img rounded-circle">\n' +
                     '                                    </div>\n' +
                     '                                    <div class="flex-1 pt-1 ml-2">\n' +
-                    '                                        <h5 class="fw-bold mb-1">' + list[i].projectsUserDuty.dutyName + '</h5>\n' +
+                    '                                        <h5 class="fw-bold mb-1">' + list[i].projectUserDuty.dutyName + '</h5>\n' +
                     '                                        <small class="text-muted">' + list[i].myUserDetails.username + '</small>\n' +
                     '                                    </div>\n' +
                     '                                    <div class="d-flex ml-auto align-items-center">\n' +
@@ -402,13 +402,10 @@
     function appendPersonInformationHtml(userId) {
         $.ajax({
             type: "get",
-            url: "/projectsUserDevotion",
+            url: "/projectUserDevotion/" + projectId + "/" + userId,
             dataType: "json",
-            data: {
-                projectId: projectId,
-                userId: userId
-            },
             success: function (json) {
+                console.log(json);
                 $("#personInformationDevelopment").text(json.myUserDetails.username);
                 codeLineCicle(json.codeDevoteLineRatio);
                 codeUpdateCile(json.codeUpdateRatio);

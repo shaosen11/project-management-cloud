@@ -2,6 +2,7 @@ package com.edu.lingnan.util;
 
 import com.edu.lingnan.annotation.Id;
 import com.edu.lingnan.annotation.Table;
+import com.edu.lingnan.utils.StringUtil;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.lang.reflect.Field;
